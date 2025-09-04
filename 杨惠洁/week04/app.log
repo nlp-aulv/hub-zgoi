@@ -1,0 +1,24 @@
+2025-09-04 19:31:21,615 - uvicorn.error - INFO - Started server process [85220]
+2025-09-04 19:31:21,616 - uvicorn.error - INFO - Waiting for application startup.
+2025-09-04 19:31:21,618 - uvicorn.error - INFO - Application startup complete.
+2025-09-04 19:31:21,618 - uvicorn.error - ERROR - [Errno 10048] error while attempting to bind on address ('0.0.0.0', 8000): [winerror 10048] 通常每个套接字地址(协议/网络地址/端口)只允许使用一次。
+2025-09-04 19:31:21,620 - uvicorn.error - INFO - Waiting for application shutdown.
+2025-09-04 19:31:21,620 - uvicorn.error - INFO - Application shutdown complete.
+2025-09-04 19:31:45,652 - uvicorn.error - INFO - Started server process [86924]
+2025-09-04 19:31:45,654 - uvicorn.error - INFO - Waiting for application startup.
+2025-09-04 19:31:45,656 - uvicorn.error - INFO - Application startup complete.
+2025-09-04 19:31:45,657 - uvicorn.error - ERROR - [Errno 10048] error while attempting to bind on address ('0.0.0.0', 8000): [winerror 10048] 通常每个套接字地址(协议/网络地址/端口)只允许使用一次。
+2025-09-04 19:31:45,658 - uvicorn.error - INFO - Waiting for application shutdown.
+2025-09-04 19:31:45,659 - uvicorn.error - INFO - Application shutdown complete.
+2025-09-04 19:32:51,183 - uvicorn.error - INFO - Started server process [90992]
+2025-09-04 19:32:51,186 - uvicorn.error - INFO - Waiting for application startup.
+2025-09-04 19:32:51,187 - uvicorn.error - INFO - Application startup complete.
+2025-09-04 19:32:51,189 - uvicorn.error - INFO - Uvicorn running on http://0.0.0.0:8000 (Press CTRL+C to quit)
+2025-09-04 19:37:48,005 - uvicorn.error - INFO - Shutting down
+2025-09-04 19:37:48,115 - uvicorn.error - INFO - Waiting for application shutdown.
+2025-09-04 19:37:48,116 - uvicorn.error - INFO - Application shutdown complete.
+2025-09-04 19:37:48,116 - uvicorn.error - INFO - Finished server process [90992]
+2025-09-04 19:40:38,657 - uvicorn.error - INFO - Started server process [89280]
+2025-09-04 19:40:38,659 - uvicorn.error - INFO - Waiting for application startup.
+2025-09-04 19:40:38,660 - uvicorn.error - INFO - Application startup complete.
+2025-09-04 19:40:38,662 - uvicorn.error - INFO - Uvicorn running on http://0.0.0.0:8000 (Press CTRL+C to quit)
