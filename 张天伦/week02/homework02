@@ -1,0 +1,101 @@
+import torch
+import numpy as np
+import torch.nn as nn
+import matplotlib.pyplot as plt
+import torch.nn.functional as F
+from torch.utils.data import Dataset, DataLoader
+from sklearn.model_selection import train_test_split
+
+
+
+class ToyDataset(Dataset):
+    def __init__(self):
+        self.mean_func = lambda x: np.sin(x * np.pi)
+
+        self.radius = 1
+
+    def __getitem__(self, index):
+        x = np.random.uniform(low=-self.radius, high=self.radius)
+        mean_x = self.mean_func(x)
+        x_ary = np.array([x, ], dtype=np.float32)
+        obs_ary = np.array([mean_x, ], dtype=np.float32)
+        return x_ary, obs_ary
+
+    def __len__(self):
+        return 99999999
+
+
+class Net(nn.Module):
+    def __init__(self):
+        super(Net, self).__init__()
+        self.fc1 = nn.Linear(1, 16)
+        self.fc2 = nn.Linear(16, 64)
+        # self.fc3 = nn.Linear(16, 16)
+        self.mean_head = nn.Linear(64, 1)
+
+        # self.var_head.bias[0] = 0.1
+
+    def forward(self, x):
+        x = self.fc1(x)
+        x = F.relu(x)
+        x = self.fc2(x)
+        x = F.relu(x)
+        # x = self.fc3(x)
+        # x = F.relu(x)
+        mean_x = self.mean_head(x)
+
+        return mean_x
+
+def Train_model():
+    dataset = ToyDataset()
+    data_loader_iter = iter(DataLoader(dataset, batch_size=128))
+
+    model = Net()
+    model.train()
+    criterion = nn.MSELoss()
+    optimizer = torch.optim.Adam(model.parameters(), lr=0.001)
+
+    num_epochs = 5000
+    for epoch in range(num_epochs):
+        x, Y_train = next(data_loader_iter)
+        y_pred = model(x)
+        loss = criterion(y_pred, Y_train)
+        optimizer.zero_grad()
+        loss.backward()
+        optimizer.step()
+        if (epoch + 1) % 100 == 0:
+            print(f'Epoch [{epoch + 1}/{num_epochs}], Loss: {loss.item():.4f}')
+    return model
+
+if __name__ == '__main__':
+
+
+    model = Train_model()
+
+    sample_x = np.arange(start=-1, stop=1, step=0.001).astype(np.float32)
+    sample_x = torch.Tensor(sample_x.reshape((-1, 1)))
+    model.eval()
+    with torch.no_grad():
+        y_pred = model(sample_x)
+
+
+    sample_x, y_pred = sample_x.detach().numpy(), y_pred.detach().numpy()
+    sample_x, y_pred = sample_x.reshape(-1), y_pred.reshape(-1)
+
+    dataset = ToyDataset()
+    gt = dataset.mean_func(sample_x)
+
+
+
+    plt.figure(figsize=(10, 6))
+    plt.plot(sample_x, gt, label='Raw data', color='blue', alpha=0.6)
+    plt.plot(sample_x, y_pred, label=f'Pred data', color='red', linewidth=2)
+    plt.xlabel('X')
+    plt.ylabel('y')
+    plt.legend()
+    plt.grid(True)
+    plt.show()
+
+
+
+

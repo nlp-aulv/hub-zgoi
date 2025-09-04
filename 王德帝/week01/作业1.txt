@@ -1,0 +1,5 @@
+(py312) dd@mac projects % conda list | grep -E "scikit-learn|jieba|torch"
+jieba                     0.42.1                   pypi_0    pypi
+scikit-learn              1.4.2                    pypi_0    pypi
+torch                     2.2.2                    pypi_0    pypi
+torchvision               0.17.2                   pypi_0    pypi

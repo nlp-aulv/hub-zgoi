@@ -1,0 +1,52 @@
+import numpy as np
+import pandas as pd
+import jieba
+from sklearn.feature_extraction.text import CountVectorizer
+from sklearn import linear_model
+from sklearn import neighbors
+from sklearn import linear_model
+from sklearn.preprocessing import LabelEncoder
+
+data = pd.read_csv("dataset.csv",sep="\t",header=None)
+
+## extract characteristics
+
+# split the sentence->prepare for transforming
+split_sentences = data[0].apply(lambda x: jieba.lcut(x))
+input_sentences = data[0].apply(lambda x: " ".join(jieba.lcut(x)))
+# learning a vocabulary
+vector = CountVectorizer()
+vector.fit(input_sentences)
+
+# convert from text into a numerical feature matrix
+input_features = vector.transform(input_sentences.values) #converts your text sentences into a numerical feature matrix
+
+# data_x transformation
+test_query = "北京今天天气怎么样"
+print("The input query is:", test_query)
+test_sentence = " ".join(jieba.lcut(test_query))
+test_feature = vector.transform([test_sentence])
+
+# data_y preprocessing
+label_encoder = LabelEncoder()
+y_label = label_encoder.fit_transform(data[1].values)
+
+# choose a model-KNN
+model = neighbors.KNeighborsClassifier()
+# train the mode
+model.fit(input_features, data[1].values)
+# predict
+prediction_knn = model.predict(test_feature)
+print("result from KNN:",prediction_knn)
+
+# choose a model
+model = linear_model.LinearRegression()
+# train the mode;
+model.fit(input_features, y_label)
+# predict
+prediction_linear =model.predict(test_feature)
+# go back to strings
+predicted_index = int(round(prediction_linear[0]))
+predicted_label = label_encoder.inverse_transform([predicted_index])
+print("result from linear regression:", predicted_label)
+
