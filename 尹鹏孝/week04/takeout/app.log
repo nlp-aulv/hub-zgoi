@@ -1,0 +1,157 @@
+2025-09-04 15:40:26,139 - logger - INFO - 执行-start:
+2025-09-04 15:40:26,139 - logger - INFO - 输出入参：
+2025-09-04 15:40:26,139 - logger - INFO - 焖面不好吃，粥还凑合。
+2025-09-04 15:43:02,534 - logger - INFO - 执行-start:
+2025-09-04 15:43:02,534 - logger - INFO - 输出入参：
+2025-09-04 15:43:02,535 - logger - INFO - 焖面不好吃，粥还凑合。
+2025-09-04 15:43:02,540 - logger - INFO - <torch.utils.data.dataloader.DataLoader object at 0x0000015D7CEAAA50>
+2025-09-04 16:04:04,137 - logger - INFO - 执行-start:
+2025-09-04 16:04:04,138 - logger - INFO - 输出入参：
+2025-09-04 16:04:04,138 - logger - INFO - 不好吃
+2025-09-04 16:04:04,141 - logger - INFO - <torch.utils.data.dataloader.DataLoader object at 0x00000257A8A8CAA0>
+2025-09-04 16:04:15,356 - logger - INFO - 执行-start:
+2025-09-04 16:04:15,356 - logger - INFO - 输出入参：
+2025-09-04 16:04:15,356 - logger - INFO - 差评
+2025-09-04 16:04:15,359 - logger - INFO - <torch.utils.data.dataloader.DataLoader object at 0x00000257A8A8D430>
+2025-09-04 16:04:23,134 - logger - INFO - 执行-start:
+2025-09-04 16:04:23,135 - logger - INFO - 输出入参：
+2025-09-04 16:04:23,135 - logger - INFO - 1111差评
+2025-09-04 16:04:23,137 - logger - INFO - <torch.utils.data.dataloader.DataLoader object at 0x00000257A8A8F680>
+2025-09-04 16:04:28,350 - logger - INFO - 执行-start:
+2025-09-04 16:04:28,351 - logger - INFO - 输出入参：
+2025-09-04 16:04:28,351 - logger - INFO - 1111差评
+2025-09-04 16:04:28,353 - logger - INFO - <torch.utils.data.dataloader.DataLoader object at 0x00000257A8A8C800>
+2025-09-04 16:06:44,015 - logger - INFO - 执行-start:
+2025-09-04 16:06:44,015 - logger - INFO - 输出入参：
+2025-09-04 16:06:44,015 - logger - INFO - 1111差评
+2025-09-04 16:06:44,018 - logger - INFO - <torch.utils.data.dataloader.DataLoader object at 0x000002AF7C224470>
+2025-09-04 16:11:35,076 - logger - INFO - 执行-start:
+2025-09-04 16:11:35,077 - logger - INFO - 输出入参：
+2025-09-04 16:11:35,077 - logger - INFO - 1111差评
+2025-09-04 16:11:35,082 - logger - INFO - <torch.utils.data.dataloader.DataLoader object at 0x0000020750304BC0>
+2025-09-04 16:11:35,229 - logger - INFO - 执行-end:
+2025-09-04 16:12:00,771 - logger - INFO - 执行-start:
+2025-09-04 16:12:00,771 - logger - INFO - 输出入参：
+2025-09-04 16:12:00,771 - logger - INFO - 1111差评
+2025-09-04 16:12:00,773 - logger - INFO - <torch.utils.data.dataloader.DataLoader object at 0x000001C83E43C200>
+2025-09-04 16:12:00,798 - logger - INFO - 执行-end:
+2025-09-04 16:13:27,024 - logger - INFO - 执行-start:
+2025-09-04 16:13:27,025 - logger - INFO - 输出入参：
+2025-09-04 16:13:27,025 - logger - INFO - 1111差评
+2025-09-04 16:13:27,026 - logger - INFO - <torch.utils.data.dataloader.DataLoader object at 0x000002B64A328080>
+2025-09-04 16:13:27,052 - logger - INFO - 执行-end:
+2025-09-04 16:14:57,333 - logger - INFO - 执行-start:
+2025-09-04 16:14:57,333 - logger - INFO - 输出入参：
+2025-09-04 16:14:57,334 - logger - INFO - 1111差评
+2025-09-04 16:14:57,335 - logger - INFO - <torch.utils.data.dataloader.DataLoader object at 0x00000238014BEFC0>
+2025-09-04 16:14:57,359 - logger - INFO - [1]
+2025-09-04 16:15:50,043 - logger - INFO - 执行-start:
+2025-09-04 16:15:50,044 - logger - INFO - 输出入参：
+2025-09-04 16:15:50,044 - logger - INFO - 1111差评
+2025-09-04 16:15:50,046 - logger - INFO - <torch.utils.data.dataloader.DataLoader object at 0x000001DF8FC5F890>
+2025-09-04 16:15:50,073 - logger - INFO - ['0']
+2025-09-04 16:16:01,821 - logger - INFO - 执行-start:
+2025-09-04 16:16:01,821 - logger - INFO - 输出入参：
+2025-09-04 16:16:01,821 - logger - INFO - 好评
+2025-09-04 16:16:01,822 - logger - INFO - <torch.utils.data.dataloader.DataLoader object at 0x000001DF8FC5F890>
+2025-09-04 16:16:01,850 - logger - INFO - ['0']
+2025-09-04 16:17:21,033 - logger - INFO - 执行-start:
+2025-09-04 16:17:21,033 - logger - INFO - 输出入参：
+2025-09-04 16:17:21,033 - logger - INFO - 好评
+2025-09-04 16:17:21,036 - logger - INFO - <torch.utils.data.dataloader.DataLoader object at 0x000001D43CCF0C20>
+2025-09-04 16:17:21,068 - logger - INFO - 执行-end:
+2025-09-04 16:18:27,669 - logger - INFO - 执行-start:
+2025-09-04 16:18:27,669 - logger - INFO - 输出入参：
+2025-09-04 16:18:27,670 - logger - INFO - 好评
+2025-09-04 16:18:27,671 - logger - INFO - <torch.utils.data.dataloader.DataLoader object at 0x0000017C330142C0>
+2025-09-04 16:18:27,693 - logger - INFO - 执行-end:
+2025-09-04 16:19:17,115 - logger - INFO - 执行-start:
+2025-09-04 16:19:17,116 - logger - INFO - 输出入参：
+2025-09-04 16:19:17,116 - logger - INFO - 好评
+2025-09-04 16:19:17,117 - logger - INFO - <torch.utils.data.dataloader.DataLoader object at 0x0000021097ED5AC0>
+2025-09-04 16:19:17,142 - logger - INFO - 执行-end:
+2025-09-04 16:20:00,885 - logger - INFO - 执行-start:
+2025-09-04 16:20:00,885 - logger - INFO - 输出入参：
+2025-09-04 16:20:00,885 - logger - INFO - 好评
+2025-09-04 16:20:00,887 - logger - INFO - <torch.utils.data.dataloader.DataLoader object at 0x00000176933753D0>
+2025-09-04 16:20:00,909 - logger - INFO - 执行-end:
+2025-09-04 16:20:56,568 - logger - INFO - 执行-start:
+2025-09-04 16:20:56,568 - logger - INFO - 输出入参：
+2025-09-04 16:20:56,568 - logger - INFO - 好评
+2025-09-04 16:20:56,570 - logger - INFO - <torch.utils.data.dataloader.DataLoader object at 0x000001903FACB920>
+2025-09-04 16:20:56,629 - logger - INFO - 执行-end:
+2025-09-04 16:22:11,271 - logger - INFO - 执行-start:
+2025-09-04 16:22:11,271 - logger - INFO - 输出入参：
+2025-09-04 16:22:11,271 - logger - INFO - 好评
+2025-09-04 16:22:11,273 - logger - INFO - <torch.utils.data.dataloader.DataLoader object at 0x000001EB8EA15400>
+2025-09-04 16:22:11,321 - logger - INFO - 执行-end:
+2025-09-04 16:23:05,726 - logger - INFO - 执行-start:
+2025-09-04 16:23:05,726 - logger - INFO - 输出入参：
+2025-09-04 16:23:05,726 - logger - INFO - 好评
+2025-09-04 16:23:05,727 - logger - INFO - <torch.utils.data.dataloader.DataLoader object at 0x000001C626EEBEC0>
+2025-09-04 16:23:05,754 - logger - INFO - 执行-end:
+2025-09-04 16:24:42,702 - logger - INFO - 执行-start:
+2025-09-04 16:24:42,703 - logger - INFO - 输出入参：
+2025-09-04 16:24:42,703 - logger - INFO - 好评
+2025-09-04 16:24:42,707 - logger - INFO - <torch.utils.data.dataloader.DataLoader object at 0x000001B67D4387D0>
+2025-09-04 16:24:42,806 - logger - INFO - 执行-end:
+2025-09-04 16:26:08,035 - logger - INFO - 执行-start:
+2025-09-04 16:26:08,035 - logger - INFO - 输出入参：
+2025-09-04 16:26:08,036 - logger - INFO - 好评
+2025-09-04 16:26:08,037 - logger - INFO - <torch.utils.data.dataloader.DataLoader object at 0x0000021E7F5DCB00>
+2025-09-04 16:26:08,091 - logger - INFO - 执行-end:
+2025-09-04 16:28:29,016 - logger - INFO - 执行-start:
+2025-09-04 16:28:29,016 - logger - INFO - 输出入参：
+2025-09-04 16:28:29,016 - logger - INFO - 好评
+2025-09-04 16:28:29,017 - logger - INFO - <torch.utils.data.dataloader.DataLoader object at 0x0000021E7F5DDC40>
+2025-09-04 16:28:29,094 - logger - INFO - 执行-end:
+2025-09-04 16:29:13,691 - logger - INFO - 执行-start:
+2025-09-04 16:29:13,691 - logger - INFO - 输出入参：
+2025-09-04 16:29:13,691 - logger - INFO - 好评
+2025-09-04 16:29:13,693 - logger - INFO - <torch.utils.data.dataloader.DataLoader object at 0x000001C450FC7410>
+2025-09-04 16:29:13,720 - logger - INFO - 执行-end:
+2025-09-04 16:30:09,402 - logger - INFO - 执行-start:
+2025-09-04 16:30:09,403 - logger - INFO - 输出入参：
+2025-09-04 16:30:09,403 - logger - INFO - 好评
+2025-09-04 16:30:09,407 - logger - INFO - <torch.utils.data.dataloader.DataLoader object at 0x00000234801353D0>
+2025-09-04 16:30:09,546 - logger - INFO - 执行-end:
+2025-09-04 16:33:06,219 - logger - INFO - 执行-start:
+2025-09-04 16:33:06,220 - logger - INFO - 输出入参：
+2025-09-04 16:33:06,220 - logger - INFO - 好评
+2025-09-04 16:33:06,221 - logger - INFO - <torch.utils.data.dataloader.DataLoader object at 0x000002635AFA9310>
+2025-09-04 16:33:16,441 - logger - INFO - 执行-start:
+2025-09-04 16:33:16,442 - logger - INFO - 输出入参：
+2025-09-04 16:33:16,442 - logger - INFO - 差评
+2025-09-04 16:33:16,444 - logger - INFO - <torch.utils.data.dataloader.DataLoader object at 0x000002635AFA8D70>
+2025-09-04 16:47:29,182 - logger - INFO - 执行-start:
+2025-09-04 16:47:29,184 - logger - INFO - 输出入参：
+2025-09-04 16:47:29,185 - logger - INFO - 5678
+2025-09-04 16:47:29,196 - logger - INFO - <torch.utils.data.dataloader.DataLoader object at 0x000001D8AC152810>
+2025-09-04 16:47:51,070 - logger - INFO - 执行-start:
+2025-09-04 16:47:51,071 - logger - INFO - 输出入参：
+2025-09-04 16:47:51,071 - logger - INFO - 鸡蛋都坏了，凉菜也洒了
+2025-09-04 16:47:51,073 - logger - INFO - <torch.utils.data.dataloader.DataLoader object at 0x000001D8AC150BC0>
+2025-09-04 16:49:43,418 - logger - INFO - 执行-start:
+2025-09-04 16:49:43,419 - logger - INFO - 输出入参：
+2025-09-04 16:49:43,420 - logger - INFO - 鸡蛋都坏了，凉菜也洒了
+2025-09-04 16:49:43,425 - logger - INFO - <torch.utils.data.dataloader.DataLoader object at 0x000002189CFCEFC0>
+2025-09-04 16:55:53,488 - logger - INFO - 执行-start:
+2025-09-04 16:55:53,489 - logger - INFO - 输出入参：
+2025-09-04 16:55:53,489 - logger - INFO - 鸡蛋都坏了，凉菜也洒了
+2025-09-04 16:55:53,491 - logger - INFO - <torch.utils.data.dataloader.DataLoader object at 0x000001BECEA1B050>
+2025-09-04 16:56:04,918 - logger - INFO - 执行-start:
+2025-09-04 16:56:04,919 - logger - INFO - 输出入参：
+2025-09-04 16:56:04,920 - logger - INFO - 鸡蛋都坏了，凉菜也洒了
+2025-09-04 16:56:04,922 - logger - INFO - <torch.utils.data.dataloader.DataLoader object at 0x000001BECEA65790>
+2025-09-04 17:01:36,813 - logger - INFO - 执行-start:
+2025-09-04 17:01:36,814 - logger - INFO - 输出入参：
+2025-09-04 17:01:36,815 - logger - INFO - 不是说好送王老吉吗？为什么没有？这样不好吧……
+2025-09-04 17:01:36,827 - logger - INFO - <torch.utils.data.dataloader.DataLoader object at 0x00000179BDE3AED0>
+2025-09-04 17:01:57,541 - logger - INFO - 执行-start:
+2025-09-04 17:01:57,541 - logger - INFO - 输出入参：
+2025-09-04 17:01:57,542 - logger - INFO - 感觉比在店里吃的时候粗糙很多
+2025-09-04 17:01:57,544 - logger - INFO - <torch.utils.data.dataloader.DataLoader object at 0x00000179BDE3AED0>
+2025-09-04 17:02:14,658 - logger - INFO - 执行-start:
+2025-09-04 17:02:14,659 - logger - INFO - 输出入参：
+2025-09-04 17:02:14,660 - logger - INFO - 量大，好吃，每次点的都够吃两次
+2025-09-04 17:02:14,663 - logger - INFO - <torch.utils.data.dataloader.DataLoader object at 0x00000179BDE3A780>
