@@ -1,0 +1,50 @@
+RAG（Retrieval-Augmented Generation）实现流程解析
+1. 初始化配置与模型加载
+配置加载：通过config.yaml加载设备、模型路径、分块参数（如chunk_size=512、chunk_overlap=100）、大模型API配置（如DeepSeek/OpenAI兼容接口）。
+模型加载：
+嵌入模型：支持bge-small-zh-v1.5/bge-base-zh-v1.5，通过SentenceTransformer加载，生成文本向量（维度由配置指定）。
+重排序模型：支持bge-reranker-base，通过AutoModelForSequenceClassification加载，用于对检索结果进行二次排序。
+2. 文档处理与向量化存储
+PDF处理（_extract_pdf_content）：
+使用pdfplumber逐页提取文本，前4页生成摘要。
+分块策略：
+每页作为初始块（chunk_id=0），生成整体页向量。
+使用split_text_with_overlap将每页文本按chunk_size和chunk_overlap切分为子块（chunk_id≥1），每个子块单独生成嵌入向量。
+数据存储：
+页级数据和子块数据均存入Elasticsearch的chunk_info索引，包含文档ID、知识库ID、页码、块内容、嵌入向量等元数据。
+文档元数据（如路径、摘要）存入document_meta索引。
+3. 检索与融合排序
+混合检索（query_document）：
+全文检索（BM25）：基于关键词匹配，返回前50个相关块。
+语义检索（KNN）：通过向量相似度检索前50个候选块（使用Elasticsearch的knn查询）。
+RRF融合：将两种检索结果按1/(排名+k)（k=60）计算融合分数，取前chunk_candidate个候选块。
+重排序（可选）：
+若启用重排序（use_rerank=True），将候选块与查询组成文本对，通过bge-reranker-base模型计算相关性得分，按得分降序排序。
+4. 生成与响应
+提示模板构造（chat_with_rag）：
+将检索到的相关文档内容（related_document）插入BASIC_QA_TEMPLATE，结合当前时间、用户问题生成结构化提示。
+示例模板：
+markdown
+现在的时间是2025-09-10。你是一个专家，你擅长回答用户提问，帮我结合给定的资料，回答下面的问题。
+如果问题无法从资料中获得，或无法从资料中进行回答，请回答无法回答。如果提问不符合逻辑，请回答无法回答。
+如果问题可以从资料中获得，则请逐步回答。
+
+资料：
+[检索到的文档内容]
+
+问题：[用户提问]
+大模型调用：
+使用openai库调用配置的大模型（如deepseek-chat），传入提示模板和参数（top_p=0.7、temperature=0.9）。
+返回的生成结果作为系统回复，追加到消息列表中。
+5. 辅助功能
+查询解析与改写（未实现）：预留query_parse和query_rewrite方法，可扩展为查询理解或意图识别模块。
+多轮对话支持：在chat_with_rag中处理多轮对话，首轮调用RAG检索，后续轮次直接调用大模型。
+关键优化点
+向量存储：使用Elasticsearch的dense_vector字段存储嵌入向量，支持高效的KNN检索。
+混合检索：BM25与KNN的融合提升召回率，RRF平衡两种检索结果的权重。
+模块化设计：嵌入模型、重排序模型可插拔配置，适应不同场景需求。
+潜在问题与改进方向
+重排序效率：当前重排序需对所有候选块进行批处理，可能成为性能瓶颈，可考虑动态裁剪或分布式计算。
+错误处理：文档提取部分（如Word处理）未实现，需补充_extract_word_content方法。
+参数调优：分块大小、重叠长度、融合权重等参数需根据实际数据调优。
+通过上述流程，RAG系统实现了从文档处理、向量存储、混合检索到生成响应的全链路闭环，兼顾了检索的准确性和生成的灵活性。
