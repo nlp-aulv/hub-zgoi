@@ -1,0 +1,48 @@
+(base) PS D:\BaiduNetdiskDownload\第四周：Transfomer和BERT、GPT模型\01-intent-classify(1)\01-intent-classify\test> ab -n 100 -c 1 -p data.json -T 'application/json' -H 'accept: application/json' 'http://127.0.0.1:8000/v1/text-cls/bert'
+This is ApacheBench, Version 2.3 <$Revision: 1923142 $>
+Copyright 1996 Adam Twiss, Zeus Technology Ltd, http://www.zeustech.net/
+Licensed to The Apache Software Foundation, http://www.apache.org/
+
+Benchmarking 127.0.0.1 (be patient).....done
+
+
+Server Software:        uvicorn
+Server Hostname:        127.0.0.1
+Server Port:            8000
+
+Document Path:          /v1/text-cls/bert
+Document Length:        128 bytes
+
+Concurrency Level:      1
+Time taken for tests:   2.871 seconds
+Complete requests:      100
+Failed requests:        3
+   (Connect: 0, Receive: 0, Length: 3, Exceptions: 0)
+Total transferred:      25397 bytes
+Total body sent:        23800
+HTML transferred:       12797 bytes
+Requests per second:    34.83 [#/sec] (mean)
+Time per request:       28.711 [ms] (mean)
+Time per request:       28.711 [ms] (mean, across all concurrent requests)
+Transfer rate:          8.64 [Kbytes/sec] received
+                        8.10 kb/s sent
+                        16.73 kb/s total
+
+Connection Times (ms)
+              min  mean[+/-sd] median   max
+Connect:        0    0   0.4      0       1
+Processing:    24   28   6.1     28      84
+Waiting:       24   28   6.1     27      84
+Total:         24   29   6.2     28      85
+
+Percentage of the requests served within a certain time (ms)
+  50%     28
+  66%     28
+  75%     29
+  80%     29
+  90%     31
+  95%     33
+  98%     40
+  99%     85
+ 100%     85 (longest request)
+

@@ -1,0 +1,70 @@
+import torch
+import torch.nn as nn
+import torch.optim as optim
+import numpy as np
+import matplotlib.pyplot as plt
+
+# 1. 生成模拟数据 (与之前相同)
+X_numpy = np.linspace(0, 2*np.pi, 100)
+#100 个在 [0, 2pi) 范围内均匀分布的随机浮点数。
+
+y_numpy = np.sin(X_numpy)
+X = torch.from_numpy(X_numpy).float().unsqueeze(1)
+y = torch.from_numpy(y_numpy).float().unsqueeze(1)
+
+
+print("数据生成完成。")
+print("---" * 10)
+
+
+
+class SinNet(nn.Module):
+    def __init__(self):
+        super().__init__()
+        self.net = nn.Sequential(
+            nn.Linear(1,64),
+            nn.ReLU(),
+            nn.Linear(64,128),
+            nn.ReLU(),
+            nn.Linear(128, 128),
+            nn.ReLU(),
+            nn.Linear(128,64),
+            nn.ReLU(),
+            nn.Linear(64, 1),
+        )
+
+    def forward(self, x):
+        return self.net(x)
+
+model = SinNet()
+loss_fn = nn.MSELoss()
+optimizer = torch.optim.Adam( model.parameters(), lr=0.001)
+
+# 训练模型
+num_epoch = 1000
+for epoch in range(num_epoch):
+    model.train()
+    y_pred = model(X)
+    loss = loss_fn(y, y_pred)
+
+
+    optimizer.zero_grad()
+    loss.backward()
+    optimizer.step()
+
+    if (epoch + 1) % 100 == 0:
+        print(f"Epoch {epoch + 1}/{num_epoch}, Loss: {loss.item():.6f}")
+
+model.eval()
+with torch.no_grad():
+    y_predicted = model(X).numpy()
+
+
+plt.figure(figsize=(10, 6))
+plt.scatter(X_numpy, y_numpy, label='Raw data', color='blue', alpha=0.6)
+plt.plot(X_numpy, y_predicted, label=f'Model', color='red', linewidth=2)
+plt.xlabel('X')
+plt.ylabel('y')
+plt.legend()
+plt.grid(True)
+plt.show()
