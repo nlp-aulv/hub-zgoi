@@ -1,0 +1,69 @@
+import torch
+import torch.nn as nn
+import torch.optim as optim
+import numpy as np
+import matplotlib.pyplot as plt
+
+# 1. 生成模拟数据
+# X: 在 [0, 2π] 之间取 100 个点
+X_numpy = np.linspace(0, 2 * np.pi, 100).reshape(-1, 1)
+y_numpy = np.sin(X_numpy)
+
+# 转换为 Tensor
+X = torch.from_numpy(X_numpy).float()
+y = torch.from_numpy(y_numpy).float()
+
+print("数据生成完成。")
+print("---" * 10)
+
+
+# 2. 定义多层感知机（MLP）
+# 输入1维，输出1维，中间2个隐藏层
+class MLP(nn.Module):
+    def __init__(self):
+        super(MLP, self).__init__()
+        self.net = nn.Sequential(
+            nn.Linear(1, 64),  # 输入层 → 隐藏层1
+            nn.Tanh(),  # 激活函数
+            nn.Linear(64, 64),  # 隐藏层1 → 隐藏层2
+            nn.Tanh(),
+            nn.Linear(64, 1)  # 隐藏层2 → 输出层
+        )
+
+    def forward(self, x):
+        return self.net(x)
+
+
+model = MLP()
+
+# 3. 定义损失函数和优化器
+loss_fn = nn.MSELoss()
+optimizer = optim.Adam(model.parameters(), lr=0.01)
+
+# 4. 训练模型
+num_epochs = 2000
+for epoch in range(num_epochs):
+    y_pred = model(X)  # 前向传播
+    loss = loss_fn(y_pred, y)  # 计算损失
+
+    optimizer.zero_grad()  # 清空梯度
+    loss.backward()  # 反向传播
+    optimizer.step()  # 更新参数
+
+    if (epoch + 1) % 200 == 0:
+        print(f"Epoch [{epoch + 1}/{num_epochs}], Loss: {loss.item():.6f}")
+
+# 5. 可视化结果
+model.eval()
+with torch.no_grad():
+    y_predicted = model(X).numpy()
+
+plt.figure(figsize=(10, 6))
+plt.plot(X_numpy, y_numpy, label='True sin(x)', color='blue', linewidth=2)
+plt.plot(X_numpy, y_predicted, label='MLP Prediction', color='red', linestyle='--', linewidth=2)
+plt.xlabel('x')
+plt.ylabel('y')
+plt.legend()
+plt.grid(True)
+plt.title("MLP Fitting sin(x)")
+plt.show()

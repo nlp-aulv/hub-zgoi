@@ -1,0 +1,125 @@
+import pandas as pd
+import torch
+import torch.nn as nn
+import matplotlib.pyplot as plt
+from torch.utils.data import Dataset, DataLoader
+
+class CharBoWDataset(Dataset):
+    def __init__(self):
+        dataset = pd.read_csv("./dataset.csv", sep="\t", header=None)
+        self.texts = dataset[0].tolist()
+        string_labels = dataset[1].tolist()
+
+        label2index = {label: i for i, label in enumerate(string_labels)}
+        self.numerical_labels = [label2index[label] for label in string_labels]
+
+        self.char2index = {'<pad>': 0}
+        for test in self.texts:
+            for char in test:
+                if char not in self.char2index:
+                    self.char2index[char] = len(self.char2index)
+
+        # index2char = {i: char for char, i in self.char2index.items()}
+        self.input_dim = len(self.char2index)
+        self.output_dim = len(self.numerical_labels)
+        self.max_len = 40
+        self.bow_vectors = self._create_bow_vectors()
+
+    def _create_bow_vectors(self):
+        tokenized_texts = []
+        for test in self.texts:
+            tokenized = [self.char2index.get(char, 0) for char in test[:self.max_len]]
+            tokenized += [0] * (self.max_len - len(tokenized))
+            tokenized_texts.append(tokenized)
+
+        bow_vectors = []
+        for text_indx in tokenized_texts:
+            bow_vector = torch.zeros(self.input_dim)
+            for index in text_indx:
+                if index != 0:
+                    bow_vector[index] += 1
+            bow_vectors.append(bow_vector)
+        return torch.stack(bow_vectors)
+
+    def __len__(self):
+        return len(self.texts)
+    def __getitem__(self, idx):
+        return self.bow_vectors[idx], self.numerical_labels[idx]
+
+
+class My_model(nn.Module):
+    def __init__(self, input_dim, output_dim, hidden_list):
+        super(My_model, self).__init__()
+
+        layer = []
+        for hidden in hidden_list:
+            layer.append(nn.Linear(input_dim, hidden))
+            layer.append(nn.ReLU())
+            input_dim = hidden
+
+        layer.append(nn.Linear(input_dim, output_dim))
+        self.layers = nn.ModuleList(layer)
+
+    def forward(self, x):
+        for layer in self.layers:
+            x = layer(x)
+        return x
+
+
+def Train_model(char_dataset, config, num_epochs):
+
+    dataloader = DataLoader(char_dataset, batch_size=32, shuffle=True)
+    model = My_model(char_dataset.input_dim, char_dataset.output_dim, config['hidden_list'])
+    optimizer = torch.optim.Adam(model.parameters(),lr=0.001)
+    criterion = nn.CrossEntropyLoss()
+
+    losses = []
+    model.train()
+    for epoch in range(num_epochs):
+        for idx, (inputs, labels) in enumerate(dataloader):
+            optimizer.zero_grad()
+            outputs = model(inputs)
+            loss = criterion(outputs, labels)
+            loss.backward()
+            optimizer.step()
+            losses.append(loss.item())
+            if idx % 50 == 0:
+                print(f"Epoch 个数 {epoch}, Batch 个数 {idx}, 当前Batch Loss: {loss.item()}")
+    return {
+        'name': config['name'],
+        'train_losses': losses,
+    }
+
+if __name__ == '__main__':
+    model_configs = [
+        {'name': 'Shallow (1x64)', 'hidden_list': [64]},
+        {'name': 'Medium (2x128)', 'hidden_list': [128, 128]},
+        {'name': 'Deep (4x64)', 'hidden_list': [64, 64, 64, 64]},
+        {'name': 'Wide (1x256)', 'hidden_list': [256]},
+        {'name': 'Pyramid (128-64-32)', 'hidden_list': [128, 64, 32]},
+        {'name': 'Very Deep (8x32)', 'hidden_list': [32] * 8},
+    ]
+
+    results = []
+    char_dataset = CharBoWDataset()
+    for config in model_configs:
+        print(f"\n=== Training {config['name']} ===")
+        result = Train_model(char_dataset, config, num_epochs=10)
+        results.append(result)
+
+    plt.figure(figsize=(12, 8))
+
+    for result in results:
+        plt.plot(result['train_losses'], label=f"{result['name']} (Train)", linestyle='--')
+
+
+    plt.xlabel('Epoch')
+    plt.ylabel('Loss')
+    plt.title('Training Loss for Different Model Architectures')
+    plt.legend()
+    plt.grid(True)
+    plt.tight_layout()
+    plt.show()
+
+
+
