@@ -1,7 +1,7 @@
 import openai
 
 client = openai.OpenAI(
-    api_key="sk-WkCbMVOViwqUVVdD97E9E88612A14071A40213E24c2989Ab",
+    api_key="sk-WkCbMVOViwqUVVdD********071A40213E24c2989Ab",
     base_url="https://openkey.cloud/v1"
 )
 
