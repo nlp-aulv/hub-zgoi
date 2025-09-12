@@ -5,7 +5,7 @@ from openai import OpenAI
 from cache import LRUMemoryKVStore
 from common import *
 
-client_deepseek = OpenAI(api_key="sk-3fdaf066dd3c459b9b5e10bb241d003b", base_url="https://api.deepseek.com")
+client_deepseek = OpenAI(api_key="sk-3fdaf066********e10bb241d003b", base_url="https://api.deepseek.com")
 chatMap = LRUMemoryKVStore()
 MAX_LENGTH = 10
 
