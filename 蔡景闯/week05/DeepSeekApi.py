@@ -1,6 +1,6 @@
 from openai import OpenAI
 
-client = OpenAI(api_key="sk-8aa396e4fc2b41ed9b1ec30d6385cef4", base_url="https://api.deepseek.com")
+client = OpenAI(api_key="sk-8aa396******b1ec30d6385cef4", base_url="https://api.deepseek.com")
 
 response = client.chat.completions.create(
     model="deepseek-chat",
