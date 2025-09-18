@@ -110,6 +110,9 @@ print("\n数据库连接已关闭。")
 
 
 # 数据库截图
+<img width="655" height="608" alt="a" src="https://github.com/user-attachments/assets/89852b91-61a7-49fd-8915-526bbf965331" />
+
+
 <img width="589" height="480" alt="image" src="https://github.com/user-attachments/assets/efde4d78-5d41-4525-aa5a-a9137a4b5f33" />
 
 
