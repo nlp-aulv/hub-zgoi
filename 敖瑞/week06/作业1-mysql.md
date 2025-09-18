@@ -103,12 +103,15 @@ remaining_borrowers = cursor.fetchall()
 for borrower in remaining_borrowers:
     print(f"姓名: {borrower[0]}")
 
+# 关闭连接
+conn.close()
+print("\n数据库连接已关闭。")
+
+
 
 # 数据库截图
 <img width="589" height="480" alt="image" src="https://github.com/user-attachments/assets/efde4d78-5d41-4525-aa5a-a9137a4b5f33" />
 
 
 
-# 关闭连接
-conn.close()
-print("\n数据库连接已关闭。")
+
