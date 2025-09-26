@@ -1,0 +1,28 @@
+Some weights of BertForQuestionAnswering were not initialized from the model checkpoint at ../Week04/models/google-bert/bert-base-chinese and are newly initialized: ['qa_outputs.bias', 'qa_outputs.weight']
+You should probably TRAIN this model on a down-stream task to be able to use it for predictions and inference.
+Map: 100%|██████████| 16/16 [00:00<00:00, 75.09 examples/s]
+Map: 100%|██████████| 16/16 [00:00<00:00, 592.97 examples/s]
+C:\Users\PC\Desktop\nlp20\Week07\05_BERT知识问答.py:169: FutureWarning: `tokenizer` is deprecated and will be removed in version 5.0.0 for `Trainer.__init__`. Use `processing_class` instead.
+  trainer = Trainer(
+开始训练QA模型...
+100%|██████████| 2/2 [04:32<00:00, 122.23s/it]{'train_runtime': 272.5429, 'train_samples_per_second': 0.092, 'train_steps_per_second': 0.007, 'train_loss': 5.975334167480469, 'epoch': 1.0}
+100%|██████████| 2/2 [04:32<00:00, 136.32s/it]
+评估模型...
+100%|██████████| 2/2 [00:06<00:00,  3.10s/it]
+评估结果: {'eval_loss': 6.128676414489746, 'eval_runtime': 49.4634, 'eval_samples_per_second': 0.364, 'eval_steps_per_second': 0.04, 'epoch': 1.0}
+
+在验证集上测试:
+问题 1: 《战国无双3》是由哪两个公司合作开发的？
+预期答案: 光荣和ω-force
+预测答案: 兼用的状况，战役虚实则是以光荣发行的2本「战国无双3人物真书」内容为主，以下是相关介绍。（注：前方加☆者为猛将传新增关卡及地图。）合并本篇和猛将
+匹配: False
+
+问题 2: 男女主角亦有专属声优这一模式是由谁改编的？
+预期答案: 村雨城
+预测答案: 兼用的状况，战役虚实则是以光荣发行的2本「战国
+匹配: False
+
+问题 3: 战国史模式主打哪两个模式？
+预期答案: 「战史演武」&「争霸演武」
+预测答案: 兼用的状况，战役虚实则是以光荣发行的2本「战国无双3人物真书」内容为主，以下是相关介绍。（注：前方加☆者为猛将传新增关卡及地图。）合并本篇和猛将
+匹配: False
