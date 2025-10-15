@@ -1,0 +1,88 @@
+root@autodl-container-85ea4180b7-a72a9248:/projects# ls -rlt
+total 8
+drwxr-xr-x 2 root root   52 Oct 10 20:34 cmrc2018_public
+-rw-r--r-- 1 root root 7603 Oct 10 20:46 bert_question.py
+drwxr-xr-x 3 root root   25 Oct 10 20:48 models
+root@autodl-container-85ea4180b7-a72a9248:/projects# python bert_question.py
+Some weights of BertForQuestionAnswering were not initialized from the model checkpoint at ./models/google-bert/bert-base-chinese andialized: ['qa_outputs.bias', 'qa_outputs.weight']
+You should probably TRAIN this model on a down-stream task to be able to use it for predictions and inference.
+设置LoRA...
+trainable params: 1,181,186 || all params: 102,859,780 || trainable%: 1.1483
+Map: 100%|███████████████████████████████████████████████████████████████████████████████████████████| 10000/10000 [00:06<00:00, 1461
+Map: 100%|█████████████████████████████████████████████████████████████████████████████████████████████| 1000/1000 [00:00<00:00, 1600
+/projects/bert_question.py:191: FutureWarning: `tokenizer` is deprecated and will be removed in version 5.0.0 for `Trainer.__init__`.g_class` instead.
+  trainer = Trainer(
+开始训练QA模型...
+{'loss': 6.0333, 'grad_norm': 6.6377668380737305, 'learning_rate': 2.942641946697567e-05, 'epoch': 0.06}
+{'loss': 4.8679, 'grad_norm': 5.995394706726074, 'learning_rate': 2.8847045191193513e-05, 'epoch': 0.12}
+{'loss': 4.3052, 'grad_norm': 10.896763801574707, 'learning_rate': 2.8267670915411354e-05, 'epoch': 0.17}
+{'loss': 3.8273, 'grad_norm': 11.421895027160645, 'learning_rate': 2.76882966396292e-05, 'epoch': 0.23}
+{'loss': 3.6358, 'grad_norm': 67.49979400634766, 'learning_rate': 2.7108922363847045e-05, 'epoch': 0.29}
+{'loss': 3.5223, 'grad_norm': 195.47140502929688, 'learning_rate': 2.652954808806489e-05, 'epoch': 0.35}
+{'loss': 3.5176, 'grad_norm': 48.7565803527832, 'learning_rate': 2.5950173812282733e-05, 'epoch': 0.41}
+{'loss': 3.0276, 'grad_norm': 19.05504608154297, 'learning_rate': 2.537079953650058e-05, 'epoch': 0.46}
+{'loss': 2.9968, 'grad_norm': 25.936634063720703, 'learning_rate': 2.4791425260718425e-05, 'epoch': 0.52}
+{'loss': 2.9593, 'grad_norm': 39.11249923706055, 'learning_rate': 2.421205098493627e-05, 'epoch': 0.58}
+{'loss': 2.7355, 'grad_norm': 43.17054748535156, 'learning_rate': 2.3632676709154116e-05, 'epoch': 0.64}
+{'loss': 2.6023, 'grad_norm': 10.028665542602539, 'learning_rate': 2.305330243337196e-05, 'epoch': 0.7}
+{'loss': 2.5445, 'grad_norm': 15.362545013427734, 'learning_rate': 2.2473928157589804e-05, 'epoch': 0.75}
+{'loss': 2.4149, 'grad_norm': 20.705730438232422, 'learning_rate': 2.189455388180765e-05, 'epoch': 0.81}
+ 29%|██████████████████████████▌                                                                 | 1493/5178 [02:09<05:30, 11.16it/s]{'loss': 2.4028, 'grad_norm': 26.36888313293457, 'learning_rate': 2.1315179606025492e-05, 'epoch': 0.87}
+{'loss': 2.285, 'grad_norm': 11.976519584655762, 'learning_rate': 2.0735805330243336e-05, 'epoch': 0.93}
+{'loss': 2.3437, 'grad_norm': 12.489209175109863, 'learning_rate': 2.0156431054461183e-05, 'epoch': 0.98}
+{'loss': 2.2476, 'grad_norm': 20.496841430664062, 'learning_rate': 1.9577056778679027e-05, 'epoch': 1.04}
+{'loss': 2.3291, 'grad_norm': 18.790882110595703, 'learning_rate': 1.899768250289687e-05, 'epoch': 1.1}
+{'loss': 2.1956, 'grad_norm': 15.01881217956543, 'learning_rate': 1.8418308227114715e-05, 'epoch': 1.16}
+{'loss': 2.2949, 'grad_norm': 11.099747657775879, 'learning_rate': 1.7838933951332563e-05, 'epoch': 1.22}
+{'loss': 2.084, 'grad_norm': 14.647171020507812, 'learning_rate': 1.7259559675550406e-05, 'epoch': 1.27}
+{'loss': 2.1877, 'grad_norm': 18.26542091369629, 'learning_rate': 1.668018539976825e-05, 'epoch': 1.33}
+{'loss': 2.0024, 'grad_norm': 18.180604934692383, 'learning_rate': 1.6100811123986098e-05, 'epoch': 1.39}
+{'loss': 2.0616, 'grad_norm': 13.67485523223877, 'learning_rate': 1.5521436848203942e-05, 'epoch': 1.45}
+{'loss': 2.0388, 'grad_norm': 18.93655014038086, 'learning_rate': 1.4942062572421784e-05, 'epoch': 1.51}
+{'loss': 1.9756, 'grad_norm': 23.307266235351562, 'learning_rate': 1.436268829663963e-05, 'epoch': 1.56}
+{'loss': 1.9301, 'grad_norm': 13.021409034729004, 'learning_rate': 1.3783314020857475e-05, 'epoch': 1.62}
+{'loss': 1.9729, 'grad_norm': 13.951025009155273, 'learning_rate': 1.3203939745075318e-05, 'epoch': 1.68}
+{'loss': 1.8875, 'grad_norm': 20.111753463745117, 'learning_rate': 1.2624565469293163e-05, 'epoch': 1.74}
+{'loss': 2.0159, 'grad_norm': 17.2274112701416, 'learning_rate': 1.2045191193511007e-05, 'epoch': 1.8}
+{'loss': 1.9839, 'grad_norm': 16.392173767089844, 'learning_rate': 1.1465816917728853e-05, 'epoch': 1.85}
+{'loss': 2.0036, 'grad_norm': 12.240762710571289, 'learning_rate': 1.0886442641946699e-05, 'epoch': 1.91}
+{'loss': 2.0019, 'grad_norm': 21.583927154541016, 'learning_rate': 1.0307068366164543e-05, 'epoch': 1.97}
+{'loss': 2.0459, 'grad_norm': 13.418335914611816, 'learning_rate': 9.727694090382387e-06, 'epoch': 2.03}
+{'loss': 1.8363, 'grad_norm': 16.496082305908203, 'learning_rate': 9.148319814600232e-06, 'epoch': 2.09}
+{'loss': 1.9982, 'grad_norm': 18.99932098388672, 'learning_rate': 8.568945538818076e-06, 'epoch': 2.14}
+{'loss': 1.8037, 'grad_norm': 18.57862663269043, 'learning_rate': 7.989571263035922e-06, 'epoch': 2.2}
+{'loss': 1.9218, 'grad_norm': 18.117956161499023, 'learning_rate': 7.410196987253767e-06, 'epoch': 2.26}
+{'loss': 1.8708, 'grad_norm': 12.032112121582031, 'learning_rate': 6.830822711471611e-06, 'epoch': 2.32}
+{'loss': 1.8273, 'grad_norm': 15.889074325561523, 'learning_rate': 6.251448435689456e-06, 'epoch': 2.38}
+{'loss': 1.8152, 'grad_norm': 16.304250717163086, 'learning_rate': 5.6720741599073004e-06, 'epoch': 2.43}
+{'loss': 2.0466, 'grad_norm': 16.318269729614258, 'learning_rate': 5.0926998841251444e-06, 'epoch': 2.49}
+{'loss': 1.8845, 'grad_norm': 16.446773529052734, 'learning_rate': 4.51332560834299e-06, 'epoch': 2.55}
+{'loss': 1.9065, 'grad_norm': 12.138339042663574, 'learning_rate': 3.933951332560835e-06, 'epoch': 2.61}
+{'loss': 1.9169, 'grad_norm': 17.250600814819336, 'learning_rate': 3.354577056778679e-06, 'epoch': 2.67}
+{'loss': 1.7628, 'grad_norm': 15.684524536132812, 'learning_rate': 2.775202780996524e-06, 'epoch': 2.72}
+{'loss': 1.9357, 'grad_norm': 19.542625427246094, 'learning_rate': 2.1958285052143685e-06, 'epoch': 2.78}
+{'loss': 1.9449, 'grad_norm': 17.750064849853516, 'learning_rate': 1.6164542294322134e-06, 'epoch': 2.84}
+{'loss': 1.9928, 'grad_norm': 19.39702796936035, 'learning_rate': 1.037079953650058e-06, 'epoch': 2.9}
+{'loss': 1.8457, 'grad_norm': 14.67776870727539, 'learning_rate': 4.5770567786790265e-07, 'epoch': 2.95}
+{'train_runtime': 451.6005, 'train_samples_per_second': 91.727, 'train_steps_per_second': 11.466, 'train_loss': 2.4150942363716914, 'epoch': 3.0}
+100%|████████████████████████████████████████████████████████████████████████████████████████████| 5178/5178 [07:31<00:00, 11.47it/s]
+评估模型...
+100%|██████████████████████████████████████████████████████████████████████████████████████████████| 171/171 [00:05<00:00, 29.13it/s]
+评估结果: {'eval_loss': 1.5829492807388306, 'eval_runtime': 5.8962, 'eval_samples_per_second': 231.336, 'eval_steps_per_second': 29.002, 'epoch': 3.0}
+
+在验证集上测试:
+问题 1: 《战国无双3》是由哪两个公司合作开发的？
+预期答案: 光荣和ω-force
+预测答案: 光荣和ω-force
+匹配: True
+
+问题 2: 男女主角亦有专属声优这一模式是由谁改编的？
+预期答案: 村雨城
+预测答案: 任天堂游戏谜之村雨城
+匹配: False
+
+问题 3: 战国史模式主打哪两个模式？
+预期答案: 「战史演武」&「争霸演武」
+预测答案: 主打两大模式「战史演武」&「争霸演武」
+匹配: False
+
