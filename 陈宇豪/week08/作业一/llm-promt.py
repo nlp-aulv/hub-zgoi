@@ -18,7 +18,7 @@ def process_file(file_path):
         return ",".join(str)
 
 
-chat_model = init_chat_model("qwen-plus", model_provider="openai")
+chat_model = init_chat_model("qwen-plus-2025-09-11", model_provider="openai")
 prompt_template = ChatPromptTemplate.from_messages([("system", DOMAIN_PROMPT), ("user", "{text}")])
 
 
@@ -36,5 +36,4 @@ def chat_model_domain(message: str):
 
 
 with open("sentences.txt", "r", encoding="utf-8") as f:
-    for line in f.readlines():
-        chat_model_domain(line.strip())
+    chat_model_domain("张培的电话号码是多少")
