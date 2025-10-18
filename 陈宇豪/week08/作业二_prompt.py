@@ -4,9 +4,11 @@ import os
 from langchain.chains import LLMChain
 from langchain.chat_models import init_chat_model
 from langchain_core.prompts import ChatPromptTemplate
+from langchain.tools import tool
 
 from promt import DOMAIN_PROMPT
 from Domain import Response
+from 陈宇豪.week08.作业二_tool import ExtractToll
 
 os.environ["OPENAI_API_KEY"] = "sk-c2a0cfd8d9b14cba93ddcb0bab3e112d"
 os.environ["OPENAI_BASE_URL"] = "https://dashscope.aliyuncs.com/compatible-mode/v1"
@@ -27,11 +29,25 @@ intents = process_file("intents.txt")
 domain = process_file("domains.txt")
 entity = process_file("slots.txt")
 
+extract_toll = {
+    "type": "function",
+    "function": {
+        "name": ExtractToll.model_json_schema()['title'],  # 工具名字
+        "description": ExtractToll.model_json_schema()['description'],  # 工具描述
+        "parameters": {
+            "type": "object",
+            "properties": ExtractToll.model_json_schema()['properties'],  # 参数说明
+            # "required": response_model.model_json_schema()['required'], # 必须要传的参数
+        },
+    }
+}
+
 
 def chat_model_domain(message: str) -> Response:
     prompt = prompt_template.invoke(
         {"domain": domain, "intents": intents, "entity": entity, "text": message})
-    result = chat_model.invoke(prompt)
+    chat_model_with_tools=chat_model.bind_tools([extract_toll])
+    result = chat_model_with_tools.invoke(prompt)
     print("语句:\"{}\"的分词结果:\n{}".format(message, result.content))
     data = json.loads(result.content)
     # 解析JSON并转换字段名
