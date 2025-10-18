@@ -12,5 +12,7 @@ class Request(BaseModel):
 
 class Response(BaseModel):
     request_user: Optional[str] = Field(..., description="用于获取历史对话")
-    response_text: str = Field(..., description="大模型回答")
-    error_msg: str = Field(..., description="异常信息")
+    entities: Dict[str, str] = Field(..., description="抽取实体")
+    domain: str = Field(..., description="抽取领域")
+    intent: str = Field(..., description="抽取意图")
+    error_msg: Optional[str] = Field(..., description="异常信息")

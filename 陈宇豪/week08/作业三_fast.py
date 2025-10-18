@@ -13,9 +13,9 @@ def recognize_domain_and_entities(input_data: Request) -> Response:
     try:
         input_text = input_data.request_text
         response = chat_model_domain(input_text)
-        return Response(response_text=response, request_user=input_data.request_user, error_msg="")
+        return response
     except Exception as e:
-        return Response(response_text="", request_user="", error_msg=str(e))
+        return Response(request_user="", entities={}, domain="", intent="", error_msg=str(e))
 
 
 if __name__ == "__main__":
