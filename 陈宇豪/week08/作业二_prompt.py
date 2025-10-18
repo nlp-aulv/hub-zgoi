@@ -1,3 +1,4 @@
+import json
 import os
 
 from langchain.chains import LLMChain
@@ -21,18 +22,17 @@ def process_file(file_path):
 chat_model = init_chat_model("qwen-plus-2025-09-11", model_provider="openai")
 prompt_template = ChatPromptTemplate.from_messages([("system", DOMAIN_PROMPT), ("user", "{text}")])
 
-
-# prompt = prompt_template.invoke(
-#     {"domain": process_file("domains.txt"), "intents": process_file("intents.txt"),
-#      "entity": process_file("slots.txt")})
-# print("提示词为:", prompt.to_messages())
+intents=process_file("intents.txt")
+domain=process_file("domains.txt")
+entity=process_file("slots.txt")
 
 def chat_model_domain(message: str):
     prompt = prompt_template.invoke(
-        {"domain": process_file("domains.txt"), "intents": process_file("intents.txt"),
-         "entity": process_file("slots.txt"), "text": message})
+        {"domain":domain , "intents": intents,"entity": entity, "text": message})
     result = chat_model.invoke(prompt)
     print("语句:\"{}\"的分词结果:{}".format(message, result.content))
+    json.load(result.content)
+    return result.content
 
 
 with open("sentences.txt", "r", encoding="utf-8") as f:
