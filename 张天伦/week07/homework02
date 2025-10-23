@@ -1,0 +1,40 @@
+使用设备: cpu
+Map: 100%|██████████| 64/64 [00:00<00:00, 1369.44 examples/s]
+Map: 100%|██████████| 64/64 [00:00<00:00, 1530.05 examples/s]
+Some weights of BertForTokenClassification were not initialized from the model checkpoint at ../Week04/models/google-bert/bert-base-chinese/ and are newly initialized: ['classifier.bias', 'classifier.weight']
+You should probably TRAIN this model on a down-stream task to be able to use it for predictions and inference.
+开始训练...
+100%|██████████| 4/4 [02:20<00:00, 35.18s/it]
+{'train_runtime': 140.7396, 'train_samples_per_second': 0.455, 'train_steps_per_second': 0.028, 'train_loss': 1.3672974109649658, 'epoch': 1.0}
+评估模型...
+100%|██████████| 4/4 [00:27<00:00,  6.90s/it]
+评估结果: {'eval_loss': 0.9007861614227295, 'eval_accuracy': 0.8659183037106329, 'eval_O_f1': 0.9281417112299465, 'eval_B-ORG_f1': 0.0, 'eval_I-ORG_f1': 0.0, 'eval_B-PER_f1': 0.0, 'eval_I-PER_f1': 0.0, 'eval_B-LOC_f1': 0.0, 'eval_I-LOC_f1': 0.0, 'eval_runtime': 34.8604, 'eval_samples_per_second': 1.836, 'eval_steps_per_second': 0.115, 'epoch': 1.0}
+tensor([[0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 5, 0, 0, 0,
+         0]])
+句子: 今天我约了王浩在恭王府吃饭，晚上在天安门逛逛。
+  LOC: 门
+
+tensor([[0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
+         0]])
+句子: 人工智能是未来的希望，也是中国和美国的冲突点。
+  未识别到实体
+
+tensor([[0, 3, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
+         0, 0, 0]])
+句子: 明天我们一起在海淀吃个饭吧，把叫刘涛和王华也叫上。
+  PER: 明
+
+tensor([[0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
+         0, 0, 0, 0, 0]])
+句子: 同煤集团同生安平煤业公司发生井下安全事故 19名矿工遇难
+  未识别到实体
+
+tensor([[0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
+         0, 0, 0, 0, 0, 0, 0, 0, 0]])
+句子: 山东省政府办公厅就平邑县玉荣商贸有限公司石膏矿坍塌事故发出通报
+  未识别到实体
+
+tensor([[0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
+         0, 0]])
+句子: [新闻直播间]黑龙江:龙煤集团一煤矿发生火灾事故
+  未识别到实体

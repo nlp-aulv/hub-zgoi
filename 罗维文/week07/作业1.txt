@@ -1,0 +1,10 @@
+理解 03_DeepWalk.py 的原理，运行并进行可视化。回答 03_DeepWalk 与 word2vec的关系。
+Word2Vec：Word2Vec通过学习文本语料库中的词语上下文关系，将每个词语表示为一个密集的向量，使得语义相似的词在向量空间中距离较近。
+Word2Vec主要有两种模型结构：
+Skip-gram和CBOW（Continuous Bag of Words）。
+Skip-gram（跳字模型）：给定一个中心词，Skip-gram模型试图预测在其周围上下文中可能出现的其他词语。
+BOW（连续词袋模型）：CBOW模型与Skip-gram相反，它试图通过上下文中的多个词来预测中心词。
+
+DeepWalk：通过随机游走在图上采样节点序列，然后使用这些序列训练嵌入模型。
+
+03_DeepWalk使用了Word2Vec方法，随机游走采样节点序列，然后将节点序列看作是文本使用Word2Vec计算各节点的向量。
