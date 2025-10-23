@@ -1,0 +1,240 @@
+app:
+  description: ''
+  icon: 🤖
+  icon_background: '#FFEAD5'
+  mode: workflow
+  name: 智能穿衣指南
+  use_icon_as_answer_icon: false
+kind: app
+version: 0.1.5
+workflow:
+  conversation_variables: []
+  environment_variables: []
+  features:
+    file_upload:
+      allowed_file_extensions:
+      - .JPG
+      - .JPEG
+      - .PNG
+      - .GIF
+      - .WEBP
+      - .SVG
+      allowed_file_types:
+      - image
+      allowed_file_upload_methods:
+      - local_file
+      - remote_url
+      enabled: false
+      fileUploadConfig:
+        audio_file_size_limit: 50
+        batch_count_limit: 5
+        file_size_limit: 15
+        image_file_size_limit: 10
+        video_file_size_limit: 100
+        workflow_file_upload_limit: 10
+      image:
+        enabled: false
+        number_limits: 3
+        transfer_methods:
+        - local_file
+        - remote_url
+      number_limits: 3
+    opening_statement: ''
+    retriever_resource:
+      enabled: true
+    sensitive_word_avoidance:
+      enabled: false
+    speech_to_text:
+      enabled: false
+    suggested_questions: []
+    suggested_questions_after_answer:
+      enabled: false
+    text_to_speech:
+      enabled: false
+      language: ''
+      voice: ''
+  graph:
+    edges:
+    - data:
+        isInIteration: false
+        sourceType: start
+        targetType: llm
+      id: 1761037128285-source-1761037236820-target
+      source: '1761037128285'
+      sourceHandle: source
+      target: '1761037236820'
+      targetHandle: target
+      type: custom
+      zIndex: 0
+    - data:
+        isInIteration: false
+        sourceType: llm
+        targetType: template-transform
+      id: 1761037236820-source-1761037361523-target
+      source: '1761037236820'
+      sourceHandle: source
+      target: '1761037361523'
+      targetHandle: target
+      type: custom
+      zIndex: 0
+    - data:
+        isInIteration: false
+        sourceType: template-transform
+        targetType: end
+      id: 1761037361523-source-1761037503947-target
+      source: '1761037361523'
+      sourceHandle: source
+      target: '1761037503947'
+      targetHandle: target
+      type: custom
+      zIndex: 0
+    nodes:
+    - data:
+        desc: ''
+        selected: false
+        title: 开始
+        type: start
+        variables:
+        - label: 天气
+          max_length: 48
+          options: []
+          required: true
+          type: text-input
+          variable: weather
+        - label: 温度（℃）
+          max_length: 48
+          options: []
+          required: true
+          type: number
+          variable: temperature
+        - label: 湿度（%）
+          max_length: 48
+          options: []
+          required: true
+          type: number
+          variable: humidity
+      height: 142
+      id: '1761037128285'
+      position:
+        x: 30
+        y: 271
+      positionAbsolute:
+        x: 30
+        y: 271
+      selected: false
+      sourcePosition: right
+      targetPosition: left
+      type: custom
+      width: 244
+    - data:
+        context:
+          enabled: false
+          variable_selector: []
+        desc: ''
+        model:
+          completion_params:
+            temperature: 0.7
+          mode: chat
+          name: deepseek-chat
+          provider: deepseek
+        prompt_template:
+        - id: b025cdd5-2106-498d-9b13-e83288245526
+          role: system
+          text: 你是一个能够根据温度、湿度、天气给出专业建议的穿衣指南助手。
+        - id: 973341f6-eaab-4649-9dc4-8297d5c35b49
+          role: user
+          text: '根据用户提供的信息给出合理的穿衣建议。
+
+
+            用户输入信息：
+
+            天气：{{#1761037128285.weather#}}
+
+            温度：{{#1761037128285.temperature#}}
+
+            湿度：{{#1761037128285.humidity#}}
+
+
+            穿衣建议：'
+        selected: false
+        title: LLM
+        type: llm
+        variables: []
+        vision:
+          enabled: false
+      height: 98
+      id: '1761037236820'
+      position:
+        x: 334
+        y: 271
+      positionAbsolute:
+        x: 334
+        y: 271
+      selected: false
+      sourcePosition: right
+      targetPosition: left
+      type: custom
+      width: 244
+    - data:
+        desc: ''
+        selected: false
+        template: "## 天气信息\r\n- 天气：{{ weather }}\r\n- 温度：{{ temperature }}\r\n- 湿度：{{\
+          \ humidity }}\r\n\r\n## 穿衣建议\r\n{{ text }}"
+        title: 模板转换
+        type: template-transform
+        variables:
+        - value_selector:
+          - '1761037236820'
+          - text
+          variable: text
+        - value_selector:
+          - '1761037128285'
+          - weather
+          variable: weather
+        - value_selector:
+          - '1761037128285'
+          - temperature
+          variable: temperature
+        - value_selector:
+          - '1761037128285'
+          - humidity
+          variable: humidity
+      height: 54
+      id: '1761037361523'
+      position:
+        x: 638
+        y: 271
+      positionAbsolute:
+        x: 638
+        y: 271
+      selected: true
+      sourcePosition: right
+      targetPosition: left
+      type: custom
+      width: 244
+    - data:
+        desc: ''
+        outputs:
+        - value_selector:
+          - '1761037361523'
+          - output
+          variable: output
+        selected: false
+        title: 结束
+        type: end
+      height: 90
+      id: '1761037503947'
+      position:
+        x: 942
+        y: 271
+      positionAbsolute:
+        x: 942
+        y: 271
+      sourcePosition: right
+      targetPosition: left
+      type: custom
+      width: 244
+    viewport:
+      x: 166
+      y: 39
+      zoom: 0.7
