@@ -368,7 +368,7 @@ workflow:
     - data:
         selected: true
         template: "\r\n## 结果\r\n\r\n结果：\r\n公司法:{{ str2 }} \r\n民法：{{ result }}\r\n\
-          合同法：{{ str1 }}\r\n\r\n\r\n\r\n\r\n## 穿衣建议\r\n\r\n{{ text }}"
+          合同法：{{ str1 }}\r\n\r\n\r\n\r\n"
         title: 模板转换
         type: template-transform
         variables:
@@ -428,3 +428,4 @@ workflow:
       y: 235.53200341577605
       zoom: 0.6040447288021533
   rag_pipeline_variables: []
+
