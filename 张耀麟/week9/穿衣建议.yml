@@ -1,0 +1,200 @@
+app:
+  description: 输入天气、温度、湿度，让大模型给出穿衣建议
+  icon: 🤖
+  icon_background: '#FFEAD5'
+  mode: workflow
+  name: 穿衣建议
+  use_icon_as_answer_icon: false
+dependencies:
+- current_identifier: null
+  type: marketplace
+  value:
+    marketplace_plugin_unique_identifier: langgenius/deepseek:0.0.6@dd589dc093c8084925858034ab5ec1fdf0d33819f43226c2f8c4a749a9acbbb2
+    version: null
+kind: app
+version: 0.4.0
+workflow:
+  conversation_variables: []
+  environment_variables: []
+  features:
+    file_upload:
+      allowed_file_extensions:
+      - .JPG
+      - .JPEG
+      - .PNG
+      - .GIF
+      - .WEBP
+      - .SVG
+      allowed_file_types:
+      - image
+      allowed_file_upload_methods:
+      - local_file
+      - remote_url
+      enabled: false
+      fileUploadConfig:
+        audio_file_size_limit: 50
+        batch_count_limit: 5
+        file_size_limit: 15
+        image_file_size_limit: 10
+        video_file_size_limit: 100
+        workflow_file_upload_limit: 10
+      image:
+        enabled: false
+        number_limits: 3
+        transfer_methods:
+        - local_file
+        - remote_url
+      number_limits: 3
+    opening_statement: ''
+    retriever_resource:
+      enabled: true
+    sensitive_word_avoidance:
+      enabled: false
+    speech_to_text:
+      enabled: false
+    suggested_questions: []
+    suggested_questions_after_answer:
+      enabled: false
+    text_to_speech:
+      enabled: false
+      language: ''
+      voice: ''
+  graph:
+    edges:
+    - data:
+        isInIteration: false
+        isInLoop: false
+        sourceType: start
+        targetType: llm
+      id: 1761223507426-source-1761223619268-target
+      source: '1761223507426'
+      sourceHandle: source
+      target: '1761223619268'
+      targetHandle: target
+      type: custom
+      zIndex: 0
+    - data:
+        isInIteration: false
+        isInLoop: false
+        sourceType: llm
+        targetType: end
+      id: 1761223619268-source-1761224282803-target
+      source: '1761223619268'
+      sourceHandle: source
+      target: '1761224282803'
+      targetHandle: target
+      type: custom
+      zIndex: 0
+    nodes:
+    - data:
+        selected: false
+        title: 开始
+        type: start
+        variables:
+        - default: ''
+          hint: ''
+          label: 天气
+          max_length: 48
+          options: []
+          placeholder: ''
+          required: true
+          type: text-input
+          variable: weather
+        - default: ''
+          hint: ''
+          label: 温度
+          max_length: 48
+          options: []
+          placeholder: ''
+          required: true
+          type: text-input
+          variable: temperature
+        - default: ''
+          hint: ''
+          label: 湿度
+          max_length: 48
+          options: []
+          placeholder: ''
+          required: true
+          type: text-input
+          variable: Humidity
+      height: 139
+      id: '1761223507426'
+      position:
+        x: 330
+        y: 364
+      positionAbsolute:
+        x: 330
+        y: 364
+      selected: false
+      sourcePosition: right
+      targetPosition: left
+      type: custom
+      width: 242
+    - data:
+        context:
+          enabled: false
+          variable_selector: []
+        model:
+          completion_params:
+            temperature: 0.7
+          mode: chat
+          name: deepseek-chat
+          provider: langgenius/deepseek/deepseek
+        prompt_template:
+        - id: e64ed1ad-75ce-41c8-aa51-fdd8ee994071
+          role: system
+          text: '你是一名专业穿衣指导专家, 请你更具给定信息给出穿衣建议。
+
+            注意：请按一整套衣服为单位返回。
+
+            比如：穿搭1：白色体恤，黑色牛仔裤，红色手链，红色棒球帽'
+        - id: 527155fd-9b89-4a87-9b07-e8f1e541e068
+          role: user
+          text: 当前的天气是{{#1761223507426.weather#}}，当前温度是{{#1761223507426.temperature#}},当前湿度是{{#1761223507426.Humidity#}}}，请你根据这些信息给出穿衣建议。
+        selected: false
+        title: LLM
+        type: llm
+        vision:
+          enabled: false
+      height: 87
+      id: '1761223619268'
+      position:
+        x: 661
+        y: 364
+      positionAbsolute:
+        x: 661
+        y: 364
+      selected: false
+      sourcePosition: right
+      targetPosition: left
+      type: custom
+      width: 242
+    - data:
+        outputs:
+        - value_selector:
+          - '1761223619268'
+          - text
+          value_type: string
+          variable: suggestion
+        selected: true
+        title: 结束
+        type: end
+      height: 88
+      id: '1761224282803'
+      position:
+        x: 963
+        y: 364
+      positionAbsolute:
+        x: 963
+        y: 364
+      selected: true
+      sourcePosition: right
+      targetPosition: left
+      type: custom
+      width: 242
+    viewport:
+      x: -76
+      y: 47.5
+      zoom: 1
+  rag_pipeline_variables: []
