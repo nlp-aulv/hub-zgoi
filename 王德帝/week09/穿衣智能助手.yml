@@ -1,0 +1,187 @@
+app:
+  description: ''
+  icon: 🤖
+  icon_background: '#FFEAD5'
+  mode: workflow
+  name: 穿衣智能助手
+  use_icon_as_answer_icon: false
+kind: app
+version: 0.1.5
+workflow:
+  conversation_variables: []
+  environment_variables: []
+  features:
+    file_upload:
+      allowed_file_extensions:
+      - .JPG
+      - .JPEG
+      - .PNG
+      - .GIF
+      - .WEBP
+      - .SVG
+      allowed_file_types:
+      - image
+      allowed_file_upload_methods:
+      - local_file
+      - remote_url
+      enabled: false
+      fileUploadConfig:
+        audio_file_size_limit: 50
+        batch_count_limit: 5
+        file_size_limit: 15
+        image_file_size_limit: 10
+        video_file_size_limit: 100
+        workflow_file_upload_limit: 10
+      image:
+        enabled: false
+        number_limits: 3
+        transfer_methods:
+        - local_file
+        - remote_url
+      number_limits: 3
+    opening_statement: ''
+    retriever_resource:
+      enabled: true
+    sensitive_word_avoidance:
+      enabled: false
+    speech_to_text:
+      enabled: false
+    suggested_questions: []
+    suggested_questions_after_answer:
+      enabled: false
+    text_to_speech:
+      enabled: false
+      language: ''
+      voice: ''
+  graph:
+    edges:
+    - data:
+        isInIteration: false
+        sourceType: start
+        targetType: llm
+      id: 1761052412733-source-1761052499753-target
+      source: '1761052412733'
+      sourceHandle: source
+      target: '1761052499753'
+      targetHandle: target
+      type: custom
+      zIndex: 0
+    - data:
+        isInIteration: false
+        sourceType: llm
+        targetType: end
+      id: 1761052499753--1761052604586-target
+      source: '1761052499753'
+      sourceHandle: source
+      target: '1761052604586'
+      targetHandle: target
+      type: custom
+      zIndex: 0
+    nodes:
+    - data:
+        desc: ''
+        selected: false
+        title: 开始
+        type: start
+        variables:
+        - label: 天气
+          max_length: 48
+          options: []
+          required: true
+          type: text-input
+          variable: weather
+        - label: 温度
+          max_length: 48
+          options: []
+          required: true
+          type: text-input
+          variable: temperature
+        - label: 湿度
+          max_length: 48
+          options: []
+          required: true
+          type: text-input
+          variable: humidity
+      height: 142
+      id: '1761052412733'
+      position:
+        x: 80
+        y: 282
+      positionAbsolute:
+        x: 80
+        y: 282
+      selected: false
+      sourcePosition: right
+      targetPosition: left
+      type: custom
+      width: 244
+    - data:
+        context:
+          enabled: false
+          variable_selector: []
+        desc: ''
+        model:
+          completion_params:
+            temperature: 0.7
+          mode: chat
+          name: qwen-vl-max-0809
+          provider: tongyi
+        prompt_template:
+        - id: 8c4c6e17-1965-449a-9a7c-5e33b1a0b2df
+          role: system
+          text: '你是一个智能穿衣助手，请结合当前天气，温度和湿度情况给出穿衣建议。
+
+            '
+        - id: a0c91e2e-ec2c-46a0-b141-04c27a271893
+          role: user
+          text: '天气：{{#1761052412733.weather#}}
+
+            温度：{{#1761052412733.temperature#}}
+
+            湿度：{{#1761052412733.humidity#}}'
+        selected: true
+        title: LLM
+        type: llm
+        variables: []
+        vision:
+          enabled: false
+      height: 98
+      id: '1761052499753'
+      position:
+        x: 514
+        y: 282
+      positionAbsolute:
+        x: 514
+        y: 282
+      selected: true
+      sourcePosition: right
+      targetPosition: left
+      type: custom
+      width: 244
+    - data:
+        desc: ''
+        outputs:
+        - value_selector:
+          - '1761052499753'
+          - text
+          variable: text
+        selected: false
+        title: 结束
+        type: end
+      height: 90
+      id: '1761052604586'
+      position:
+        x: 916
+        y: 302
+      positionAbsolute:
+        x: 916
+        y: 302
+      selected: false
+      sourcePosition: right
+      targetPosition: left
+      type: custom
+      width: 244
+    viewport:
+      x: 0
+      y: -1
+      zoom: 1
