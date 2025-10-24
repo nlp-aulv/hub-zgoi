@@ -1,0 +1,339 @@
+app:
+  description: ''
+  icon: 🤖
+  icon_background: '#FFEAD5'
+  mode: workflow
+  name: 根据知识库回答问题
+  use_icon_as_answer_icon: false
+dependencies:
+- current_identifier: null
+  type: marketplace
+  value:
+    marketplace_plugin_unique_identifier: langgenius/tongyi:0.0.26@4f1c4ded3d189719b7dd54e9d4e5b26f724f3632f3dfaa299491b42accc112c8
+    version: null
+kind: app
+version: 0.4.0
+workflow:
+  conversation_variables: []
+  environment_variables: []
+  features:
+    file_upload:
+      allowed_file_extensions:
+      - .JPG
+      - .JPEG
+      - .PNG
+      - .GIF
+      - .WEBP
+      - .SVG
+      allowed_file_types:
+      - image
+      allowed_file_upload_methods:
+      - local_file
+      - remote_url
+      enabled: false
+      fileUploadConfig:
+        audio_file_size_limit: 50
+        batch_count_limit: 5
+        file_size_limit: 15
+        image_file_size_limit: 10
+        video_file_size_limit: 100
+        workflow_file_upload_limit: 10
+      image:
+        enabled: false
+        number_limits: 3
+        transfer_methods:
+        - local_file
+        - remote_url
+      number_limits: 3
+    opening_statement: ''
+    retriever_resource:
+      enabled: true
+    sensitive_word_avoidance:
+      enabled: false
+    speech_to_text:
+      enabled: false
+    suggested_questions: []
+    suggested_questions_after_answer:
+      enabled: false
+    text_to_speech:
+      enabled: false
+      language: ''
+      voice: ''
+  graph:
+    edges:
+    - data:
+        isInIteration: false
+        isInLoop: false
+        sourceType: question-classifier
+        targetType: knowledge-retrieval
+      id: 1761285949263-1-1761286041187-target
+      source: '1761285949263'
+      sourceHandle: '1'
+      target: '1761286041187'
+      targetHandle: target
+      type: custom
+      zIndex: 0
+    - data:
+        isInIteration: false
+        isInLoop: false
+        sourceType: knowledge-retrieval
+        targetType: llm
+      id: 1761286041187-source-1761286091165-target
+      source: '1761286041187'
+      sourceHandle: source
+      target: '1761286091165'
+      targetHandle: target
+      type: custom
+      zIndex: 0
+    - data:
+        isInIteration: false
+        isInLoop: false
+        sourceType: llm
+        targetType: end
+      id: 1761286091165-source-1761286181596-target
+      source: '1761286091165'
+      sourceHandle: source
+      target: '1761286181596'
+      targetHandle: target
+      type: custom
+      zIndex: 0
+    - data:
+        isInIteration: false
+        isInLoop: false
+        sourceType: question-classifier
+        targetType: code
+      id: 1761285949263-2-1761286236733-target
+      source: '1761285949263'
+      sourceHandle: '2'
+      target: '1761286236733'
+      targetHandle: target
+      type: custom
+      zIndex: 0
+    - data:
+        isInIteration: false
+        isInLoop: false
+        sourceType: code
+        targetType: end
+      id: 1761286236733-source-1761286285992-target
+      source: '1761286236733'
+      sourceHandle: source
+      target: '1761286285992'
+      targetHandle: target
+      type: custom
+      zIndex: 0
+    - data:
+        isInLoop: false
+        sourceType: start
+        targetType: question-classifier
+      id: 1761285833805-source-1761285949263-target
+      source: '1761285833805'
+      sourceHandle: source
+      target: '1761285949263'
+      targetHandle: target
+      type: custom
+      zIndex: 0
+    nodes:
+    - data:
+        selected: false
+        title: 开始
+        type: start
+        variables:
+        - default: ''
+          hint: ''
+          label: user_ask
+          max_length: 48
+          options: []
+          placeholder: ''
+          required: true
+          type: text-input
+          variable: user_ask
+      height: 88
+      id: '1761285833805'
+      position:
+        x: 350.84905660377365
+        y: 329.6493710691824
+      positionAbsolute:
+        x: 350.84905660377365
+        y: 329.6493710691824
+      selected: false
+      sourcePosition: right
+      targetPosition: left
+      type: custom
+      width: 242
+    - data:
+        classes:
+        - id: '1'
+          name: dify部署相关问题
+        - id: '2'
+          name: 其他问题
+        instructions: ''
+        model:
+          completion_params:
+            temperature: 0.7
+          mode: chat
+          name: qvq-max-latest
+          provider: langgenius/tongyi/tongyi
+        query_variable_selector:
+        - '1761285833805'
+        - user_ask
+        selected: false
+        title: 问题分类器
+        type: question-classifier
+        vision:
+          enabled: false
+      height: 170
+      id: '1761285949263'
+      position:
+        x: 682
+        y: 282
+      positionAbsolute:
+        x: 682
+        y: 282
+      selected: false
+      sourcePosition: right
+      targetPosition: left
+      type: custom
+      width: 242
+    - data:
+        dataset_ids:
+        - +5hKyOnZdKMhh9ciT0MW2q9ChsTw2ohAusef4UIFpLVNChtID/eA5hszdOPrGyhT
+        multiple_retrieval_config:
+          reranking_enable: true
+          reranking_mode: reranking_model
+          reranking_model:
+            model: gte-rerank
+            provider: langgenius/tongyi/tongyi
+          top_k: 4
+        query_variable_selector:
+        - '1761285833805'
+        - user_ask
+        retrieval_mode: multiple
+        selected: false
+        title: 知识检索
+        type: knowledge-retrieval
+      height: 90
+      id: '1761286041187'
+      position:
+        x: 984
+        y: 282
+      positionAbsolute:
+        x: 984
+        y: 282
+      selected: false
+      sourcePosition: right
+      targetPosition: left
+      type: custom
+      width: 242
+    - data:
+        context:
+          enabled: true
+          variable_selector:
+          - '1761286041187'
+          - result
+        model:
+          completion_params:
+            temperature: 0.7
+          mode: chat
+          name: qvq-max-latest
+          provider: langgenius/tongyi/tongyi
+        prompt_template:
+        - id: bc3cb4fe-16c6-42b4-821e-9a26c41226db
+          role: system
+          text: 你是一个dify相关的专家，你需要对用户根据dify在阿里云的部署问题进行回答，如果需要可以从知识库中寻找相关信息准确回答
+        selected: false
+        title: LLM
+        type: llm
+        vision:
+          enabled: false
+      height: 88
+      id: '1761286091165'
+      position:
+        x: 1286
+        y: 282
+      positionAbsolute:
+        x: 1286
+        y: 282
+      sourcePosition: right
+      targetPosition: left
+      type: custom
+      width: 242
+    - data:
+        outputs:
+        - value_selector:
+          - '1761286091165'
+          - text
+          value_type: string
+          variable: text
+        selected: false
+        title: 结束
+        type: end
+      height: 89
+      id: '1761286181596'
+      position:
+        x: 1588
+        y: 282
+      positionAbsolute:
+        x: 1588
+        y: 282
+      sourcePosition: right
+      targetPosition: left
+      type: custom
+      width: 242
+    - data:
+        code: "\ndef main(arg1: str):\n    return {\n        \"result\": arg1 + \"\
+          这个问题无法回答，请询问dify相关问题\",\n    }\n"
+        code_language: python3
+        outputs:
+          result:
+            children: null
+            type: string
+        selected: true
+        title: 代码执行
+        type: code
+        variables:
+        - value_selector:
+          - '1761285833805'
+          - user_ask
+          value_type: string
+          variable: arg1
+      height: 52
+      id: '1761286236733'
+      position:
+        x: 984
+        y: 411
+      positionAbsolute:
+        x: 984
+        y: 411
+      selected: true
+      sourcePosition: right
+      targetPosition: left
+      type: custom
+      width: 242
+    - data:
+        outputs:
+        - value_selector:
+          - '1761286236733'
+          - result
+          value_type: string
+          variable: result
+        selected: false
+        title: 结束 2
+        type: end
+      height: 89
+      id: '1761286285992'
+      position:
+        x: 1286
+        y: 411
+      positionAbsolute:
+        x: 1286
+        y: 411
+      selected: false
+      sourcePosition: right
+      targetPosition: left
+      type: custom
+      width: 242
+    viewport:
+      x: -438.9717868338556
+      y: 3.2708463949842326
+      zoom: 1.1962382445141064
+  rag_pipeline_variables: []
