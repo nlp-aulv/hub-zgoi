@@ -1,0 +1,338 @@
+app:
+  description: 使用dify搭建一个穿衣智能指南，输入天气、温度、湿度，让大模型给出穿衣建议。
+  icon: 🤖
+  icon_background: '#FFEAD5'
+  mode: workflow
+  name: 智能穿衣指南
+  use_icon_as_answer_icon: false
+dependencies:
+- current_identifier: null
+  type: marketplace
+  value:
+    marketplace_plugin_unique_identifier: langgenius/deepseek:0.0.6@dd589dc093c8084925858034ab5ec1fdf0d33819f43226c2f8c4a749a9acbbb2
+    version: null
+kind: app
+version: 0.4.0
+workflow:
+  conversation_variables: []
+  environment_variables: []
+  features:
+    file_upload:
+      allowed_file_extensions:
+      - .JPG
+      - .JPEG
+      - .PNG
+      - .GIF
+      - .WEBP
+      - .SVG
+      allowed_file_types:
+      - image
+      allowed_file_upload_methods:
+      - local_file
+      - remote_url
+      enabled: false
+      fileUploadConfig:
+        audio_file_size_limit: 50
+        batch_count_limit: 5
+        file_size_limit: 15
+        image_file_size_limit: 10
+        video_file_size_limit: 100
+        workflow_file_upload_limit: 10
+      image:
+        enabled: false
+        number_limits: 3
+        transfer_methods:
+        - local_file
+        - remote_url
+      number_limits: 3
+    opening_statement: ''
+    retriever_resource:
+      enabled: true
+    sensitive_word_avoidance:
+      enabled: false
+    speech_to_text:
+      enabled: false
+    suggested_questions: []
+    suggested_questions_after_answer:
+      enabled: false
+    text_to_speech:
+      enabled: false
+      language: ''
+      voice: ''
+  graph:
+    edges:
+    - data:
+        isInIteration: false
+        isInLoop: false
+        sourceType: start
+        targetType: code
+      id: 1761125662476-source-1761215896737-target
+      selected: false
+      source: '1761125662476'
+      sourceHandle: source
+      target: '1761215896737'
+      targetHandle: target
+      type: custom
+      zIndex: 0
+    - data:
+        isInIteration: false
+        isInLoop: false
+        sourceType: code
+        targetType: llm
+      id: 1761215896737-source-1761216071289-target
+      source: '1761215896737'
+      sourceHandle: source
+      target: '1761216071289'
+      targetHandle: target
+      type: custom
+      zIndex: 0
+    - data:
+        isInIteration: false
+        isInLoop: false
+        sourceType: llm
+        targetType: template-transform
+      id: 1761216071289-source-1761218512353-target
+      source: '1761216071289'
+      sourceHandle: source
+      target: '1761218512353'
+      targetHandle: target
+      type: custom
+      zIndex: 0
+    - data:
+        isInLoop: false
+        sourceType: template-transform
+        targetType: end
+      id: 1761218512353-source-1761215628230-target
+      source: '1761218512353'
+      sourceHandle: source
+      target: '1761215628230'
+      targetHandle: target
+      type: custom
+      zIndex: 0
+    nodes:
+    - data:
+        selected: false
+        title: 开始
+        type: start
+        variables:
+        - default: ''
+          hint: ''
+          label: 天气
+          max_length: 48
+          options:
+          - 晴天
+          - 多云
+          - 雨
+          - 雪
+          - 雾
+          - 霾
+          - 霜冻
+          placeholder: ''
+          required: true
+          type: select
+          variable: weather
+        - default: ''
+          hint: ''
+          label: 温度
+          max_length: 48
+          options: []
+          placeholder: ''
+          required: true
+          type: number
+          variable: temperature
+        - default: ''
+          hint: ''
+          label: 湿度
+          max_length: 48
+          options: []
+          placeholder: ''
+          required: true
+          type: number
+          variable: humidity
+      height: 140
+      id: '1761125662476'
+      position:
+        x: 30
+        y: 270
+      positionAbsolute:
+        x: 30
+        y: 270
+      selected: false
+      sourcePosition: right
+      targetPosition: left
+      type: custom
+      width: 242
+    - data:
+        outputs:
+        - value_selector:
+          - '1761218512353'
+          - output
+          value_type: string
+          variable: output
+        selected: false
+        title: 结束
+        type: end
+      height: 88
+      id: '1761215628230'
+      position:
+        x: 1215.4285714285716
+        y: 398
+      positionAbsolute:
+        x: 1215.4285714285716
+        y: 398
+      selected: false
+      sourcePosition: right
+      targetPosition: left
+      type: custom
+      width: 242
+    - data:
+        code: "def main(weather: str, temperature: str, humidity: str):\n    # 设计穿衣指南依据\n\
+          \    # 温度是基础：决定穿多厚、多少件。\n    # 天气状况是关键：决定是否需要防护（雨具、防风等）和衣物功能。\n    # 湿度是“体感调节器”：\n\
+          \n    result = \"\"\n    res_temperature = \"\"\n    res_weather = \"\"\n\
+          \    res_clothing = \"\"\n    res_humidity = \"\"\n    \n    # 转换温度和湿度为数值类型\n\
+          \    temp = float(temperature)\n    hum = float(humidity)\n    \n    # 天气判断\n\
+          \    if weather == '晴':\n        res_weather = \"注意防晒，可戴太阳镜和帽子。\"\n    elif\
+          \ weather == '多云':\n        res_weather = \"可戴太阳镜和帽子\"\n    elif weather\
+          \ == '雨':\n        res_weather = \"请携带雨具，建议穿防水外套和防滑鞋。\"\n    elif weather\
+          \ == '雪':\n        res_weather = \"防水防滑的靴子、手套、帽子。衣物外层最好防水或防泼水，防止雪融化后浸湿\"\
+          \n    elif weather == '雾':\n        res_weather = \"携带除雾剂\"\n    elif weather\
+          \ == '霾':\n        res_weather = \"戴防霾口罩\"\n    elif weather == '霜冻':\n\
+          \        res_weather = \"戴手套，擦拭防冻霜\"\n    elif weather == '大风':\n      \
+          \  res_weather = \"防风外套（风衣、冲锋衣、软壳衣）、围巾（保护脖颈）,远离大树，广告牌等地方\"\n    elif weather\
+          \ == '雷电':\n        res_weather = \"远离大树，变压器，水建筑物顶部\"\n    else:\n     \
+          \   res_weather = \"\"\n\n    # 温度判断（使用完整的if-elif-else链）\n    if temp >\
+          \ 30:\n        res_temperature = \"天气炎热\"\n        res_clothing = \"轻薄、透气、防晒\"\
+          \n    elif temp > 25 and temp <= 30:\n        res_temperature = \"温暖/舒适\"\
+          \n        res_clothing = \"夏装，短袖、薄裙、薄裤\"\n    elif temp > 20 and temp <=\
+          \ 25:\n        res_temperature = \"凉爽/舒适\"\n        res_clothing = \"单层长袖或短袖+薄外套。\"\
+          \n    elif temp > 15 and temp <= 20:\n        res_temperature = \"微凉\"\n\
+          \        res_clothing = \"需要双层着装。例如：打底衫+外套。\"\n    elif temp > 10 and temp\
+          \ <= 15:\n        res_temperature = \"冷\" \n        res_clothing = \"需要穿毛衣或抓绒衣了。\"\
+          \n    elif temp > 0 and temp <= 10:\n        res_temperature = \"寒冷\" \n\
+          \        res_clothing = \"需要羽绒服/厚大衣等重型保暖装备。\"\n    else:\n        res_temperature\
+          \ = \"极寒\"\n        res_clothing = \"需要羽绒服/厚大衣等重型保暖装备。\"\n\n    # 湿度判断\n\
+          \    if hum > 85:\n        res_humidity = \"，建议穿透气衣服\"\n    elif hum > 50\
+          \ and hum <= 85:\n        res_humidity = \"，建议穿布衣服\"\n    else:\n      \
+          \  res_humidity = \"，建议穿棉衣服\"\n\n    # 返回结果\n    return {\n        \"result\"\
+          : res_temperature + \"，\" + res_weather + \"，\" + res_clothing + res_humidity,\n\
+          \    }\n"
+        code_language: python3
+        outputs:
+          result:
+            children: null
+            type: string
+        selected: false
+        title: 代码执行
+        type: code
+        variables:
+        - value_selector:
+          - '1761125662476'
+          - weather
+          value_type: string
+          variable: weather
+        - value_selector:
+          - '1761125662476'
+          - temperature
+          value_type: number
+          variable: temperature
+        - value_selector:
+          - '1761125662476'
+          - humidity
+          value_type: number
+          variable: humidity
+      height: 52
+      id: '1761215896737'
+      position:
+        x: 332
+        y: 398
+      positionAbsolute:
+        x: 332
+        y: 398
+      selected: false
+      sourcePosition: right
+      targetPosition: left
+      type: custom
+      width: 242
+    - data:
+        context:
+          enabled: false
+          variable_selector: []
+        model:
+          completion_params:
+            temperature: 0.7
+          mode: chat
+          name: deepseek-chat
+          provider: langgenius/deepseek/deepseek
+        prompt_template:
+        - id: ff4e7a86-be92-46b4-ad92-af4d2a5789e1
+          role: system
+          text: 你是搭建一个穿衣智助手，请结合用户输入的天气，温度，湿度给出有效的穿衣建议。
+        - id: dd47a3c3-6948-4913-b9a1-fa5f52e9fcd1
+          role: user
+          text: '天气：{{#1761125662476.weather#}}
+
+            温度：{{#1761125662476.temperature#}}
+
+            湿度：{{#1761125662476.humidity#}}
+
+            穿衣建议：{{#1761215896737.result#}}'
+        selected: true
+        title: LLM
+        type: llm
+        vision:
+          enabled: false
+      height: 88
+      id: '1761216071289'
+      position:
+        x: 634
+        y: 398
+      positionAbsolute:
+        x: 634
+        y: 398
+      selected: true
+      sourcePosition: right
+      targetPosition: left
+      type: custom
+      width: 242
+    - data:
+        selected: false
+        template: "## 用户输入天气信息\r\n\r\n- 天气 {{ weather }}\r\n- 温度 {{ temperature }}\r\
+          \n- 湿度 {{ humidity }}\r\n\r\n\r\n\r\n## 穿衣建议\r\n\r\n{{ text }}"
+        title: 模板转换
+        type: template-transform
+        variables:
+        - value_selector:
+          - '1761125662476'
+          - weather
+          variable: weather
+        - value_selector:
+          - '1761125662476'
+          - temperature
+          variable: temperature
+        - value_selector:
+          - '1761125662476'
+          - humidity
+          variable: humidity
+        - value_selector:
+          - '1761216071289'
+          - text
+          value_type: string
+          variable: text
+      height: 52
+      id: '1761218512353'
+      position:
+        x: 936
+        y: 398
+      positionAbsolute:
+        x: 936
+        y: 398
+      selected: false
+      sourcePosition: right
+      targetPosition: left
+      type: custom
+      width: 242
+    viewport:
+      x: -323.3343834447735
+      y: -93.27258135749037
+      zoom: 0.8815912309148598
+  rag_pipeline_variables: []
