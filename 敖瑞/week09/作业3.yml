@@ -1,0 +1,255 @@
+app:
+  description: ''
+  icon: 🤖
+  icon_background: '#FFEAD5'
+  mode: advanced-chat
+  name: 数据分析方法小助手
+  use_icon_as_answer_icon: false
+kind: app
+version: 0.1.5
+workflow:
+  conversation_variables: []
+  environment_variables: []
+  features:
+    file_upload:
+      allowed_file_extensions:
+      - .JPG
+      - .JPEG
+      - .PNG
+      - .GIF
+      - .WEBP
+      - .SVG
+      allowed_file_types:
+      - image
+      allowed_file_upload_methods:
+      - local_file
+      - remote_url
+      enabled: false
+      fileUploadConfig:
+        audio_file_size_limit: 50
+        batch_count_limit: 5
+        file_size_limit: 15
+        image_file_size_limit: 10
+        video_file_size_limit: 100
+        workflow_file_upload_limit: 10
+      image:
+        enabled: false
+        number_limits: 3
+        transfer_methods:
+        - local_file
+        - remote_url
+      number_limits: 3
+    opening_statement: ''
+    retriever_resource:
+      enabled: true
+    sensitive_word_avoidance:
+      enabled: false
+    speech_to_text:
+      enabled: false
+    suggested_questions: []
+    suggested_questions_after_answer:
+      enabled: false
+    text_to_speech:
+      enabled: false
+      language: ''
+      voice: ''
+  graph:
+    edges:
+    - data:
+        sourceType: llm
+        targetType: answer
+      id: llm-answer
+      source: llm
+      sourceHandle: source
+      target: answer
+      targetHandle: target
+      type: custom
+    - data:
+        isInIteration: false
+        sourceType: start
+        targetType: knowledge-retrieval
+      id: 1761206012595-source-1761206017015-target
+      source: '1761206012595'
+      sourceHandle: source
+      target: '1761206017015'
+      targetHandle: target
+      type: custom
+      zIndex: 0
+    - data:
+        isInIteration: false
+        sourceType: knowledge-retrieval
+        targetType: llm
+      id: 1761206017015-source-llm-target
+      source: '1761206017015'
+      sourceHandle: source
+      target: llm
+      targetHandle: target
+      type: custom
+      zIndex: 0
+    nodes:
+    - data:
+        desc: ''
+        selected: true
+        title: 开始
+        type: start
+        variables: []
+      height: 54
+      id: '1761206012595'
+      position:
+        x: 80
+        y: 282
+      positionAbsolute:
+        x: 80
+        y: 282
+      selected: true
+      sourcePosition: right
+      targetPosition: left
+      type: custom
+      width: 244
+    - data:
+        context:
+          enabled: true
+          variable_selector:
+          - '1761206017015'
+          - result
+        desc: ''
+        memory:
+          query_prompt_template: '{{#sys.query#}}'
+          role_prefix:
+            assistant: ''
+            user: ''
+          window:
+            enabled: false
+            size: 10
+        model:
+          completion_params:
+            temperature: 0.7
+          mode: chat
+          name: qwen2.5-72b-instruct
+          provider: tongyi
+        prompt_template:
+        - id: 9023677f-b08b-41fa-aaa1-9cc1795fd338
+          role: system
+          text: '根据提供的上下文信息，准确回答问题。
+
+            请遵循以下步骤：
+
+            1. 仔细阅读上下文内容，理解其中包含的信息
+
+            2. 分析问题，确定需要从上下文中提取的关键信息
+
+            3. 基于上下文信息，给出准确、简洁的答案
+
+            4. 如果上下文中没有相关信息，请明确说明"根据上下文无法回答此问题"
+
+            5. 确保答案完全基于上下文信息，不要添加额外知识或推测
+
+            6. 输出中不要包含任何XML标签
+
+
+            请使用以下格式：
+
+            输入：
+
+            上下文：{{#context#}}
+
+            问题：{{#sys.query#}}
+
+
+            输出：
+
+            直接给出答案，不要包含任何标签或额外说明
+
+
+            示例1：
+
+            上下文：苹果公司于1976年4月1日由史蒂夫·乔布斯、史蒂夫·沃兹尼亚克和罗纳德·韦恩创立。公司总部位于美国加利福尼亚州的库比蒂诺。
+
+            问题：苹果公司是哪一年成立的？
+
+            输出：苹果公司于1976年成立。
+
+            示例2：
+
+            上下文：巴黎是法国的首都，位于塞纳河畔。巴黎以其艺术、文化和时尚而闻名。
+
+            问题：巴黎的人口是多少？
+
+            输出：根据上下文无法回答此问题。
+
+
+            '
+        selected: false
+        title: LLM
+        type: llm
+        variables: []
+        vision:
+          enabled: false
+      height: 98
+      id: llm
+      position:
+        x: 661
+        y: 398
+      positionAbsolute:
+        x: 661
+        y: 398
+      selected: false
+      sourcePosition: right
+      targetPosition: left
+      type: custom
+      width: 244
+    - data:
+        answer: '{{#llm.text#}}'
+        desc: ''
+        selected: false
+        title: 直接回复
+        type: answer
+        variables: []
+      height: 103
+      id: answer
+      position:
+        x: 983
+        y: 275
+      positionAbsolute:
+        x: 983
+        y: 275
+      selected: false
+      sourcePosition: right
+      targetPosition: left
+      type: custom
+      width: 244
+    - data:
+        dataset_ids:
+        - 6432302b-e444-4024-86a9-53dcbf907633
+        desc: ''
+        multiple_retrieval_config:
+          reranking_enable: true
+          reranking_mode: reranking_model
+          reranking_model:
+            model: gte-rerank
+            provider: tongyi
+          top_k: 4
+        query_variable_selector:
+        - '1761206012595'
+        - sys.query
+        retrieval_mode: multiple
+        selected: false
+        title: 知识检索
+        type: knowledge-retrieval
+      height: 92
+      id: '1761206017015'
+      position:
+        x: 378
+        y: 334
+      positionAbsolute:
+        x: 378
+        y: 334
+      selected: false
+      sourcePosition: right
+      targetPosition: left
+      type: custom
+      width: 244
+    viewport:
+      x: 71
+      y: 73
+      zoom: 1

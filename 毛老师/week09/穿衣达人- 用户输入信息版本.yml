@@ -1,0 +1,255 @@
+app:
+  description: ''
+  icon: 🤖
+  icon_background: '#FFEAD5'
+  mode: workflow
+  name: 穿衣达人- 用户输入信息版本
+  use_icon_as_answer_icon: false
+dependencies:
+- current_identifier: null
+  type: marketplace
+  value:
+    marketplace_plugin_unique_identifier: langgenius/tongyi:0.0.26@4f1c4ded3d189719b7dd54e9d4e5b26f724f3632f3dfaa299491b42accc112c8
+kind: app
+version: 0.2.0
+workflow:
+  conversation_variables: []
+  environment_variables: []
+  features:
+    file_upload:
+      allowed_file_extensions:
+      - .JPG
+      - .JPEG
+      - .PNG
+      - .GIF
+      - .WEBP
+      - .SVG
+      allowed_file_types:
+      - image
+      allowed_file_upload_methods:
+      - local_file
+      - remote_url
+      enabled: false
+      fileUploadConfig:
+        audio_file_size_limit: 50
+        batch_count_limit: 5
+        file_size_limit: 15
+        image_file_size_limit: 10
+        video_file_size_limit: 100
+        workflow_file_upload_limit: 10
+      image:
+        enabled: false
+        number_limits: 3
+        transfer_methods:
+        - local_file
+        - remote_url
+      number_limits: 3
+    opening_statement: ''
+    retriever_resource:
+      enabled: true
+    sensitive_word_avoidance:
+      enabled: false
+    speech_to_text:
+      enabled: false
+    suggested_questions: []
+    suggested_questions_after_answer:
+      enabled: false
+    text_to_speech:
+      enabled: false
+      language: ''
+      voice: ''
+  graph:
+    edges:
+    - data:
+        isInIteration: false
+        isInLoop: false
+        sourceType: start
+        targetType: llm
+      id: 1761283188639-source-1761283278618-target
+      source: '1761283188639'
+      sourceHandle: source
+      target: '1761283278618'
+      targetHandle: target
+      type: custom
+      zIndex: 0
+    - data:
+        isInIteration: false
+        isInLoop: false
+        sourceType: llm
+        targetType: template-transform
+      id: 1761283278618-source-1761283352397-target
+      source: '1761283278618'
+      sourceHandle: source
+      target: '1761283352397'
+      targetHandle: target
+      type: custom
+      zIndex: 0
+    - data:
+        isInIteration: false
+        isInLoop: false
+        sourceType: template-transform
+        targetType: end
+      id: 1761283352397-source-1761283384812-target
+      source: '1761283352397'
+      sourceHandle: source
+      target: '1761283384812'
+      targetHandle: target
+      type: custom
+      zIndex: 0
+    nodes:
+    - data:
+        desc: ''
+        selected: false
+        title: 开始
+        type: start
+        variables:
+        - label: 天气
+          max_length: 48
+          options:
+          - 晴天
+          - 下雨
+          - 下雪
+          - 阴天
+          required: true
+          type: select
+          variable: weather
+        - label: 温度
+          max_length: 48
+          options: []
+          required: true
+          type: number
+          variable: temperature
+        - label: 湿度
+          max_length: 48
+          options: []
+          required: true
+          type: number
+          variable: humidity
+      height: 142
+      id: '1761283188639'
+      position:
+        x: 81
+        y: 282
+      positionAbsolute:
+        x: 81
+        y: 282
+      selected: true
+      sourcePosition: right
+      targetPosition: left
+      type: custom
+      width: 244
+    - data:
+        context:
+          enabled: false
+          variable_selector: []
+        desc: ''
+        model:
+          completion_params: {}
+          mode: chat
+          name: qwen2.5-7b-instruct
+          provider: langgenius/tongyi/tongyi
+        prompt_template:
+        - role: system
+          text: '你是一个穿衣建议大人，请结合用户输入的信息，给出穿衣建议。
+
+
+            温度：{{#1761283188639.temperature#}}
+
+            天气：{{#1761283188639.weather#}}
+
+            湿度：{{#1761283188639.humidity#}}
+
+            '
+        selected: false
+        title: LLM
+        type: llm
+        variables: []
+        vision:
+          enabled: false
+      height: 90
+      id: '1761283278618'
+      position:
+        x: 385
+        y: 282
+      positionAbsolute:
+        x: 385
+        y: 282
+      sourcePosition: right
+      targetPosition: left
+      type: custom
+      width: 244
+    - data:
+        desc: ''
+        selected: false
+        template: '当前天气为：
+
+
+          {{ weather }}
+
+          {{ temperature }}
+
+          {{ humidity }}
+
+
+          穿衣智能体建议：
+
+          {{ text }}'
+        title: 模板转换
+        type: template-transform
+        variables:
+        - value_selector: []
+          variable: arg1
+        - value_selector:
+          - '1761283188639'
+          - weather
+          variable: weather
+        - value_selector:
+          - '1761283188639'
+          - temperature
+          variable: temperature
+        - value_selector:
+          - '1761283188639'
+          - humidity
+          variable: humidity
+        - value_selector:
+          - '1761283278618'
+          - text
+          variable: text
+      height: 54
+      id: '1761283352397'
+      position:
+        x: 689
+        y: 282
+      positionAbsolute:
+        x: 689
+        y: 282
+      sourcePosition: right
+      targetPosition: left
+      type: custom
+      width: 244
+    - data:
+        desc: ''
+        outputs:
+        - value_selector:
+          - '1761283352397'
+          - output
+          variable: output
+        selected: false
+        title: 结束
+        type: end
+      height: 90
+      id: '1761283384812'
+      position:
+        x: 993
+        y: 282
+      positionAbsolute:
+        x: 993
+        y: 282
+      sourcePosition: right
+      targetPosition: left
+      type: custom
+      width: 244
+    viewport:
+      x: -535.5
+      y: 67.5
+      zoom: 1

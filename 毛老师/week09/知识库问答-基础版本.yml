@@ -1,0 +1,272 @@
+app:
+  description: ''
+  icon: 🤖
+  icon_background: '#FFEAD5'
+  mode: workflow
+  name: 知识库问答-基础版本
+  use_icon_as_answer_icon: false
+dependencies:
+- current_identifier: null
+  type: marketplace
+  value:
+    marketplace_plugin_unique_identifier: langgenius/tongyi:0.0.26@4f1c4ded3d189719b7dd54e9d4e5b26f724f3632f3dfaa299491b42accc112c8
+kind: app
+version: 0.2.0
+workflow:
+  conversation_variables: []
+  environment_variables: []
+  features:
+    file_upload:
+      allowed_file_extensions:
+      - .JPG
+      - .JPEG
+      - .PNG
+      - .GIF
+      - .WEBP
+      - .SVG
+      allowed_file_types:
+      - image
+      allowed_file_upload_methods:
+      - local_file
+      - remote_url
+      enabled: false
+      fileUploadConfig:
+        audio_file_size_limit: 50
+        batch_count_limit: 5
+        file_size_limit: 15
+        image_file_size_limit: 10
+        video_file_size_limit: 100
+        workflow_file_upload_limit: 10
+      image:
+        enabled: false
+        number_limits: 3
+        transfer_methods:
+        - local_file
+        - remote_url
+      number_limits: 3
+    opening_statement: ''
+    retriever_resource:
+      enabled: true
+    sensitive_word_avoidance:
+      enabled: false
+    speech_to_text:
+      enabled: false
+    suggested_questions: []
+    suggested_questions_after_answer:
+      enabled: false
+    text_to_speech:
+      enabled: false
+      language: ''
+      voice: ''
+  graph:
+    edges:
+    - data:
+        isInIteration: false
+        isInLoop: false
+        sourceType: start
+        targetType: knowledge-retrieval
+      id: 1761283447148-source-1761283466316-target
+      source: '1761283447148'
+      sourceHandle: source
+      target: '1761283466316'
+      targetHandle: target
+      type: custom
+      zIndex: 0
+    - data:
+        isInIteration: false
+        isInLoop: false
+        sourceType: knowledge-retrieval
+        targetType: llm
+      id: 1761283466316-source-1761283477930-target
+      source: '1761283466316'
+      sourceHandle: source
+      target: '1761283477930'
+      targetHandle: target
+      type: custom
+      zIndex: 0
+    - data:
+        isInIteration: false
+        isInLoop: false
+        sourceType: llm
+        targetType: template-transform
+      id: 1761283477930-source-1761283531961-target
+      source: '1761283477930'
+      sourceHandle: source
+      target: '1761283531961'
+      targetHandle: target
+      type: custom
+      zIndex: 0
+    - data:
+        isInIteration: false
+        isInLoop: false
+        sourceType: template-transform
+        targetType: end
+      id: 1761283531961-source-1761283569644-target
+      source: '1761283531961'
+      sourceHandle: source
+      target: '1761283569644'
+      targetHandle: target
+      type: custom
+      zIndex: 0
+    nodes:
+    - data:
+        desc: ''
+        selected: false
+        title: 开始
+        type: start
+        variables:
+        - label: 提问
+          max_length: 48
+          options: []
+          required: true
+          type: text-input
+          variable: query
+      height: 90
+      id: '1761283447148'
+      position:
+        x: 80
+        y: 282
+      positionAbsolute:
+        x: 80
+        y: 282
+      selected: true
+      sourcePosition: right
+      targetPosition: left
+      type: custom
+      width: 244
+    - data:
+        dataset_ids:
+        - MSQab/SUz6sbVJyXlMRjRMh4ojeqRSaiuFe+6E3gRetn7H4VzxOOPBakuBkYN1WX
+        desc: ''
+        multiple_retrieval_config:
+          reranking_enable: false
+          reranking_mode: reranking_model
+          reranking_model:
+            model: gte-rerank
+            provider: langgenius/tongyi/tongyi
+          top_k: 4
+        query_variable_selector:
+        - '1761283447148'
+        - query
+        retrieval_mode: multiple
+        selected: false
+        title: 知识检索
+        type: knowledge-retrieval
+      height: 92
+      id: '1761283466316'
+      position:
+        x: 384
+        y: 282
+      positionAbsolute:
+        x: 384
+        y: 282
+      selected: false
+      sourcePosition: right
+      targetPosition: left
+      type: custom
+      width: 244
+    - data:
+        context:
+          enabled: true
+          variable_selector:
+          - '1761283466316'
+          - result
+        desc: ''
+        model:
+          completion_params: {}
+          mode: chat
+          name: qwen2.5-7b-instruct
+          provider: langgenius/tongyi/tongyi
+        prompt_template:
+        - role: system
+          text: '结合给定的资料，回答用户问题：
+
+
+            提问：{{#1761283447148.query#}}
+
+
+            资料：{{#context#}}'
+        selected: false
+        title: LLM
+        type: llm
+        variables: []
+        vision:
+          enabled: false
+      height: 90
+      id: '1761283477930'
+      position:
+        x: 688
+        y: 282
+      positionAbsolute:
+        x: 688
+        y: 282
+      sourcePosition: right
+      targetPosition: left
+      type: custom
+      width: 244
+    - data:
+        desc: ''
+        selected: false
+        template: '用户提问为：{{ query }}
+
+
+          检索结果为：{{ result }}
+
+
+          大模型回答：{{ text }}'
+        title: 模板转换
+        type: template-transform
+        variables:
+        - value_selector: []
+          variable: arg1
+        - value_selector:
+          - '1761283447148'
+          - query
+          variable: query
+        - value_selector:
+          - '1761283466316'
+          - result
+          variable: result
+        - value_selector:
+          - '1761283477930'
+          - text
+          variable: text
+      height: 54
+      id: '1761283531961'
+      position:
+        x: 407
+        y: 518
+      positionAbsolute:
+        x: 407
+        y: 518
+      selected: false
+      sourcePosition: right
+      targetPosition: left
+      type: custom
+      width: 244
+    - data:
+        desc: ''
+        outputs:
+        - value_selector:
+          - '1761283531961'
+          - output
+          variable: output
+        selected: false
+        title: 结束
+        type: end
+      height: 90
+      id: '1761283569644'
+      position:
+        x: 711
+        y: 518
+      positionAbsolute:
+        x: 711
+        y: 518
+      sourcePosition: right
+      targetPosition: left
+      type: custom
+      width: 244
+    viewport:
+      x: -111.5
+      y: -134
+      zoom: 1

@@ -1,0 +1,520 @@
+app:
+  description: ''
+  icon: 🤖
+  icon_background: '#FFEAD5'
+  mode: workflow
+  name: 天气穿衣助理
+  use_icon_as_answer_icon: false
+dependencies:
+- current_identifier: null
+  type: marketplace
+  value:
+    marketplace_plugin_unique_identifier: langgenius/tongyi:0.0.56@42a5fb7bc09b2f14f9d19f0ac79bec42c3c50dba07a52bf1b6d3abcd6906c739
+    version: null
+kind: app
+version: 0.4.0
+workflow:
+  conversation_variables: []
+  environment_variables: []
+  features:
+    file_upload:
+      allowed_file_extensions:
+      - .JPG
+      - .JPEG
+      - .PNG
+      - .GIF
+      - .WEBP
+      - .SVG
+      allowed_file_types:
+      - image
+      allowed_file_upload_methods:
+      - local_file
+      - remote_url
+      enabled: false
+      fileUploadConfig:
+        audio_file_size_limit: 50
+        batch_count_limit: 5
+        file_size_limit: 15
+        image_file_size_limit: 10
+        video_file_size_limit: 100
+        workflow_file_upload_limit: 10
+      image:
+        enabled: false
+        number_limits: 3
+        transfer_methods:
+        - local_file
+        - remote_url
+      number_limits: 3
+    opening_statement: ''
+    retriever_resource:
+      enabled: true
+    sensitive_word_avoidance:
+      enabled: false
+    speech_to_text:
+      enabled: false
+    suggested_questions: []
+    suggested_questions_after_answer:
+      enabled: false
+    text_to_speech:
+      enabled: false
+      language: ''
+      voice: ''
+  graph:
+    edges:
+    - data:
+        isInIteration: false
+        isInLoop: false
+        sourceType: start
+        targetType: agent
+      id: 1761473782849-source-1761477395395-target
+      source: '1761473782849'
+      sourceHandle: source
+      target: '1761477395395'
+      targetHandle: target
+      type: custom
+      zIndex: 0
+    - data:
+        isInIteration: false
+        isInLoop: false
+        sourceType: agent
+        targetType: llm
+      id: 1761477395395-source-1761479296472-target
+      source: '1761477395395'
+      sourceHandle: source
+      target: '1761479296472'
+      targetHandle: target
+      type: custom
+      zIndex: 0
+    - data:
+        isInIteration: false
+        isInLoop: false
+        sourceType: llm
+        targetType: end
+      id: 1761479296472-source-1761479458907-target
+      source: '1761479296472'
+      sourceHandle: source
+      target: '1761479458907'
+      targetHandle: target
+      type: custom
+      zIndex: 0
+    nodes:
+    - data:
+        selected: false
+        title: 开始
+        type: start
+        variables:
+        - default: 北京朝阳区
+          hint: ''
+          label: 地址
+          max_length: 48
+          options: []
+          placeholder: ''
+          required: false
+          type: text-input
+          variable: location
+        - default: 今天
+          hint: ''
+          label: day
+          max_length: 48
+          options: []
+          placeholder: ''
+          required: false
+          type: text-input
+          variable: day
+      height: 113
+      id: '1761473782849'
+      position:
+        x: 82.14869835499701
+        y: 281.12944943670385
+      positionAbsolute:
+        x: 82.14869835499701
+        y: 281.12944943670385
+      selected: false
+      sourcePosition: right
+      targetPosition: left
+      type: custom
+      width: 241
+    - data:
+        agent_parameters:
+          instruction:
+            type: constant
+            value: 你是一个天气预报专家，你可以根据用户输入的地址{{#1761473782849.location#}}以及日期信息{{#1761473782849.day#}}查询此时的天气详情以及未来几天的天气，你只需要输出对应日期以及未来日期的天气信息。请直接输出天气信息，不需要添加你的思考
+          mcp_prompts_as_tools:
+            type: constant
+            value: true
+          mcp_resources_as_tools:
+            type: constant
+            value: true
+          mcp_servers_config:
+            type: constant
+            value: "{  \n    \"amap-amap-sse\":\n     {    \n        \"url\": \"https://mcp.amap.com/sse?key=d22240126eb6ff98b23937679fa0ac3d\"\
+              , \n        \"headers\": {}, \n        \"timeout\": 60,    \n      \
+              \  \"sse_read_timeout\": 300  \n    }\n}"
+          model:
+            type: constant
+            value:
+              completion_params: {}
+              mode: chat
+              model: deepseek-chat
+              model_type: llm
+              provider: langgenius/deepseek/deepseek
+              type: model-selector
+          query:
+            type: constant
+            value: 你是一个天气预报专家，你可以根据用户输入的地址{{#1761473782849.location#}}以及日期信息{{#1761473782849.day#}}查询此时的天气详情以及未来几天的天气，你只需要输出对应日期以及未来日期的天气信息。
+          tools:
+            type: constant
+            value:
+            - enabled: true
+              extra:
+                description: 调用 MCP 服务端工具。
+              parameters:
+                arguments:
+                  auto: 1
+                  value: null
+                servers_config:
+                  auto: 1
+                  value: null
+                tool_name:
+                  auto: 1
+                  value: null
+              provider_name: junjiem/mcp_sse/mcp_sse
+              provider_show_name: junjiem/mcp_sse/mcp_sse
+              schemas:
+              - auto_generate: null
+                default: null
+                form: llm
+                human_description:
+                  en_US: Name of the tool to execute.
+                  ja_JP: Name of the tool to execute.
+                  pt_BR: Name of the tool to execute.
+                  zh_Hans: 要执行的工具的名称。
+                label:
+                  en_US: Tool Name
+                  ja_JP: Tool Name
+                  pt_BR: Tool Name
+                  zh_Hans: 工具名称
+                llm_description: Name of the MCP tool to execute.
+                max: null
+                min: null
+                name: tool_name
+                options: []
+                placeholder: null
+                precision: null
+                required: true
+                scope: null
+                template: null
+                type: string
+              - auto_generate: null
+                default: null
+                form: llm
+                human_description:
+                  en_US: Tool arguments (JSON string in the python dict[str, Any]
+                    format).
+                  ja_JP: Tool arguments (JSON string in the python dict[str, Any]
+                    format).
+                  pt_BR: Tool arguments (JSON string in the python dict[str, Any]
+                    format).
+                  zh_Hans: 工具的参数。
+                label:
+                  en_US: Arguments
+                  ja_JP: Arguments
+                  pt_BR: Arguments
+                  zh_Hans: 参数
+                llm_description: MCP Tool arguments (JSON string in the python dict[str,
+                  Any] format).
+                max: null
+                min: null
+                name: arguments
+                options: []
+                placeholder: null
+                precision: null
+                required: true
+                scope: null
+                template: null
+                type: string
+              - auto_generate: null
+                default: true
+                form: form
+                human_description:
+                  en_US: Fetch and call the preset MCP Resources as Tools.
+                  ja_JP: Fetch and call the preset MCP Resources as Tools.
+                  pt_BR: Fetch and call the preset MCP Resources as Tools.
+                  zh_Hans: 将预设的 MCP Resources 作为 Tools 返回和调用。
+                label:
+                  en_US: MCP Resources as Tools
+                  ja_JP: MCP Resources as Tools
+                  pt_BR: MCP Resources as Tools
+                  zh_Hans: MCP 资源作为工具
+                llm_description: ''
+                max: null
+                min: null
+                name: resources_as_tools
+                options: []
+                placeholder: null
+                precision: null
+                required: true
+                scope: null
+                template: null
+                type: boolean
+              - auto_generate: null
+                default: true
+                form: form
+                human_description:
+                  en_US: Fetch and call the preset MCP Prompts as Tools.
+                  ja_JP: Fetch and call the preset MCP Prompts as Tools.
+                  pt_BR: Fetch and call the preset MCP Prompts as Tools.
+                  zh_Hans: 将预设的 MCP Prompts 作为 Tools 返回和调用。
+                label:
+                  en_US: MCP Prompts as Tools
+                  ja_JP: MCP Prompts as Tools
+                  pt_BR: MCP Prompts as Tools
+                  zh_Hans: MCP 提示词作为工具
+                llm_description: ''
+                max: null
+                min: null
+                name: prompts_as_tools
+                options: []
+                placeholder: null
+                precision: null
+                required: true
+                scope: null
+                template: null
+                type: boolean
+              - auto_generate: null
+                default: null
+                form: llm
+                human_description:
+                  en_US: MCP Servers config, support multiple MCP services. (Optional,
+                    Filling in this field will overwrite the MCP Servers config entered
+                    during authorization.)
+                  ja_JP: MCP Servers config, support multiple MCP services. (Optional,
+                    Filling in this field will overwrite the MCP Servers config entered
+                    during authorization.)
+                  pt_BR: MCP Servers config, support multiple MCP services. (Optional,
+                    Filling in this field will overwrite the MCP Servers config entered
+                    during authorization.)
+                  zh_Hans: MCP服务配置，支持多个MCP服务。 （选填，填写后将覆盖授权时填写的MCP服务配置。）
+                label:
+                  en_US: MCP Servers config
+                  ja_JP: MCP Servers config
+                  pt_BR: MCP Servers config
+                  zh_Hans: MCP 服务配置
+                llm_description: ''
+                max: null
+                min: null
+                name: servers_config
+                options: []
+                placeholder: null
+                precision: null
+                required: false
+                scope: null
+                template: null
+                type: string
+              settings:
+                prompts_as_tools:
+                  value:
+                    type: constant
+                    value: false
+                resources_as_tools:
+                  value:
+                    type: constant
+                    value: true
+              tool_description: 调用 MCP 服务端工具。
+              tool_label: 调用 MCP 工具
+              tool_name: mcp_sse_call_tool
+              type: builtin
+            - enabled: true
+              extra:
+                description: 获取 MCP 服务端的工具列表。
+              parameters:
+                servers_config:
+                  auto: 1
+                  value: null
+              provider_name: junjiem/mcp_sse/mcp_sse
+              provider_show_name: junjiem/mcp_sse/mcp_sse
+              schemas:
+              - auto_generate: null
+                default: true
+                form: form
+                human_description:
+                  en_US: Fetch and call the preset MCP Resources as Tools.
+                  ja_JP: Fetch and call the preset MCP Resources as Tools.
+                  pt_BR: Fetch and call the preset MCP Resources as Tools.
+                  zh_Hans: 将预设的 MCP Resources 作为 Tools 返回和调用。
+                label:
+                  en_US: MCP Resources as Tools
+                  ja_JP: MCP Resources as Tools
+                  pt_BR: MCP Resources as Tools
+                  zh_Hans: MCP 资源作为工具
+                llm_description: ''
+                max: null
+                min: null
+                name: resources_as_tools
+                options: []
+                placeholder: null
+                precision: null
+                required: true
+                scope: null
+                template: null
+                type: boolean
+              - auto_generate: null
+                default: true
+                form: form
+                human_description:
+                  en_US: Fetch and call the preset MCP Prompts as Tools.
+                  ja_JP: Fetch and call the preset MCP Prompts as Tools.
+                  pt_BR: Fetch and call the preset MCP Prompts as Tools.
+                  zh_Hans: 将预设的 MCP Prompts 作为 Tools 返回和调用。
+                label:
+                  en_US: MCP Prompts as Tools
+                  ja_JP: MCP Prompts as Tools
+                  pt_BR: MCP Prompts as Tools
+                  zh_Hans: MCP 提示词作为工具
+                llm_description: ''
+                max: null
+                min: null
+                name: prompts_as_tools
+                options: []
+                placeholder: null
+                precision: null
+                required: true
+                scope: null
+                template: null
+                type: boolean
+              - auto_generate: null
+                default: null
+                form: llm
+                human_description:
+                  en_US: MCP Servers config, support multiple MCP services. (Optional,
+                    Filling in this field will overwrite the MCP Servers config entered
+                    during authorization.)
+                  ja_JP: MCP Servers config, support multiple MCP services. (Optional,
+                    Filling in this field will overwrite the MCP Servers config entered
+                    during authorization.)
+                  pt_BR: MCP Servers config, support multiple MCP services. (Optional,
+                    Filling in this field will overwrite the MCP Servers config entered
+                    during authorization.)
+                  zh_Hans: MCP服务配置，支持多个MCP服务。 （选填，填写后将覆盖授权时填写的MCP服务配置。）
+                label:
+                  en_US: MCP Servers config
+                  ja_JP: MCP Servers config
+                  pt_BR: MCP Servers config
+                  zh_Hans: MCP 服务配置
+                llm_description: ''
+                max: null
+                min: null
+                name: servers_config
+                options: []
+                placeholder: null
+                precision: null
+                required: false
+                scope: null
+                template: null
+                type: string
+              settings:
+                prompts_as_tools:
+                  value:
+                    type: constant
+                    value: false
+                resources_as_tools:
+                  value:
+                    type: constant
+                    value: true
+              tool_description: 获取 MCP 服务端的工具列表。
+              tool_label: 获取 MCP 工具列表
+              tool_name: mcp_sse_list_tools
+              type: builtin
+        agent_strategy_label: FunctionCalling (支持 MCP 工具)
+        agent_strategy_name: mcp_sse_function_calling
+        agent_strategy_provider_name: junjiem/mcp_see_agent/mcp_see_agent
+        meta:
+          minimum_dify_version: null
+          version: 0.0.1
+        output_schema: {}
+        plugin_unique_identifier: junjiem/mcp_see_agent:0.2.4@82caf96890992e9dec2c43c3fac82bfce8bd18a41de7c2b6948151b2d7f7b7a2
+        selected: false
+        title: Agent
+        tool_node_version: '2'
+        type: agent
+      height: 195
+      id: '1761477395395'
+      position:
+        x: 384.7603500448854
+        y: 281.12944943670385
+      positionAbsolute:
+        x: 384.7603500448854
+        y: 281.12944943670385
+      selected: true
+      sourcePosition: right
+      targetPosition: left
+      type: custom
+      width: 241
+    - data:
+        context:
+          enabled: true
+          variable_selector:
+          - '1761477395395'
+          - text
+        model:
+          completion_params: {}
+          mode: chat
+          name: qwq-plus
+          provider: langgenius/tongyi/tongyi
+        prompt_template:
+        - id: 4d4ca3a2-ac78-4ba4-aea7-4459d0e05dcb
+          role: system
+          text: 你是一个穿衣出行大牛，请根据今天以及未来的天气{{#1761477395395.text#}}给出穿衣建议以及出门建议，以及上线班等建议，请从多方面对天气分析然后给出很明确很有用的建议信息，直接输出建议即可。
+        reasoning_format: tagged
+        selected: false
+        structured_output_enabled: true
+        title: LLM
+        type: llm
+        vision:
+          enabled: false
+      height: 87
+      id: '1761479296472'
+      position:
+        x: 685.7603500448854
+        y: 281.12944943670385
+      positionAbsolute:
+        x: 685.7603500448854
+        y: 281.12944943670385
+      selected: false
+      sourcePosition: right
+      targetPosition: left
+      type: custom
+      width: 241
+    - data:
+        outputs:
+        - value_selector:
+          - '1761477395395'
+          - text
+          value_type: string
+          variable: weathInfo
+        - value_selector:
+          - '1761479296472'
+          - text
+          value_type: string
+          variable: suggest
+        selected: false
+        title: 结束
+        type: end
+      height: 113
+      id: '1761479458907'
+      position:
+        x: 986.7603500448854
+        y: 281.12944943670385
+      positionAbsolute:
+        x: 986.7603500448854
+        y: 281.12944943670385
+      selected: false
+      sourcePosition: right
+      targetPosition: left
+      type: custom
+      width: 241
+    viewport:
+      x: -332.2603500448862
+      y: 299.870550563296
+      zoom: 1.0000000000000007
+  rag_pipeline_variables: []
