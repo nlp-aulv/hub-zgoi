@@ -1,0 +1,8 @@
+collection_schema = {
+  "fields": [
+    {"name": "id", "type": "string", "is_primary": True},
+    {"name": "modality", "type": "string"},          # text / image / table
+    {"name": "vector", "type": "float_vector", "dim": 1024},
+    {"name": "metadata", "type": "json"}             # 存放原文信息或描述
+  ]
+}
