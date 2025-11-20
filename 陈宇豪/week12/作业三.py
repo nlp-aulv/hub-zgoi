@@ -1,4 +1,5 @@
 import streamlit as st
+import json
 
 from agents.mcp.server import MCPServerSse
 import asyncio
@@ -19,6 +20,14 @@ MCP_CATEGORIES = {
     "saying": "名言服务", 
     "tool": "工具服务",
     "sentiment": "情感分析服务"
+}
+
+# 类别到服务器名称的映射
+CATEGORY_TO_SERVER = {
+    "news": "news_only_mcp",
+    "saying": "saying_only_mcp",
+    "tool": "tool_only_mcp",
+    "sentiment": "sentiment_only_mcp"
 }
 
 with st.sidebar:
@@ -48,6 +57,11 @@ with st.sidebar:
     
     if selected_categories:
         st.info(f"已选择服务: {', '.join([MCP_CATEGORIES[c] for c in selected_categories])}")
+        
+        # 如果只选择了一个类别，提示将使用专门的MCP服务器
+        if len(selected_categories) == 1:
+            category = selected_categories[0]
+            st.info(f"将使用专门的 '{MCP_CATEGORIES[category]}' 服务器")
     else:
         st.warning("未选择任何服务")
 
@@ -77,22 +91,35 @@ async def get_model_response(prompt, model_name, use_tool):
     selected_categories = st.session_state.get('selected_mcp_categories', [])
     
     if use_tool and selected_categories:
-        # 创建带有特定类别参数的MCP服务器连接
-        # 注意：这需要MCP服务器支持按类别过滤工具
+        # 创建MCP服务器连接
         mcp_params = {
             "url": "http://localhost:8900/sse",
         }
         
-        # 如果需要传递类别参数，可以添加到params中
-        # 这里假设MCP服务器支持通过参数过滤工具
-        if selected_categories != list(MCP_CATEGORIES.keys()):  # 如果不是全选
-            mcp_params["categories"] = ",".join(selected_categories)
-            
+        # 如果只选择了一个类别，则使用专门的MCP服务器
+        if len(selected_categories) == 1:
+            category = selected_categories[0]
+            if category in CATEGORY_TO_SERVER:
+                mcp_params["server_name"] = CATEGORY_TO_SERVER[category]
+        
         async with MCPServerSse(
                 name="SSE Python Server",
                 params=mcp_params,
                 client_session_timeout_seconds=20
         ) as mcp_server:
+            # 如果用户没有选择所有类别，则调用get_filtered_tools获取过滤后的工具
+            if selected_categories != list(MCP_CATEGORIES.keys()):
+                try:
+                    # 调用get_filtered_tools工具获取过滤后的工具列表
+                    categories_str = ",".join(selected_categories)
+                    filtered_tools_result = await mcp_server.client.call_tool(
+                        "get_filtered_tools", 
+                        {"categories": categories_str}
+                    )
+                    st.info(f"过滤后的工具: {filtered_tools_result}")
+                except Exception as e:
+                    st.warning(f"调用get_filtered_tools时出错: {e}")
+            
             external_client = AsyncOpenAI(
                 api_key=key,
                 base_url="https://dashscope.aliyuncs.com/compatible-mode/v1",

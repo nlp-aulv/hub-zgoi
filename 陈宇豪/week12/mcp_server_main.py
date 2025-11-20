@@ -7,10 +7,6 @@ from saying import mcp as saying_mcp
 from tool import mcp as tool_mcp
 from sentiment import mcp as sentiment_mcp
 
-mcp = FastMCP(
-    name="MCP-Server"
-)
-
 # 类别映射到对应的MCP服务器
 CATEGORY_MCP_MAP = {
     "news": news_mcp,
@@ -20,6 +16,11 @@ CATEGORY_MCP_MAP = {
 }
 
 CATEGORIES = list(CATEGORY_MCP_MAP.keys())
+
+# 创建主MCP实例
+mcp = FastMCP(
+    name="MCP-Server"
+)
 
 async def setup():
     """初始化设置，导入所有MCP服务器"""
@@ -61,8 +62,8 @@ def get_available_categories() -> List[str]:
     """
     return CATEGORIES
 
-# 添加一个函数来根据类别创建动态MCP实例
-def create_filtered_mcp(categories: List[str] = None):
+# 添加一个函数来创建基于类别的过滤MCP实例
+async def create_filtered_mcp_instance(categories: List[str] = None):
     """
     根据指定类别创建一个过滤后的MCP实例
     
@@ -77,15 +78,39 @@ def create_filtered_mcp(categories: List[str] = None):
     # 如果没有指定类别，则使用所有类别
     if not categories:
         categories = CATEGORIES
-        
+    
     # 只导入指定类别的MCP服务器
     for category in categories:
         if category in CATEGORY_MCP_MAP:
-            # 注意：实际实现可能需要不同的方法来实现动态导入
-            # 这里只是一个概念演示
-            pass
+            await filtered_mcp.import_server(CATEGORY_MCP_MAP[category], prefix="")
             
     return filtered_mcp
+
+# 添加一个工具函数来获取过滤后的工具列表
+@mcp.tool
+def get_filtered_tools(categories: str = None) -> dict:
+    """
+    根据类别参数返回过滤后的工具
+    
+    参数:
+        categories: 逗号分隔的类别字符串，例如 "news,tool"
+        
+    返回:
+        过滤后的工具列表
+    """
+    if categories:
+        category_list = categories.split(",")
+        # 验证类别
+        valid_categories = [cat for cat in category_list if cat in CATEGORY_MCP_MAP]
+    else:
+        valid_categories = CATEGORIES
+    
+    # 返回工具信息
+    return {
+        "tools": [f"tool_from_{cat}_category" for cat in valid_categories],
+        "categories": valid_categories,
+        "message": "This is a simulated response. In a full implementation, this would return actual tools."
+    }
 
 async def test_filtering():
     async with Client(mcp) as client:
