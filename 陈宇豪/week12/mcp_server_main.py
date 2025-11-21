@@ -22,35 +22,31 @@ mcp = FastMCP(
     name="MCP-Server"
 )
 
+# 为单个类别创建专门的MCP实例
+news_only_mcp = FastMCP(name="News-Only-MCP-Server")
+saying_only_mcp = FastMCP(name="Saying-Only-MCP-Server")
+tool_only_mcp = FastMCP(name="Tool-Only-MCP-Server")
+sentiment_only_mcp = FastMCP(name="Sentiment-Only-MCP-Server")
+
+# 专门MCP实例映射
+SERVER_MCP_MAP = {
+    "news_only_mcp": news_only_mcp,
+    "saying_only_mcp": saying_only_mcp,
+    "tool_only_mcp": tool_only_mcp,
+    "sentiment_only_mcp": sentiment_only_mcp
+}
+
 async def setup():
     """初始化设置，导入所有MCP服务器"""
+    # 设置主MCP服务器
     for category_mcp in CATEGORY_MCP_MAP.values():
         await mcp.import_server(category_mcp, prefix="")
-
-@mcp.tool
-def list_tools_by_category(categories: List[str] = None) -> dict:
-    """
-    根据指定类别列出可用工具。
     
-    参数:
-        categories: 工具类别列表。如果为None或空列表，则返回所有工具。
-                  可选值: "news", "saying", "tool", "sentiment"
-    
-    返回:
-        包含每个类别及其对应工具列表的字典
-    """
-    # 这个函数主要是为了展示API结构，在实际应用中，
-    # 工具过滤将在服务器层面处理
-    if not categories:
-        categories = CATEGORIES
-    
-    result = {}
-    for category in categories:
-        if category in CATEGORY_MCP_MAP:
-            # 在实际实现中，这里会查询特定类别的工具
-            result[category] = f"Tools for {category} category"
-    
-    return result
+    # 设置专门的MCP服务器
+    await news_only_mcp.import_server(news_mcp, prefix="")
+    await saying_only_mcp.import_server(saying_mcp, prefix="")
+    await tool_only_mcp.import_server(tool_mcp, prefix="")
+    await sentiment_only_mcp.import_server(sentiment_mcp, prefix="")
 
 @mcp.tool
 def get_available_categories() -> List[str]:
@@ -61,30 +57,6 @@ def get_available_categories() -> List[str]:
         所有可用类别的列表
     """
     return CATEGORIES
-
-# 添加一个函数来创建基于类别的过滤MCP实例
-async def create_filtered_mcp_instance(categories: List[str] = None):
-    """
-    根据指定类别创建一个过滤后的MCP实例
-    
-    参数:
-        categories: 要包含的类别列表，如果为None则包含所有类别
-        
-    返回:
-        配置好的FastMCP实例
-    """
-    filtered_mcp = FastMCP(name="Filtered-MCP-Server")
-    
-    # 如果没有指定类别，则使用所有类别
-    if not categories:
-        categories = CATEGORIES
-    
-    # 只导入指定类别的MCP服务器
-    for category in categories:
-        if category in CATEGORY_MCP_MAP:
-            await filtered_mcp.import_server(CATEGORY_MCP_MAP[category], prefix="")
-            
-    return filtered_mcp
 
 # 添加一个工具函数来获取过滤后的工具列表
 @mcp.tool

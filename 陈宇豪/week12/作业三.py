@@ -101,24 +101,21 @@ async def get_model_response(prompt, model_name, use_tool):
             category = selected_categories[0]
             if category in CATEGORY_TO_SERVER:
                 mcp_params["server_name"] = CATEGORY_TO_SERVER[category]
+        # 如果选择了所有类别，则不指定特定服务器（使用默认的主服务器）
+        elif selected_categories == list(MCP_CATEGORIES.keys()):
+            pass  # 使用默认主服务器
+        # 如果选择了部分类别（多于一个但不是全部），显示提示信息
+        elif len(selected_categories) > 1:
+            st.info(f"注意：当前选择了 {len(selected_categories)} 个服务类别，将使用完整工具集")
         
         async with MCPServerSse(
                 name="SSE Python Server",
                 params=mcp_params,
                 client_session_timeout_seconds=20
         ) as mcp_server:
-            # 如果用户没有选择所有类别，则调用get_filtered_tools获取过滤后的工具
-            if selected_categories != list(MCP_CATEGORIES.keys()):
-                try:
-                    # 调用get_filtered_tools工具获取过滤后的工具列表
-                    categories_str = ",".join(selected_categories)
-                    filtered_tools_result = await mcp_server.client.call_tool(
-                        "get_filtered_tools", 
-                        {"categories": categories_str}
-                    )
-                    st.info(f"过滤后的工具: {filtered_tools_result}")
-                except Exception as e:
-                    st.warning(f"调用get_filtered_tools时出错: {e}")
+            # 显示将使用的工具类别
+            categories_text = ', '.join([MCP_CATEGORIES[c] for c in selected_categories])
+            st.info(f"将使用以下类别的工具: {categories_text}")
             
             external_client = AsyncOpenAI(
                 api_key=key,

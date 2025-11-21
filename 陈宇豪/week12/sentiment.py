@@ -51,5 +51,5 @@ def sentiment_analysis(text: str) -> str:
 
 
 if __name__ == '__main__':
-    # print(sentiment_analysis("我非常开心"))
+    print(sentiment_analysis("我非常开心"))
     pass
