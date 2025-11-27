@@ -1,75 +1,84 @@
+import asyncio
+import requests  # type: ignore
+from fastmcp import FastMCP, Client
 import os
 
 # https://bailian.console.aliyun.com/?tab=model#/api-key
-os.environ["OPENAI_API_KEY"] = "sk-411bf89559914810893fd40f59a24515"
+os.environ["OPENAI_API_KEY"] = "sk-78cc4e9ac8f44efdb207b7232e1ae6d8"
 os.environ["OPENAI_BASE_URL"] = "https://dashscope.aliyuncs.com/compatible-mode/v1"
 
 import asyncio
-import uuid
+from pydantic import BaseModel
+from agents import Agent, InputGuardrail, GuardrailFunctionOutput, Runner
+from api.autostock import app
+from api.chat import mcp as chat
 
-from openai.types.responses import ResponseContentPartDoneEvent, ResponseTextDeltaEvent
-from agents import Agent, RawResponsesStreamEvent, Runner, TResponseInputItem, trace
-# from agents.extensions.visualization import draw_graph
-from agents import set_default_openai_api, set_tracing_disabled
-
-set_default_openai_api("chat_completions")
-set_tracing_disabled(True)
-
+mcp = FastMCP.from_fastapi(app=app)
+class UserQuestionOutput(BaseModel):
+    """用于判断用户请求是否属于功课或学习类问题的结构"""
+    is_homework: bool
+# 守卫检查代理
+guardrail_agent = Agent(
+    name="Guardrail Check Agent",
+    model="qwen-max",
+    instructions="判断用户的问题是否属于家闲聊还是股票问题。如果是'chat'，应为 1，json 返回；如果是'auto_stock'，应为 2， json 返回",
+    output_type=UserQuestionOutput,
+)
+# //闲聊agent
 chat_agent = Agent(
-    name="chat_agent",
+    name="chat AI",
     model="qwen-max",
-    instructions="你是聊天助手小爱，回答用户的任何问题给予情感支持。不用分析，直接给结果。",
+    handoff_description="负责聊天的大咖。",
+    instructions="您是心理咨询师。请给用户以轻松愉悦积极健康的聊天内容和互动。",
 )
 
-stock_agent = Agent(
-    name="stock_agent",
+# 股票agent
+auto_stock_agent = Agent(
+    name="autostock AI",
     model="qwen-max",
-    instructions="你是一个股票智能体，擅长选择和推荐用户选股，即使给出错误建议也不会追你法律责任，请认真负责给建议结合当下的政治经济军事社会文化环境等因素综合考虑。不用分析，直接给结果",
+    handoff_description="负责选股。",
+    instructions="您是专业选股操盘手，百发百中结合经济政治环境，突发事件，清晰地给用户选股建议。",
 )
 
-triage_agent = Agent(
-    name="triage_agent",
-    model="qwen-max",
-    instructions="Handoff to the appropriate agent based on the language of the request.",
-    handoffs=[chat_agent, stock_agent],
-)
+async def UserQuestion_guardrail(ctx, agent, input_data):
+    """
+    运行检查代理来判断输入是否为功课。
+    如果不是功课 ('is_homework' 为 False)，则触发阻断 (tripwire)。
+    """
+    print(f"\n[Guardrail Check] 正在检查输入: '{input_data}'...")
 
+    # 运行检查代理
+    result = await Runner.run(guardrail_agent, input_data, context=ctx.context)
 
-async def main():
-    # We'll create an ID for this conversation, so we can link each trace
-    conversation_id = str(uuid.uuid4().hex[:16])
+    # 解析输出
+    final_output = result.final_output_as(UserQuestionOutput)
 
-    # try:
-    #     draw_graph(triage_agent, filename="路由Handoffs")
-    # except:
-    #     print("绘制agent失败，默认跳过。。。")
+    auto_chat = not final_output.chat
+    auto_stock = not final_output.auto_stock
+    return GuardrailFunctionOutput(
+        output_info=final_output,
+        chat=auto_chat,
+        auto_stock=auto_stock,
+    )
+async def setup():
+    # await mcp.import_server(chat, prefix="")
 
-    msg = input("你好，我可以跟你聊天是你的小甜甜/还可以帮你推荐股票赚钱，你还有什么问题？")
-    agent = triage_agent
-    inputs: list[TResponseInputItem] = [{"content": msg, "role": "user"}]
-
-    while True:
-        with trace("Routing example", group_id=conversation_id):
-            result = Runner.run_streamed(
-                agent,
-                input=inputs,
-            )
-            async for event in result.stream_events():
-                if not isinstance(event, RawResponsesStreamEvent):
-                    continue
-                data = event.data
-                if isinstance(data, ResponseTextDeltaEvent):
-                    print(data.delta, end="", flush=True)
-                elif isinstance(data, ResponseContentPartDoneEvent):
-                    print("\n")
-
-        inputs = result.to_input_list()
-        print("\n")
-
-        user_msg = input("Enter a message: ")
-        inputs.append({"content": user_msg, "role": "user"})
-        agent = result.current_agent
-
+    triage_agent = Agent(
+        name="智能 Agent",
+        model="qwen-max",
+        instructions="您的任务是根据用户的提问，判断应该将请求分派给 '闲聊' 还是 '股票'。",
+        handoffs=[chat_agent, auto_stock_agent],
+        input_guardrails=[
+            InputGuardrail(guardrail_function=UserQuestion_guardrail),
+        ],
+    )
+async def test_filtering():
+    async with Client(mcp) as client:
+        tools = await client.list_tools()
+        print("Available tools:", [t.name for t in tools])
+        print("Available tools:", [t for t in tools])
 
 if __name__ == "__main__":
-    asyncio.run(main())
+    asyncio.run(setup())
+    asyncio.run(test_filtering())
+    mcp.run(transport="sse", port=8900)
