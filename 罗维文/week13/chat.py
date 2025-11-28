@@ -218,7 +218,6 @@ async def chat(user_name:str, session_id: Optional[str], task: Optional[str], co
                 ),
                 tool_use_behavior=tool_use_behavior,
                 model_settings=ModelSettings(parallel_tool_calls=False),
-                session = session
             )
 
             Stock_agent = Agent(
@@ -231,7 +230,6 @@ async def chat(user_name:str, session_id: Optional[str], task: Optional[str], co
                 ),
                 tool_use_behavior=tool_use_behavior,
                 model_settings=ModelSettings(parallel_tool_calls=False),
-                session = session
             )
 
             agent = Agent(
@@ -243,7 +241,6 @@ async def chat(user_name:str, session_id: Optional[str], task: Optional[str], co
                     openai_client=external_client,
                 ),
                 model_settings=ModelSettings(parallel_tool_calls=False),
-                session = session
             )
 
             result = Runner.run_streamed(agent, input=content, session=session)
