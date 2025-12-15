@@ -1,0 +1,99 @@
+# 1、复现一下chatbi项目，三部分（mcp、fastapi、streamlit）组成，本地启动运
+
+agents==1.4.0
+fastapi==0.122.0
+fastmcp==2.13.1
+Jinja2==3.1.6
+numpy==2.3.5
+openai==2.8.1
+pandas==2.3.3
+plotly==6.3.0
+pydantic==2.12.4
+Requests==2.32.5
+SQLAlchemy==2.0.44
+streamlit==1.50.0
+uvicorn==0.38.0
+
+# 2、chatbi的项目梳理一下，现在前端和后端交互接口有多少个，写一个接口文档。
+
+- stock 信息
+
+| 接口名                | 传入参数                                                                 | 功能说明                                                                 |
+|-----------------------|--------------------------------------------------------------------------|--------------------------------------------------------------------------|
+| `/get_stock_code`     | `keyword`（可选，支持代码和名称模糊查询）                                | 获取所有股票，支持代码和名称模糊查询                                     |
+| `/get_index_code`     | 无                                                                       | 获取所有指数，支持代码和名称模糊查询                                     |
+| `/get_industry_code`  | 无                                                                       | 获取板块数据                                                             |
+| `/get_board_info`     | 无                                                                       | 获取大盘数据                                                             |
+| `/get_stock_rank`     | `node`（股票市场/板块代码），`industryCode`（可选，行业代码），`pageIndex`（页码），`pageSize`（每页大小），`sort`（排序字段），`asc`（排序方式） | 获取股票排行，支持多种排序方式和分页                                     |
+| `/get_month_line`     | `code`（股票代码），`startDate`（可选，开始时间），`endDate`（可选，结束时间），`type`（复权类型） | 获取股票月K线数据，支持复权选项                                         |
+| `/get_week_line`      | `code`（股票代码），`startDate`（可选，开始时间），`endDate`（可选，结束时间），`type`（复权类型） | 获取股票周K线数据，支持复权选项                                         |
+| `/get_day_line`       | `code`（股票代码），`startDate`（可选，开始时间），`endDate`（可选，结束时间），`type`（复权类型） | 获取股票日K线数据，支持复权选项                                         |
+| `/get_stock_info`     | `code`（股票代码）                                                       | 获取股票基础信息                                                         |
+| `/get_stock_minute_data` | `code`（股票代码）                                                      | 获取股票分时信息                                                         |
+
+- user
+
+| 接口名                        | 传入参数                                                                      | 功能说明                      |
+| -------------------------- | ------------------------------------------------------------------------- | ------------------------- |
+| `/v1/users/login`          | `RequestForUserLogin`（包含 `user_name` 和 `password`）                        | 用户登录，验证用户名和密码，返回登录结果      |
+| `/v1/users/register`       | `RequestForUserRegister`（包含 `user_name`、`password` 和 `user_role`）         | 用户注册，创建新用户，返回注册结果         |
+| `/v1/users/reset-password` | `RequestForUserResetPassword`（包含 `user_name`、`password` 和 `new_password`） | 用户重置密码，验证旧密码后设置新密码，返回重置结果 |
+| `/v1/users/info`           | `user_name`（用户名称）                                                         | 获取用户信息，返回用户详细信息           |
+| `/v1/users/reset-info`     | `RequestForUserChangeInfo`（包含 `user_name`、`user_role` 和 `status`）         | 修改用户信息，可更新用户角色和状态，返回修改结果  |
+| `/v1/users/delete`         | `user_name`（用户名称）                                                         | 删除用户，返回删除结果               |
+| `/v1/users/list`           | 无                                                                         | 获取用户列表，返回所有用户信息           |
+
+
+- chat
+
+| 接口名                 | 传入参数                                                                     | 功能说明                      |
+| ------------------- | ------------------------------------------------------------------------ | ------------------------- |
+| `/v1/chat/`         | `RequestForChat`（包含 `user_name`、`task`、`session_id`、`content` 和 `tools`） | 实时对话接口，支持流式响应，返回对话内容      |
+| `/v1/chat/init`     | 无                                                                        | 初始化聊天会话，生成随机会话ID并返回       |
+| `/v1/chat/get`      | `session_id`（会话ID）                                                       | 获取指定会话ID的聊天记录，返回聊天内容      |
+| `/v1/chat/delete`   | `session_id`（会话ID）                                                       | 删除指定会话ID的聊天记录，返回删除结果      |
+| `/v1/chat/list`     | `user_name`（用户名称）                                                        | 获取指定用户的聊天记录列表，返回聊天记录列表    |
+| `/v1/chat/feedback` | `session_id`（会话ID）、`message_id`（消息ID）、`feedback`（反馈值）                    | 提交消息反馈，更新指定消息的反馈状态，返回操作结果 |
+
+
+- stock 管理
+
+
+| 接口名                         | 传入参数                                 | 功能说明          |
+| --------------------------- | ------------------------------------ | ------------- |
+| `/v1/stock/list_fav_stock`  | `user_name`（用户名称）                    | 获取用户收藏的所有股票列表 |
+| `/v1/stock/del_fav_stock`   | `user_name`（用户名称）、`stock_code`（股票代码） | 删除用户收藏的指定股票   |
+| `/v1/stock/add_fav_stock`   | `user_name`（用户名称）、`stock_code`（股票代码） | 添加用户收藏的股票     |
+| `/v1/stock/clear_fav_stock` | `user_name`（用户名称）                    | 清空用户收藏的所有股票   |
+
+# 3、在service中，定义两种agent，一种是闲聊agent，一种股票agent，通过handoff链接一起进行对话。
+
+stock_agent = Agent(
+    name="News Assistant",
+    instructions="Solve task with Stock",
+    mcp_servers=[mcp_server],
+    model=OpenAIChatCompletionsModel(
+        model=model_name,
+        openai_client=external_client,
+    ),
+    model_settings=ModelSettings(parallel_tool_calls=False)
+)
+chat_agnet = Agent(
+    name="Chat Assistant",
+    instructions="Chat with user",
+    model=OpenAIChatCompletionsModel(
+        model=model_name,
+        openai_client=external_client,
+    ),
+    model_settings=ModelSettings(parallel_tool_calls=False)
+)
+agent = Agent(
+    name="triage_agent",
+    instructions="Handoff to the appropriate agent based on the task of the request.",
+    handoffs=[stock_agent, chat_agnet],
+    model=OpenAIChatCompletionsModel(
+        model=model_name,
+        openai_client=external_client,
+    ),
+    model_settings=ModelSettings(parallel_tool_calls=False)
+)

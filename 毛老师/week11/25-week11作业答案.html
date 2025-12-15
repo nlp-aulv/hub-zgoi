@@ -1,0 +1,618 @@
+<!doctype html>
+<html>
+<head>
+<meta charset='UTF-8'><meta name='viewport' content='width=device-width initial-scale=1'>
+
+<link href='https://fonts.googleapis.com/css?family=Open+Sans:400italic,700italic,700,400&subset=latin,latin-ext' rel='stylesheet' type='text/css' /><style type='text/css'>html {overflow-x: initial !important;}:root { --bg-color: #ffffff; --text-color: #333333; --select-text-bg-color: #B5D6FC; --select-text-font-color: auto; --monospace: "Lucida Console",Consolas,"Courier",monospace; --title-bar-height: 20px; }
+.mac-os-11 { --title-bar-height: 28px; }
+html { font-size: 14px; background-color: var(--bg-color); color: var(--text-color); font-family: "Helvetica Neue", Helvetica, Arial, sans-serif; -webkit-font-smoothing: antialiased; }
+h1, h2, h3, h4, h5 { white-space: pre-wrap; }
+body { margin: 0px; padding: 0px; height: auto; inset: 0px; font-size: 1rem; line-height: 1.428571; overflow-x: hidden; background: inherit; }
+iframe { margin: auto; }
+a.url { word-break: break-all; }
+a:active, a:hover { outline: 0px; }
+.in-text-selection, ::selection { text-shadow: none; background: var(--select-text-bg-color); color: var(--select-text-font-color); }
+#write { margin: 0px auto; height: auto; width: inherit; word-break: normal; overflow-wrap: break-word; position: relative; white-space: normal; overflow-x: visible; padding-top: 36px; }
+#write.first-line-indent p { text-indent: 2em; }
+#write.first-line-indent li p, #write.first-line-indent p * { text-indent: 0px; }
+#write.first-line-indent li { margin-left: 2em; }
+.for-image #write { padding-left: 8px; padding-right: 8px; }
+body.typora-export { padding-left: 30px; padding-right: 30px; }
+.typora-export .footnote-line, .typora-export li, .typora-export p { white-space: pre-wrap; }
+.typora-export .task-list-item input { pointer-events: none; }
+@media screen and (max-width: 500px) {
+  body.typora-export { padding-left: 0px; padding-right: 0px; }
+  #write { padding-left: 20px; padding-right: 20px; }
+}
+#write li > figure:last-child { margin-bottom: 0.5rem; }
+#write ol, #write ul { position: relative; }
+img { max-width: 100%; vertical-align: middle; image-orientation: from-image; }
+button, input, select, textarea { color: inherit; font-style: inherit; font-variant-caps: inherit; font-weight: inherit; font-stretch: inherit; font-size: inherit; line-height: inherit; font-family: inherit; font-size-adjust: inherit; font-kerning: inherit; font-variant-alternates: inherit; font-variant-ligatures: inherit; font-variant-numeric: inherit; font-variant-east-asian: inherit; font-variant-position: inherit; font-variant-emoji: inherit; font-feature-settings: inherit; font-optical-sizing: inherit; font-variation-settings: inherit; }
+input[type="checkbox"], input[type="radio"] { line-height: normal; padding: 0px; }
+*, ::after, ::before { box-sizing: border-box; }
+#write h1, #write h2, #write h3, #write h4, #write h5, #write h6, #write p, #write pre { width: inherit; position: relative; }
+#write svg h1, #write svg h2, #write svg h3, #write svg h4, #write svg h5, #write svg h6, #write svg p { position: static; }
+p { line-height: inherit; }
+h1, h2, h3, h4, h5, h6 { break-after: avoid-page; break-inside: avoid; orphans: 4; }
+p { orphans: 4; }
+h1 { font-size: 2rem; }
+h2 { font-size: 1.8rem; }
+h3 { font-size: 1.6rem; }
+h4 { font-size: 1.4rem; }
+h5 { font-size: 1.2rem; }
+h6 { font-size: 1rem; }
+.md-math-block, .md-rawblock, h1, h2, h3, h4, h5, h6, p { margin-top: 1rem; margin-bottom: 1rem; }
+.hidden { display: none; }
+.md-blockmeta { color: rgb(204, 204, 204); font-weight: 700; font-style: italic; }
+a { cursor: pointer; }
+sup.md-footnote { padding: 2px 4px; background-color: rgba(238, 238, 238, 0.7); color: rgb(85, 85, 85); border-radius: 4px; cursor: pointer; }
+sup.md-footnote a, sup.md-footnote a:hover { color: inherit; text-transform: inherit; text-decoration: inherit; }
+#write input[type="checkbox"] { cursor: pointer; width: inherit; height: inherit; }
+figure { overflow-x: auto; margin: 1.2em 0px; max-width: calc(100% + 16px); padding: 0px; }
+figure > table { margin: 0px; }
+thead, tr { break-inside: avoid; break-after: auto; }
+thead { display: table-header-group; }
+table { border-collapse: collapse; border-spacing: 0px; width: 100%; overflow: auto; break-inside: auto; text-align: left; }
+table.md-table td { min-width: 32px; }
+.CodeMirror-gutters { border-right-width: 0px; border-right-style: none; border-right-color: currentcolor; background-color: inherit; }
+.CodeMirror-linenumber { -webkit-user-select: none; }
+.CodeMirror { text-align: left; }
+.CodeMirror-placeholder { opacity: 0.3; }
+.CodeMirror pre { padding: 0px 4px; }
+.CodeMirror-lines { padding: 0px; }
+div.hr:focus { cursor: none; }
+#write pre { white-space: pre-wrap; }
+#write.fences-no-line-wrapping pre { white-space: pre; }
+#write pre.ty-contain-cm { white-space: normal; }
+.CodeMirror-gutters { margin-right: 4px; }
+.md-fences { font-size: 0.9rem; display: block; break-inside: avoid; text-align: left; overflow: visible; white-space: pre; background: inherit; position: relative !important; }
+.md-fences-adv-panel { width: 100%; margin-top: 10px; text-align: center; padding-top: 0px; padding-bottom: 8px; overflow-x: auto; }
+#write .md-fences.mock-cm { white-space: pre-wrap; }
+.md-fences.md-fences-with-lineno { padding-left: 0px; }
+#write.fences-no-line-wrapping .md-fences.mock-cm { white-space: pre; overflow-x: auto; }
+.md-fences.mock-cm.md-fences-with-lineno { padding-left: 8px; }
+.CodeMirror-line, twitterwidget { break-inside: avoid; }
+svg { break-inside: avoid; }
+.footnotes { opacity: 0.8; font-size: 0.9rem; margin-top: 1em; margin-bottom: 1em; }
+.footnotes + .footnotes { margin-top: 0px; }
+.md-reset { margin: 0px; padding: 0px; border: 0px; outline: 0px; vertical-align: top; background: 0px 0px; text-decoration: none; text-shadow: none; float: none; position: static; width: auto; height: auto; white-space: nowrap; cursor: inherit; line-height: normal; font-weight: 400; text-align: left; box-sizing: content-box; direction: ltr; }
+li div { padding-top: 0px; }
+blockquote { margin: 1rem 0px; }
+li .mathjax-block, li p { margin: 0.5rem 0px; }
+li blockquote { margin: 1rem 0px; }
+li { margin: 0px; position: relative; }
+blockquote > :last-child { margin-bottom: 0px; }
+blockquote > :first-child, li > :first-child { margin-top: 0px; }
+.footnotes-area { color: rgb(136, 136, 136); margin-top: 0.714rem; padding-bottom: 0.143rem; white-space: normal; }
+#write .footnote-line { white-space: pre-wrap; }
+@media print {
+  body, html { border: 1px solid transparent; height: 99%; break-after: avoid; break-before: avoid; font-variant-ligatures: no-common-ligatures; }
+  #write { margin-top: 0px; border-color: transparent !important; padding-top: 0px !important; padding-bottom: 0px !important; }
+  .typora-export * { print-color-adjust: exact; }
+  .typora-export #write { break-after: avoid; }
+  .typora-export #write::after { height: 0px; }
+  .is-mac table { break-inside: avoid; }
+  #write > p:nth-child(1) { margin-top: 0px; }
+  .typora-export-show-outline .typora-export-sidebar { display: none; }
+  figure { overflow-x: visible; }
+}
+.footnote-line { margin-top: 0.714em; font-size: 0.7em; }
+a img, img a { cursor: pointer; }
+pre.md-meta-block { font-size: 0.8rem; min-height: 0.8rem; white-space: pre-wrap; background: rgb(204, 204, 204); display: block; overflow-x: hidden; }
+p > .md-image:only-child:not(.md-img-error) img, p > img:only-child { display: block; margin: auto; }
+#write.first-line-indent p > .md-image:only-child:not(.md-img-error) img { left: -2em; position: relative; }
+p > .md-image:only-child { display: inline-block; width: 100%; }
+#write .MathJax_Display { margin: 0.8em 0px 0px; }
+.md-math-block { width: 100%; }
+.md-math-block:not(:empty)::after { display: none; }
+.MathJax_ref { fill: currentcolor; }
+[contenteditable="true"]:active, [contenteditable="true"]:focus, [contenteditable="false"]:active, [contenteditable="false"]:focus { outline: 0px; box-shadow: none; }
+.md-task-list-item { position: relative; list-style-type: none; }
+.task-list-item.md-task-list-item { padding-left: 0px; }
+.md-task-list-item > input { position: absolute; top: 0px; left: 0px; margin-left: -1.2em; margin-top: calc(1em - 10px); border: medium; }
+.math { font-size: 1rem; }
+.md-toc { min-height: 3.58rem; position: relative; font-size: 0.9rem; border-radius: 10px; }
+.md-toc-content { position: relative; margin-left: 0px; }
+.md-toc-content::after, .md-toc::after { display: none; }
+.md-toc-item { display: block; color: rgb(65, 131, 196); }
+.md-toc-item a { text-decoration: none; }
+.md-toc-inner:hover { text-decoration: underline; }
+.md-toc-inner { display: inline-block; cursor: pointer; }
+.md-toc-h1 .md-toc-inner { margin-left: 0px; font-weight: 700; }
+.md-toc-h2 .md-toc-inner { margin-left: 2em; }
+.md-toc-h3 .md-toc-inner { margin-left: 4em; }
+.md-toc-h4 .md-toc-inner { margin-left: 6em; }
+.md-toc-h5 .md-toc-inner { margin-left: 8em; }
+.md-toc-h6 .md-toc-inner { margin-left: 10em; }
+@media screen and (max-width: 48em) {
+  .md-toc-h3 .md-toc-inner { margin-left: 3.5em; }
+  .md-toc-h4 .md-toc-inner { margin-left: 5em; }
+  .md-toc-h5 .md-toc-inner { margin-left: 6.5em; }
+  .md-toc-h6 .md-toc-inner { margin-left: 8em; }
+}
+a.md-toc-inner { font-size: inherit; font-style: inherit; font-weight: inherit; line-height: inherit; }
+.footnote-line a:not(.reversefootnote) { color: inherit; }
+.reversefootnote { font-family: ui-monospace, sans-serif; }
+.md-attr { display: none; }
+.md-fn-count::after { content: "."; }
+code, pre, samp, tt { font-family: var(--monospace); }
+kbd { margin: 0px 0.1em; padding: 0.1em 0.6em; font-size: 0.8em; color: rgb(36, 39, 41); background: rgb(255, 255, 255); border: 1px solid rgb(173, 179, 185); border-radius: 3px; box-shadow: rgba(12, 13, 14, 0.2) 0px 1px 0px, rgb(255, 255, 255) 0px 0px 0px 2px inset; white-space: nowrap; vertical-align: middle; }
+.md-comment { color: rgb(162, 127, 3); opacity: 0.6; font-family: var(--monospace); }
+code { text-align: left; vertical-align: initial; }
+a.md-print-anchor { white-space: pre !important; border-width: medium !important; border-style: none !important; border-color: currentcolor !important; display: inline-block !important; position: absolute !important; width: 1px !important; right: 0px !important; outline: 0px !important; background: 0px 0px !important; text-decoration: initial !important; text-shadow: initial !important; }
+.os-windows.monocolor-emoji .md-emoji { font-family: "Segoe UI Symbol", sans-serif; }
+.md-diagram-panel > svg { max-width: 100%; }
+[lang="flow"] svg, [lang="mermaid"] svg { max-width: 100%; height: auto; }
+[lang="mermaid"] .node text { font-size: 1rem; }
+table tr th { border-bottom-width: 0px; border-bottom-style: none; border-bottom-color: currentcolor; }
+video { max-width: 100%; display: block; margin: 0px auto; }
+iframe { max-width: 100%; width: 100%; border: medium; }
+.highlight td, .highlight tr { border: 0px; }
+mark { background: rgb(255, 255, 0); color: rgb(0, 0, 0); }
+.md-html-inline .md-plain, .md-html-inline strong, mark .md-inline-math, mark strong { color: inherit; }
+.md-expand mark .md-meta { opacity: 0.3 !important; }
+mark .md-meta { color: rgb(0, 0, 0); }
+@media print {
+  .typora-export h1, .typora-export h2, .typora-export h3, .typora-export h4, .typora-export h5, .typora-export h6 { break-inside: avoid; }
+}
+.md-diagram-panel .messageText { stroke: none !important; }
+.md-diagram-panel .start-state { fill: var(--node-fill); }
+.md-diagram-panel .edgeLabel rect { opacity: 1 !important; }
+.md-fences.md-fences-math { font-size: 1em; }
+.md-fences-advanced:not(.md-focus) { padding: 0px; white-space: nowrap; border: 0px; }
+.md-fences-advanced:not(.md-focus) { background: inherit; }
+.mermaid-svg { margin: auto; }
+.typora-export-show-outline .typora-export-content { max-width: 1440px; margin: auto; display: flex; flex-direction: row; }
+.typora-export-sidebar { width: 300px; font-size: 0.8rem; margin-top: 80px; margin-right: 18px; }
+.typora-export-show-outline #write { --webkit-flex: 2; flex: 2 1 0%; }
+.typora-export-sidebar .outline-content { position: fixed; top: 0px; max-height: 100%; overflow: hidden auto; padding-bottom: 30px; padding-top: 60px; width: 300px; }
+@media screen and (max-width: 1024px) {
+  .typora-export-sidebar, .typora-export-sidebar .outline-content { width: 240px; }
+}
+@media screen and (max-width: 800px) {
+  .typora-export-sidebar { display: none; }
+}
+.outline-content li, .outline-content ul { margin-left: 0px; margin-right: 0px; padding-left: 0px; padding-right: 0px; list-style: none; overflow-wrap: anywhere; }
+.outline-content ul { margin-top: 0px; margin-bottom: 0px; }
+.outline-content strong { font-weight: 400; }
+.outline-expander { width: 1rem; height: 1.428571rem; position: relative; display: table-cell; vertical-align: middle; cursor: pointer; padding-left: 4px; }
+.outline-expander::before { content: ""; position: relative; font-family: Ionicons; display: inline-block; font-size: 8px; vertical-align: middle; }
+.outline-item { padding-top: 3px; padding-bottom: 3px; cursor: pointer; }
+.outline-expander:hover::before { content: ""; }
+.outline-h1 > .outline-item { padding-left: 0px; }
+.outline-h2 > .outline-item { padding-left: 1em; }
+.outline-h3 > .outline-item { padding-left: 2em; }
+.outline-h4 > .outline-item { padding-left: 3em; }
+.outline-h5 > .outline-item { padding-left: 4em; }
+.outline-h6 > .outline-item { padding-left: 5em; }
+.outline-label { cursor: pointer; display: table-cell; vertical-align: middle; text-decoration: none; color: inherit; }
+.outline-label:hover { text-decoration: underline; }
+.outline-item:hover { border-color: rgb(245, 245, 245); background-color: var(--item-hover-bg-color); }
+.outline-item:hover { margin-left: -28px; margin-right: -28px; border-left-width: 28px; border-left-style: solid; border-left-color: transparent; border-right-width: 28px; border-right-style: solid; border-right-color: transparent; }
+.outline-item-single .outline-expander::before, .outline-item-single .outline-expander:hover::before { display: none; }
+.outline-item-open > .outline-item > .outline-expander::before { content: ""; }
+.outline-children { display: none; }
+.info-panel-tab-wrapper { display: none; }
+.outline-item-open > .outline-children { display: block; }
+.typora-export .outline-item { padding-top: 1px; padding-bottom: 1px; }
+.typora-export .outline-item:hover { margin-right: -8px; border-right-width: 8px; border-right-style: solid; border-right-color: transparent; }
+.typora-export .outline-expander::before { content: "+"; font-family: inherit; top: -1px; }
+.typora-export .outline-expander:hover::before, .typora-export .outline-item-open > .outline-item > .outline-expander::before { content: "−"; }
+.typora-export-collapse-outline .outline-children { display: none; }
+.typora-export-collapse-outline .outline-item-open > .outline-children, .typora-export-no-collapse-outline .outline-children { display: block; }
+.typora-export-no-collapse-outline .outline-expander::before { content: "" !important; }
+.typora-export-show-outline .outline-item-active > .outline-item .outline-label { font-weight: 700; }
+.md-inline-math-container mjx-container { zoom: 0.95; }
+mjx-container { break-inside: avoid; }
+.md-alert.md-alert-note { border-left-color: rgb(9, 105, 218); }
+.md-alert.md-alert-important { border-left-color: rgb(130, 80, 223); }
+.md-alert.md-alert-warning { border-left-color: rgb(154, 103, 0); }
+.md-alert.md-alert-tip { border-left-color: rgb(31, 136, 61); }
+.md-alert.md-alert-caution { border-left-color: rgb(207, 34, 46); }
+.md-alert { padding: 0px 1em; margin-bottom: 16px; color: inherit; border-left-width: 0.25em; border-left-style: solid; border-left-color: rgb(0, 0, 0); }
+.md-alert-text-note { color: rgb(9, 105, 218); }
+.md-alert-text-important { color: rgb(130, 80, 223); }
+.md-alert-text-warning { color: rgb(154, 103, 0); }
+.md-alert-text-tip { color: rgb(31, 136, 61); }
+.md-alert-text-caution { color: rgb(207, 34, 46); }
+.md-alert-text { font-size: 0.9rem; font-weight: 700; }
+.md-alert-text svg { fill: currentcolor; position: relative; top: 0.125em; margin-right: 1ch; overflow: visible; }
+.md-alert-text-container::after { content: attr(data-text); text-transform: capitalize; pointer-events: none; margin-right: 1ch; }
+
+
+:root {
+    --side-bar-bg-color: #fafafa;
+    --control-text-color: #777;
+}
+
+@include-when-export url(https://fonts.googleapis.com/css?family=Open+Sans:400italic,700italic,700,400&subset=latin,latin-ext);
+
+/* open-sans-regular - latin-ext_latin */
+  /* open-sans-italic - latin-ext_latin */
+    /* open-sans-700 - latin-ext_latin */
+    /* open-sans-700italic - latin-ext_latin */
+  html {
+    font-size: 16px;
+    -webkit-font-smoothing: antialiased;
+}
+
+body {
+    font-family: "Open Sans","Clear Sans", "Helvetica Neue", Helvetica, Arial, 'Segoe UI Emoji', sans-serif;
+    color: rgb(51, 51, 51);
+    line-height: 1.6;
+}
+
+#write {
+    max-width: 860px;
+  	margin: 0 auto;
+  	padding: 30px;
+    padding-bottom: 100px;
+}
+
+@media only screen and (min-width: 1400px) {
+	#write {
+		max-width: 1024px;
+	}
+}
+
+@media only screen and (min-width: 1800px) {
+	#write {
+		max-width: 1200px;
+	}
+}
+
+#write > ul:first-child,
+#write > ol:first-child{
+    margin-top: 30px;
+}
+
+a {
+    color: #4183C4;
+}
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+    position: relative;
+    margin-top: 1rem;
+    margin-bottom: 1rem;
+    font-weight: bold;
+    line-height: 1.4;
+    cursor: text;
+}
+h1:hover a.anchor,
+h2:hover a.anchor,
+h3:hover a.anchor,
+h4:hover a.anchor,
+h5:hover a.anchor,
+h6:hover a.anchor {
+    text-decoration: none;
+}
+h1 tt,
+h1 code {
+    font-size: inherit;
+}
+h2 tt,
+h2 code {
+    font-size: inherit;
+}
+h3 tt,
+h3 code {
+    font-size: inherit;
+}
+h4 tt,
+h4 code {
+    font-size: inherit;
+}
+h5 tt,
+h5 code {
+    font-size: inherit;
+}
+h6 tt,
+h6 code {
+    font-size: inherit;
+}
+h1 {
+    font-size: 2.25em;
+    line-height: 1.2;
+    border-bottom: 1px solid #eee;
+}
+h2 {
+    font-size: 1.75em;
+    line-height: 1.225;
+    border-bottom: 1px solid #eee;
+}
+
+/*@media print {
+    .typora-export h1,
+    .typora-export h2 {
+        border-bottom: none;
+        padding-bottom: initial;
+    }
+
+    .typora-export h1::after,
+    .typora-export h2::after {
+        content: "";
+        display: block;
+        height: 100px;
+        margin-top: -96px;
+        border-top: 1px solid #eee;
+    }
+}*/
+
+h3 {
+    font-size: 1.5em;
+    line-height: 1.43;
+}
+h4 {
+    font-size: 1.25em;
+}
+h5 {
+    font-size: 1em;
+}
+h6 {
+   font-size: 1em;
+    color: #777;
+}
+p,
+blockquote,
+ul,
+ol,
+dl,
+table{
+    margin: 0.8em 0;
+}
+li>ol,
+li>ul {
+    margin: 0 0;
+}
+hr {
+    height: 2px;
+    padding: 0;
+    margin: 16px 0;
+    background-color: #e7e7e7;
+    border: 0 none;
+    overflow: hidden;
+    box-sizing: content-box;
+}
+
+li p.first {
+    display: inline-block;
+}
+ul,
+ol {
+    padding-left: 30px;
+}
+ul:first-child,
+ol:first-child {
+    margin-top: 0;
+}
+ul:last-child,
+ol:last-child {
+    margin-bottom: 0;
+}
+blockquote {
+    border-left: 4px solid #dfe2e5;
+    padding: 0 15px;
+    color: #777777;
+}
+blockquote blockquote {
+    padding-right: 0;
+}
+table {
+    padding: 0;
+    word-break: initial;
+}
+table tr {
+    border: 1px solid #dfe2e5;
+    margin: 0;
+    padding: 0;
+}
+table tr:nth-child(2n),
+thead {
+    background-color: #f8f8f8;
+}
+table th {
+    font-weight: bold;
+    border: 1px solid #dfe2e5;
+    border-bottom: 0;
+    margin: 0;
+    padding: 6px 13px;
+}
+table td {
+    border: 1px solid #dfe2e5;
+    margin: 0;
+    padding: 6px 13px;
+}
+table th:first-child,
+table td:first-child {
+    margin-top: 0;
+}
+table th:last-child,
+table td:last-child {
+    margin-bottom: 0;
+}
+
+.CodeMirror-lines {
+    padding-left: 4px;
+}
+
+.code-tooltip {
+    box-shadow: 0 1px 1px 0 rgba(0,28,36,.3);
+    border-top: 1px solid #eef2f2;
+}
+
+.md-fences,
+code,
+tt {
+    border: 1px solid #e7eaed;
+    background-color: #f8f8f8;
+    border-radius: 3px;
+    padding: 0;
+    padding: 2px 4px 0px 4px;
+    font-size: 0.9em;
+}
+
+code {
+    background-color: #f3f4f4;
+    padding: 0 2px 0 2px;
+}
+
+.md-fences {
+    margin-bottom: 15px;
+    margin-top: 15px;
+    padding-top: 8px;
+    padding-bottom: 6px;
+}
+
+
+.md-task-list-item > input {
+  margin-left: -1.3em;
+}
+
+@media print {
+    html {
+        font-size: 13px;
+    }
+    pre {
+        page-break-inside: avoid;
+        word-wrap: break-word;
+    }
+}
+
+.md-fences {
+	background-color: #f8f8f8;
+}
+#write pre.md-meta-block {
+	padding: 1rem;
+    font-size: 85%;
+    line-height: 1.45;
+    background-color: #f7f7f7;
+    border: 0;
+    border-radius: 3px;
+    color: #777777;
+    margin-top: 0 !important;
+}
+
+.mathjax-block>.code-tooltip {
+	bottom: .375rem;
+}
+
+.md-mathjax-midline {
+    background: #fafafa;
+}
+
+#write>h3.md-focus:before{
+	left: -1.5625rem;
+	top: .375rem;
+}
+#write>h4.md-focus:before{
+	left: -1.5625rem;
+	top: .285714286rem;
+}
+#write>h5.md-focus:before{
+	left: -1.5625rem;
+	top: .285714286rem;
+}
+#write>h6.md-focus:before{
+	left: -1.5625rem;
+	top: .285714286rem;
+}
+.md-image>.md-meta {
+    /*border: 1px solid #ddd;*/
+    border-radius: 3px;
+    padding: 2px 0px 0px 4px;
+    font-size: 0.9em;
+    color: inherit;
+}
+
+.md-tag {
+    color: #a7a7a7;
+    opacity: 1;
+}
+
+.md-toc { 
+    margin-top:20px;
+    padding-bottom:20px;
+}
+
+.sidebar-tabs {
+    border-bottom: none;
+}
+
+#typora-quick-open {
+    border: 1px solid #ddd;
+    background-color: #f8f8f8;
+}
+
+#typora-quick-open-item {
+    background-color: #FAFAFA;
+    border-color: #FEFEFE #e5e5e5 #e5e5e5 #eee;
+    border-style: solid;
+    border-width: 1px;
+}
+
+/** focus mode */
+.on-focus-mode blockquote {
+    border-left-color: rgba(85, 85, 85, 0.12);
+}
+
+header, .context-menu, .megamenu-content, footer{
+    font-family: "Segoe UI", "Arial", sans-serif;
+}
+
+.file-node-content:hover .file-node-icon,
+.file-node-content:hover .file-node-open-state{
+    visibility: visible;
+}
+
+.mac-seamless-mode #typora-sidebar {
+    background-color: #fafafa;
+    background-color: var(--side-bar-bg-color);
+}
+
+.mac-os #write{
+    caret-color: AccentColor;
+}
+
+.md-lang {
+    color: #b4654d;
+}
+
+/*.html-for-mac {
+    --item-hover-bg-color: #E6F0FE;
+}*/
+
+#md-notification .btn {
+    border: 0;
+}
+
+.dropdown-menu .divider {
+    border-color: #e5e5e5;
+    opacity: 0.4;
+}
+
+.ty-preferences .window-content {
+    background-color: #fafafa;
+}
+
+.ty-preferences .nav-group-item.active {
+    color: white;
+    background: #999;
+}
+
+.menu-item-container a.menu-style-btn {
+    background-color: #f5f8fa;
+    background-image: linear-gradient( 180deg , hsla(0, 0%, 100%, 0.8), hsla(0, 0%, 100%, 0)); 
+}
+
+
+ @media print { @page {margin: 0 0 0 0;} body.typora-export {padding-left: 0; padding-right: 0;} #write {padding:0;}}
+</style><title>好的，这是对您最初提供的 OpenAI Agents SDK 文档内容进行整理的标题结构。我将遵循您要求的格式，只提供标题，并且使用四个级别的标题。</title>
+</head>
+<body class='typora-export'><div class='typora-export-content'>
+<div id='write'  class=''><div class='md-toc' mdtype='toc'><p class="md-toc-content" role="list"><span role="listitem" class="md-toc-item md-toc-h2" data-ref="n1253"><a class="md-toc-inner" style="" href="#多模态rag系统接口设计">多模态RAG系统接口设计</a></span><span role="listitem" class="md-toc-item md-toc-h3" data-ref="n1254"><a class="md-toc-inner" style="" href="#i-权限管理模块-authorization--access">I. 权限管理模块 (Authorization &amp; Access)</a></span><span role="listitem" class="md-toc-item md-toc-h3" data-ref="n1276"><a class="md-toc-inner" style="" href="#ii-数据管理接口-data-management-api">II. 数据管理接口 (Data Management API)</a></span><span role="listitem" class="md-toc-item md-toc-h4" data-ref="n1277"><a class="md-toc-inner" style="" href="#1-知识库维度-knowledge-base-level">1. 知识库维度 (Knowledge Base Level)</a></span><span role="listitem" class="md-toc-item md-toc-h4" data-ref="n1315"><a class="md-toc-inner" style="" href="#2-文档维度-document-level">2. 文档维度 (Document Level)</a></span><span role="listitem" class="md-toc-item md-toc-h4" data-ref="n1345"><a class="md-toc-inner" style="" href="#3-chunk维度-chunk-level">3. Chunk维度 (Chunk Level)</a></span><span role="listitem" class="md-toc-item md-toc-h3" data-ref="n1370"><a class="md-toc-inner" style="" href="#iii-多模态检索接口-multi-modal-retrieval-api">III. 多模态检索接口 (Multi-modal Retrieval API)</a></span><span role="listitem" class="md-toc-item md-toc-h3" data-ref="n1387"><a class="md-toc-inner" style="" href="#iv-多模态问答接口-multi-modal-qa-api">IV. 多模态问答接口 (Multi-modal Q&amp;A API)</a></span><span role="listitem" class="md-toc-item md-toc-h2" data-ref="n1414"><a class="md-toc-inner" style="" href="#数据存储-schema-设计">数据存储 Schema 设计</a></span><span role="listitem" class="md-toc-item md-toc-h3" data-ref="n1424"><a class="md-toc-inner" style="" href="#i-mysql-schema-设计">I. MySQL Schema 设计</a></span><span role="listitem" class="md-toc-item md-toc-h4" data-ref="n1425"><a class="md-toc-inner" style="" href="#1-users-用户表">1. <code>users</code> (用户表)</a></span><span role="listitem" class="md-toc-item md-toc-h4" data-ref="n1452"><a class="md-toc-inner" style="" href="#2-knowledgebases-知识库表">2. <code>knowledge_bases</code> (知识库表)</a></span><span role="listitem" class="md-toc-item md-toc-h4" data-ref="n1484"><a class="md-toc-inner" style="" href="#3-kbpermissions-知识库权限表">3. <code>kb_permissions</code> (知识库权限表)</a></span><span role="listitem" class="md-toc-item md-toc-h4" data-ref="n1516"><a class="md-toc-inner" style="" href="#4-documents-文档表">4. <code>documents</code> (文档表)</a></span><span role="listitem" class="md-toc-item md-toc-h4" data-ref="n1559"><a class="md-toc-inner" style="" href="#5-chunks-多模态-chunk-表">5. <code>chunks</code> (多模态 Chunk 表)</a></span><span role="listitem" class="md-toc-item md-toc-h3" data-ref="n1608"><a class="md-toc-inner" style="" href="#ii-milvus-schema">II. Milvus Schema </a></span></p></div><h2 id='多模态rag系统接口设计'><span>多模态RAG系统接口设计</span></h2><h3 id='i-权限管理模块-authorization--access'><span>I. 权限管理模块 (Authorization &amp; Access)</span></h3><figure class='table-figure'><table><thead><tr><th><strong><span>模块/功能</span></strong></th><th><strong><span>接口定义</span></strong></th><th><strong><span>HTTP方法</span></strong></th><th><strong><span>描述</span></strong></th></tr></thead><tbody><tr><td><strong><span>用户登录</span></strong></td><td><code>/auth/login</code></td><td><code>POST</code></td><td><span>获取用户Token。</span></td></tr><tr><td><strong><span>用户注册</span></strong></td><td><code>/auth/register</code></td><td><code>POST</code></td><td><span>注册新用户。</span></td></tr><tr><td><strong><span>分配权限</span></strong></td><td><code>/permission/grant</code></td><td><code>POST</code></td><td><span>管理员为用户分配知识库的读/写权限。</span></td></tr></tbody></table></figure><h3 id='ii-数据管理接口-data-management-api'><span>II. 数据管理接口 (Data Management API)</span></h3><h4 id='1-知识库维度-knowledge-base-level'><span>1. 知识库维度 (Knowledge Base Level)</span></h4><figure class='table-figure'><table><thead><tr><th><strong><span>接口定义</span></strong></th><th><strong><span>HTTP方法</span></strong></th><th><strong><span>传入参数 (Request Body)</span></strong></th><th><strong><span>返回结果 (Response Body)</span></strong></th><th><strong><span>权限要求</span></strong></th><th><strong><span>描述</span></strong></th></tr></thead><tbody><tr><td><code>/kb/create</code></td><td><code>POST</code></td><td><code>kb_name</code><span> (str), </span><code>description</code><span> (str), </span><code>owner_id</code><span> (int), </span><code>read_users</code><span> (list[int]), </span><code>write_users</code><span> (list[int])</span></td><td><code>kb_id</code><span> (int), </span><code>message</code><span> (str)</span></td><td><span>需管理员或特定权限</span></td><td><strong><span>创建</span></strong><span>新的知识库。</span></td></tr><tr><td><code>/kb/{kb_id}</code></td><td><code>GET</code></td><td><span>(URL Path)</span></td><td><code>kb_id</code><span>, </span><code>kb_name</code><span>, </span><code>description</code><span>, </span><code>owner_id</code><span>, </span><code>read_users</code><span>, </span><code>write_users</code><span>, </span><code>status</code></td><td><span>读权限</span></td><td><strong><span>获取</span></strong><span>知识库详细信息。</span></td></tr><tr><td><code>/kb/{kb_id}/update</code></td><td><code>POST</code></td><td><code>kb_name</code><span> (str, optional), </span><code>description</code><span> (str, optional), </span><code>add_read_users</code><span> (list[int], optional), </span><code>remove_read_users</code><span> (list[int], optional)</span></td><td><code>message</code><span> (str)</span></td><td><span>写权限</span></td><td><strong><span>更新</span></strong><span>知识库信息和权限。</span></td></tr><tr><td><code>/kb/{kb_id}/delete</code></td><td><code>POST</code></td><td><span>(URL Path)</span></td><td><code>message</code><span> (str)</span></td><td><span>所有者或管理员</span></td><td><strong><span>删除</span></strong><span>知识库。</span></td></tr></tbody></table></figure><h4 id='2-文档维度-document-level'><span>2. 文档维度 (Document Level)</span></h4><figure class='table-figure'><table><thead><tr><th><strong><span>接口定义</span></strong></th><th><strong><span>HTTP方法</span></strong></th><th><strong><span>传入参数 (Request Body)</span></strong></th><th><strong><span>返回结果 (Response Body)</span></strong></th><th><strong><span>权限要求</span></strong></th><th><strong><span>描述</span></strong></th></tr></thead><tbody><tr><td><code>/doc/upload</code></td><td><code>POST</code></td><td><code>kb_id</code><span> (int), </span><code>file</code><span> (multipart/form-data), </span><code>doc_name</code><span> (str, optional)</span></td><td><code>doc_id</code><span> (int), </span><code>message</code><span> (str)</span></td><td><span>写权限</span></td><td><strong><span>上传</span></strong><span>文件并自动开始切分和多模态识别（异步）。</span></td></tr><tr><td><code>/doc/{doc_id}</code></td><td><code>GET</code></td><td><span>(URL Path)</span></td><td><code>doc_id</code><span>, </span><code>kb_id</code><span>, </span><code>doc_name</code><span>, </span><code>upload_time</code><span>, </span><code>chunk_count</code><span>, </span><code>process_status</code></td><td><span>读权限</span></td><td><strong><span>获取</span></strong><span>文档详情及处理状态。</span></td></tr><tr><td><code>/doc/{doc_id}/delete</code></td><td><code>POST</code></td><td><span>(URL Path)</span></td><td><code>message</code><span> (str)</span></td><td><span>写权限</span></td><td><strong><span>删除</span></strong><span>文档及其所有Chunk。</span></td></tr></tbody></table></figure><h4 id='3-chunk维度-chunk-level'><span>3. Chunk维度 (Chunk Level)</span></h4><figure class='table-figure'><table><thead><tr><th><strong><span>接口定义</span></strong></th><th><strong><span>HTTP方法</span></strong></th><th><strong><span>传入参数 (Request Body)</span></strong></th><th><strong><span>返回结果 (Response Body)</span></strong></th><th><strong><span>权限要求</span></strong></th><th><strong><span>描述</span></strong></th></tr></thead><tbody><tr><td><code>/chunk/{chunk_id}</code></td><td><code>GET</code></td><td><span>(URL Path)</span></td><td><code>chunk_id</code><span> (int), </span><code>doc_id</code><span> (int), </span><code>kb_id</code><span> (int), </span><code>chunk_index</code><span> (int), </span><code>original_content</code><span> (str), </span><code>image_url</code><span> (str, optional), </span><code>qwen_vl_description</code><span> (str, optional), </span><code>vector_id</code><span> (str)</span></td><td><span>读权限</span></td><td><strong><span>获取</span></strong><span>特定多模态Chunk的详细内容。</span></td></tr><tr><td><code>/doc/{doc_id}/chunks</code></td><td><code>GET</code></td><td><code>doc_id</code><span> (URL Path), </span><code>page</code><span> (int, query), </span><code>page_size</code><span> (int, query)</span></td><td><code>total</code><span>, </span><code>page</code><span>, </span><code>chunks</code><span> (list of simplified chunk objects)</span></td><td><span>读权限</span></td><td><strong><span>分页获取</span></strong><span>文档下的所有Chunk列表。</span></td></tr></tbody></table></figure><h3 id='iii-多模态检索接口-multi-modal-retrieval-api'><span>III. 多模态检索接口 (Multi-modal Retrieval API)</span></h3><figure class='table-figure'><table><thead><tr><th><strong><span>接口定义</span></strong></th><th><strong><span>HTTP方法</span></strong></th><th><strong><span>传入参数 (Request Body)</span></strong></th><th><strong><span>返回结果 (Response Body)</span></strong></th><th><strong><span>权限要求</span></strong></th><th><strong><span>描述</span></strong></th></tr></thead><tbody><tr><td><code>/search/retrieve</code></td><td><code>POST</code></td><td><code>kb_ids</code><span> (list[int]), </span><code>query_text</code><span> (str, optional), </span><code>query_image_url</code><span> (str, optional), </span><code>top_k</code><span> (int, default=5)</span></td><td><strong><code>retrieved_chunks</code></strong><span> (list of objects): * </span><code>chunk_id</code><span> * </span><code>doc_id</code><span> * </span><code>score</code><span> (float) * </span><code>original_content</code><span> * </span><code>qwen_vl_description</code><span> * </span><code>image_url</code></td><td><span>读权限</span></td><td><strong><span>核心检索</span></strong><span>接口。支持纯文本、纯图片（通过URL）或图文混合查询。</span></td></tr></tbody></table></figure><h3 id='iv-多模态问答接口-multi-modal-qa-api'><span>IV. 多模态问答接口 (Multi-modal Q&amp;A API)</span></h3><figure class='table-figure'><table><thead><tr><th><strong><span>接口定义</span></strong></th><th><strong><span>HTTP方法</span></strong></th><th><strong><span>传入参数 (Request Body)</span></strong></th><th><strong><span>返回结果 (Response Body)</span></strong></th><th><strong><span>权限要求</span></strong></th><th><strong><span>描述</span></strong></th></tr></thead><tbody><tr><td><code>/qa/answer</code></td><td><code>POST</code></td><td><code>kb_ids</code><span> (list[int]), </span><code>question_text</code><span> (str), </span><code>question_image_url</code><span> (str, optional), </span><code>session_id</code><span> (str, optional), </span><code>stream</code><span> (bool, optional)</span></td><td><strong><code>answer</code></strong><span> (str), </span><strong><code>source_chunks</code></strong><span> (list of simplified retrieved chunks)</span></td><td><span>读权限</span></td><td><strong><span>核心问答</span></strong><span>接口。基于检索到的多模态信息生成答案。支持会话历史（通过</span><code>session_id</code><span>）和流式输出（通过</span><code>stream</code><span>）。</span></td></tr><tr><td><code>/qa/history/{session_id}</code></td><td><code>GET</code></td><td><span>(URL Path)</span></td><td><strong><code>messages</code></strong><span> (list of Q&amp;A objects)</span></td><td><span>读权限</span></td><td><strong><span>获取</span></strong><span>特定会话的历史记录。</span></td></tr></tbody></table></figure><p>&nbsp;</p><h2 id='数据存储-schema-设计'><span>数据存储 Schema 设计</span></h2><p><span>将数据分为三个部分进行存储：</span></p><ol start='' ><li><p><strong><span>MySQL 关系型数据库 (Metadata &amp; Access Control):</span></strong><span> 存储知识库、文档、Chunk 的元数据，以及用户、权限和会话历史等结构化信息。</span></p></li><li><p><strong><span>Milvus 向量数据库 (Multi-modal Vectors):</span></strong><span> 存储多模态 Chunk 的向量嵌入，用于高效的相似性检索。</span></p></li><li><p><strong><span>对象存储 (Object Storage, e.g., S3/OSS):</span></strong><span> 存储原始大文件和提取出的图片文件（不属于数据库 Schema，但实际项目中必须使用）。</span></p></li></ol><p>&nbsp;</p><h3 id='i-mysql-schema-设计'><span>I. MySQL Schema 设计</span></h3><h4 id='1-users-用户表'><span>1. </span><code>users</code><span> (用户表)</span></h4><figure class='table-figure'><table><thead><tr><th><strong><span>字段名</span></strong></th><th><strong><span>数据类型</span></strong></th><th><strong><span>约束</span></strong></th><th><strong><span>描述</span></strong></th></tr></thead><tbody><tr><td><code>user_id</code></td><td><code>INT</code></td><td><span>Primary Key, Auto Increment</span></td><td><span>用户唯一ID。</span></td></tr><tr><td><code>username</code></td><td><code>VARCHAR(100)</code></td><td><span>Unique</span></td><td><span>用户名/邮箱。</span></td></tr><tr><td><code>hashed_password</code></td><td><code>VARCHAR(255)</code></td><td><span>Not Null</span></td><td><span>加密后的密码。</span></td></tr><tr><td><code>is_admin</code></td><td><code>BOOLEAN</code></td><td><span>Default 0</span></td><td><span>是否为管理员。</span></td></tr></tbody></table></figure><h4 id='2-knowledgebases-知识库表'><span>2. </span><code>knowledge_bases</code><span> (知识库表)</span></h4><figure class='table-figure'><table><thead><tr><th><strong><span>字段名</span></strong></th><th><strong><span>数据类型</span></strong></th><th><strong><span>约束</span></strong></th><th><strong><span>描述</span></strong></th></tr></thead><tbody><tr><td><code>kb_id</code></td><td><code>INT</code></td><td><span>Primary Key, Auto Increment</span></td><td><span>知识库唯一ID。</span></td></tr><tr><td><code>kb_name</code></td><td><code>VARCHAR(255)</code></td><td><span>Not Null</span></td><td><span>知识库名称。</span></td></tr><tr><td><code>description</code></td><td><code>TEXT</code></td><td><span>Nullable</span></td><td><span>知识库描述。</span></td></tr><tr><td><code>owner_id</code></td><td><code>INT</code></td><td><span>Foreign Key (users.user_id)</span></td><td><span>知识库所有者。</span></td></tr><tr><td><code>created_at</code></td><td><code>DATETIME</code></td><td><span>Not Null</span></td><td><span>创建时间。</span></td></tr></tbody></table></figure><h4 id='3-kbpermissions-知识库权限表'><span>3. </span><code>kb_permissions</code><span> (知识库权限表)</span></h4><figure class='table-figure'><table><thead><tr><th><strong><span>字段名</span></strong></th><th><strong><span>数据类型</span></strong></th><th><strong><span>约束</span></strong></th><th><strong><span>描述</span></strong></th></tr></thead><tbody><tr><td><code>perm_id</code></td><td><code>INT</code></td><td><span>Primary Key, Auto Increment</span></td><td><span>权限记录ID。</span></td></tr><tr><td><code>kb_id</code></td><td><code>INT</code></td><td><span>Foreign Key (knowledge_bases.kb_id)</span></td><td><span>知识库ID。</span></td></tr><tr><td><code>user_id</code></td><td><code>INT</code></td><td><span>Foreign Key (users.user_id)</span></td><td><span>用户ID。</span></td></tr><tr><td><code>read_access</code></td><td><code>BOOLEAN</code></td><td><span>Not Null, Default 0</span></td><td><span>是否有读取权限。</span></td></tr><tr><td><code>write_access</code></td><td><code>BOOLEAN</code></td><td><span>Not Null, Default 0</span></td><td><span>是否有写入/管理权限。</span></td></tr></tbody></table></figure><h4 id='4-documents-文档表'><span>4. </span><code>documents</code><span> (文档表)</span></h4><figure class='table-figure'><table><thead><tr><th><strong><span>字段名</span></strong></th><th><strong><span>数据类型</span></strong></th><th><strong><span>约束</span></strong></th><th><strong><span>描述</span></strong></th></tr></thead><tbody><tr><td><code>doc_id</code></td><td><code>INT</code></td><td><span>Primary Key, Auto Increment</span></td><td><span>文档唯一ID。</span></td></tr><tr><td><code>kb_id</code></td><td><code>INT</code></td><td><span>Foreign Key (knowledge_bases.kb_id)</span></td><td><span>所属知识库ID。</span></td></tr><tr><td><code>doc_name</code></td><td><code>VARCHAR(255)</code></td><td><span>Not Null</span></td><td><span>文档名。</span></td></tr><tr><td><code>file_path</code></td><td><code>VARCHAR(512)</code></td><td><span>Not Null</span></td><td><span>对象存储（如S3）中的原始文件路径。</span></td></tr><tr><td><code>status</code></td><td><code>ENUM</code></td><td><span>&#39;UPLOADING&#39;, &#39;PROCESSING&#39;, &#39;READY&#39;, &#39;FAILED&#39;</span></td><td><span>文档处理状态。</span></td></tr><tr><td><code>uploaded_by</code></td><td><code>INT</code></td><td><span>Foreign Key (users.user_id)</span></td><td><span>上传者。</span></td></tr><tr><td><code>uploaded_at</code></td><td><code>DATETIME</code></td><td><span>Not Null</span></td><td><span>上传时间。</span></td></tr></tbody></table></figure><h4 id='5-chunks-多模态-chunk-表'><span>5. </span><code>chunks</code><span> (多模态 Chunk 表)</span></h4><p><span>这是最核心的元数据表，对应 Milvus 中的记录。</span></p><figure class='table-figure'><table><thead><tr><th><strong><span>字段名</span></strong></th><th><strong><span>数据类型</span></strong></th><th><strong><span>约束</span></strong></th><th><strong><span>描述</span></strong></th></tr></thead><tbody><tr><td><strong><code>chunk_id</code></strong></td><td><code>INT</code></td><td><span>Primary Key, Auto Increment</span></td><td><strong><span>Chunk唯一ID，也是Milvus中的</span><code>id</code><span>。</span></strong></td></tr><tr><td><code>doc_id</code></td><td><code>INT</code></td><td><span>Foreign Key (documents.doc_id)</span></td><td><span>所属文档ID。</span></td></tr><tr><td><code>kb_id</code></td><td><code>INT</code></td><td><span>Index</span></td><td><span>所属知识库ID (冗余存储，方便检索)。</span></td></tr><tr><td><code>chunk_index</code></td><td><code>INT</code></td><td><span>Not Null</span></td><td><span>在文档中的序号。</span></td></tr><tr><td><code>original_content</code></td><td><code>TEXT</code></td><td><span>Nullable</span></td><td><span>原始文本内容。</span></td></tr><tr><td><code>image_url</code></td><td><code>VARCHAR(512)</code></td><td><span>Nullable</span></td><td><span>提取出的图片在对象存储中的路径。</span></td></tr><tr><td><strong><code>vl_description</code></strong></td><td><code>TEXT</code></td><td><span>Nullable</span></td><td><strong><span>Qwen-VL或DeepSeek-OCR对Chunk内容的全面多模态识别结果（文本描述）。</span></strong></td></tr><tr><td><code>vector_id</code></td><td><code>VARCHAR(255)</code></td><td><span>Not Null</span></td><td><span>Milvus中的向量ID (通常与</span><code>chunk_id</code><span>保持一致)。</span></td></tr></tbody></table></figure><h3 id='ii-milvus-schema'><span>II. Milvus Schema </span></h3><figure class='table-figure'><table><thead><tr><th><strong><span>字段名</span></strong></th><th><strong><span>数据类型</span></strong></th><th><strong><span>属性</span></strong></th><th><strong><span>描述</span></strong></th></tr></thead><tbody><tr><td><strong><code>chunk_id</code></strong></td><td><code>Int64</code></td><td><span>Primary Key</span></td><td><span>对应 MySQL </span><code>chunks.chunk_id</code><span>。</span></td></tr><tr><td><code>kb_id</code></td><td><code>Int64</code></td><td><span>Scalar</span></td><td><strong><span>知识库ID</span></strong><span>。用于过滤检索范围。</span></td></tr><tr><td><code>doc_id</code></td><td><code>Int64</code></td><td><span>Scalar</span></td><td><strong><span>文档ID</span></strong><span>。用于溯源。</span></td></tr><tr><td><code>chunk_index</code></td><td><code>Int64</code></td><td><span>Scalar</span></td><td><span>Chunk在文档中的索引。</span></td></tr><tr><td><code>original_content</code></td><td><code>VARCHAR</code><span> (Max Size: 65535)</span></td><td><span>Scalar</span></td><td><strong><span>原始文本内容</span></strong><span>。保留在 Milvus 中，作为 RAG 的直接上下文。</span></td></tr><tr><td><strong><code>image_url</code></strong></td><td><code>VARCHAR</code><span> (Max Size: 512)</span></td><td><span>Scalar</span></td><td><span>图片在对象存储中的路径。保留用于展示或大模型二次调用。</span></td></tr><tr><td><code>vl_description</code></td><td><code>VARCHAR</code><span> (Max Size: 65535)</span></td><td><span>Scalar</span></td><td><strong><span>Qwen-VL识别结果的文本描述</span></strong><span>。作为 RAG 的 enriched 上下文。</span></td></tr><tr><td><strong><code>text_vector</code></strong></td><td><code>FLOAT_VECTOR</code></td><td><span>Vector Field</span></td><td><strong><span>【文本】向量</span></strong><span>：仅使用 </span><code>original_content</code><span> 或 </span><code>qwen_vl_description</code><span> 进行文本编码（例如使用 BGE 或 E5 模型）。</span></td></tr><tr><td><strong><code>image_vector</code></strong></td><td><code>FLOAT_VECTOR</code></td><td><span>Vector Field</span></td><td><strong><span>【图像】向量</span></strong><span>：仅对 </span><code>image_url</code><span> 对应的图像进行编码（例如使用 CLIP 模型的 Vision Encoder）。</span></td></tr></tbody></table></figure></div></div>
+</body>
+</html>
